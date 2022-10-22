@@ -1,6 +1,7 @@
 package cu.edu.cujae.pweb.bean;
 
 import cu.edu.cujae.pweb.dto.DriverDto;
+import cu.edu.cujae.pweb.dto.DriversCategoriesDto;
 import cu.edu.cujae.pweb.service.DriverService;
 import cu.edu.cujae.pweb.utils.JsfUtils;
 import java.util.List;
@@ -20,6 +21,7 @@ public class ManageDriverBean {
   private DriverDto dto;
   private DriverDto selected;
   private List<DriverDto> drivers;
+  private List<DriversCategoriesDto> categories;
 
   @Autowired
   private DriverService driverService;
@@ -29,6 +31,7 @@ public class ManageDriverBean {
   @PostConstruct
   public void init() {
     drivers = drivers == null ? driverService.getAll() : drivers;
+    categories = categories == null ? driverService.getCategories() : categories;
   }
 
   //Se ejecuta al dar clic en el button Nuevo
@@ -83,5 +86,13 @@ public class ManageDriverBean {
 
   public List<DriverDto> getDrivers() {
     return drivers;
+  }
+
+  public List<DriversCategoriesDto> getCategories() {
+    return categories;
+  }
+
+  public void setCategories(List<DriversCategoriesDto> categories) {
+    this.categories = categories;
   }
 }

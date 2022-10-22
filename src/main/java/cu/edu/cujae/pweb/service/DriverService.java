@@ -20,9 +20,10 @@ public class DriverService implements CrudInterface {
    */
 
   private List<DriverDto> drivers = initializeDrivers();
+  private List<DriversCategoriesDto> categories = initializeCategories();
 
   //Inicializamos la lista de choferes
-  private List<DriverDto> initializeDrivers() { 
+  private List<DriverDto> initializeDrivers() {
     List<DriverDto> drivers = new ArrayList<DriverDto>();
     drivers.add(
       new DriverDto(
@@ -83,6 +84,13 @@ public class DriverService implements CrudInterface {
     return drivers;
   }
 
+  private List<DriversCategoriesDto> initializeCategories() {
+    List<DriversCategoriesDto> categorias = new ArrayList<DriversCategoriesDto>();
+    categorias.add(new DriversCategoriesDto(0, "novato"));
+    categorias.add(new DriversCategoriesDto(1, "profesional"));
+    return categorias;
+  }
+
   //Obtenemos todos los choferes
   @Override
   public List<DriverDto> getAll() {
@@ -126,5 +134,9 @@ public class DriverService implements CrudInterface {
         break;
       }
     }
+  }
+
+  public List<DriversCategoriesDto> getCategories() {
+    return categories;
   }
 }

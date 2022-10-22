@@ -20,8 +20,7 @@
 								id="ci"
 								required="true"
 								value="#{manageDriverBean.selected.id}"
-								maxlength="11"
-								/>
+								maxlength="11" />
 							<p:message for="@previous"></p:message>
 						</div>
 						<div class="p-field">
@@ -55,7 +54,7 @@
 					<h:panelGroup>
 						<div class="p-field">
 							<p:outputLabel for="@next">Categoría</p:outputLabel>
-							<p:selectCheckboxMenu
+							<p:selectOneMenu
 								id="multiple"
 								required="true"
 								value="#{manageDriverBean.categories}"
@@ -69,9 +68,9 @@
 								<f:selectItems
 									value="#{manageDriverBean.categories}"
 									var="category"
-									itemLabel="#{category.code}"
+									itemLabel="#{category.category}"
 									itemValue="#{category.category}" />
-							</p:selectCheckboxMenu>
+							</p:selectOneMenu>
 						</div>						
 					</h:panelGroup>
 				</p:panelGrid>
