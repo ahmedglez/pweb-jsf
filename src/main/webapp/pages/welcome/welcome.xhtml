@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/pages/template/layout.xhtml">
+        <ui:define name="title">
+		    Inicio
+		</ui:define>
+    	<ui:define name="layout">
+    		<h:form>
+		    	<p:card style="width: 100%; margin-bottom: 2em">
+				    <f:facet name="title">
+				        Bievenidos al demo de pweb
+				    </f:facet>
+				
+				    <p>Este demo servirá de guía para el desarrollo de los proyectos de curso de la asignatura. Poco a poco lo iremos actualizando con diversas funcionalidades y casos de estudio. </p>
+				    <ul>
+				    	<li>Plantilla con Facelets </li>
+				    	<li>Login </li>
+				    	<li>Crud de usuario </li>
+				    </ul>
+				</p:card>
+			</h:form>
+    	</ui:define>
+    </ui:composition>
+</html>

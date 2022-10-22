@@ -1,0 +1,88 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:dialog header="Usuario" showEffect="fade" modal="true"
+		widgetVar="manageUserDialog" responsive="true">
+		<p:outputPanel id="manage-user-content" class="ui-fluid">
+			<p:outputPanel rendered="#{not empty manageUserBean.selectedUser}">
+				<p:panelGrid layout="grid" columns="2">
+					<h:panelGroup>
+						<div class="p-field">
+							<p:outputLabel for="@next">Nombre Completo</p:outputLabel>
+							<p:inputText id="name" required="true" 
+								value="#{manageUserBean.selectedUser.fullName}" />
+							<p:message for="@previous" ></p:message>
+						</div>
+						<div class="p-field">
+							<p:outputLabel for="@next">Usuario</p:outputLabel>
+							<p:inputText id="username" required="true"
+								value="#{manageUserBean.selectedUser.username}" />
+							<p:message for="@previous"></p:message>
+						</div>
+						<div class="p-field">
+							<p:outputLabel for="@next">Identificación</p:outputLabel>
+							<p:inputText id="ci" required="true"
+								value="#{manageUserBean.selectedUser.identification}"
+								maxlength="11">
+								<p:keyFilter mask="num" />
+							</p:inputText>
+							<p:message for="@previous"></p:message>
+						</div>
+						<div class="p-field">
+							<p:outputLabel for="@next">Correo</p:outputLabel>
+							<p:inputText id="email" required="true"
+								value="#{manageUserBean.selectedUser.email}"
+								validatorMessage="Email mal formado">
+								<f:validateRegex
+									pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+							</p:inputText>
+							<p:message for="@previous"></p:message>
+						</div>
+					</h:panelGroup>
+					<h:panelGroup>
+					    <div class="p-field">
+							<p:outputLabel for="@next">Roles</p:outputLabel>
+							<p:selectCheckboxMenu id="multiple" required="true"
+								value="#{manageUserBean.selectedRoles}" label="Seleccione"
+								style="min-width: 15rem" multiple="true" filter="true"
+								filterMatchMode="startsWith" panelStyle="width: 30rem"
+								scrollHeight="250">
+								<f:selectItems value="#{manageUserBean.roles}" var="role"
+									itemLabel="#{role.description}" itemValue="#{role.id}" />
+							</p:selectCheckboxMenu>
+						</div>
+						<div class="p-field">
+							<p:outputLabel for="@next" rendered="#{empty manageUserBean.selectedUser.id}">Contraseña</p:outputLabel>
+							<p:password id="password1" required="true"
+								rendered="#{empty manageUserBean.selectedUser.id}"
+								value="#{manageUserBean.selectedUser.password}"
+								match="password2">
+							</p:password>
+							<p:message for="@previous" rendered="#{empty manageUserBean.selectedUser.id}"></p:message>
+						</div>
+						<div class="p-field">
+							<p:outputLabel for="@next" rendered="#{empty manageUserBean.selectedUser.id}">Repetir contraseña</p:outputLabel>
+							<p:password id="password2" required="true"
+								value="#{manageUserBean.selectedUser.password}"
+								rendered="#{empty manageUserBean.selectedUser.id}">
+							</p:password>
+							<p:message for="@previous" rendered="#{empty manageUserBean.selectedUser.id}"></p:message>
+						</div>
+						
+					</h:panelGroup>
+				</p:panelGrid>
+			</p:outputPanel>
+		</p:outputPanel>
+
+		<f:facet name="footer">
+			<p:commandButton value="Salvar" icon="pi pi-check"
+				actionListener="#{manageUserBean.saveUser}"
+				update="manage-user-content" process="manage-user-content @this" />
+			<p:commandButton value="Cancelar" icon="pi pi-times"
+				onclick="PF('manageUserDialog').hide()" class="ui-button-secondary" />
+		</f:facet>
+	</p:dialog>
+</ui:composition>
