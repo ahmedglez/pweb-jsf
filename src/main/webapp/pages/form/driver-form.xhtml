@@ -1,0 +1,95 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<p:dialog
+		header="Conductor"
+		showEffect="fade"
+		modal="true"
+		widgetVar="manageDriverDialog"
+		responsive="true">
+		<p:outputPanel id="manage-driver-content" class="ui-fluid">
+			<p:outputPanel rendered="#{not empty manageDriverBean.selected}">
+				<p:panelGrid layout="grid" columns="2">
+					<h:panelGroup>
+						<div class="p-field">
+							<p:outputLabel for="@next">Carnet de Identidad</p:outputLabel>
+							<p:inputText
+								id="ci"
+								required="true"
+								value="#{manageDriverBean.selected.id}"
+								maxlength="11"
+								/>
+							<p:message for="@previous"></p:message>
+						</div>
+						<div class="p-field">
+							<p:outputLabel for="@next">Nombre</p:outputLabel>
+							<p:inputText
+								id="firstName"
+								required="true"
+								value="#{manageDriverBean.selected.firstName}" />
+							<p:message for="@previous"></p:message>
+						</div>
+						<div class="p-field">
+							<p:outputLabel for="@next">Apellidos</p:outputLabel>
+							<p:inputText
+								id="lastName"
+								required="true"
+								value="#{manageDriverBean.selected.lastName}">
+								<p:keyFilter mask="num" />
+							</p:inputText>
+							<p:message for="@previous"></p:message>
+						</div>
+						<div class="p-field">
+							<p:outputLabel for="@next">Dirección</p:outputLabel>
+							<p:inputText
+								id="address"
+								required="true"
+								value="#{manageDriverBean.selected.address}">
+							</p:inputText>
+							<p:message for="@previous"></p:message>
+						</div>
+					</h:panelGroup>
+					<h:panelGroup>
+						<div class="p-field">
+							<p:outputLabel for="@next">Categoría</p:outputLabel>
+							<p:selectCheckboxMenu
+								id="multiple"
+								required="true"
+								value="#{manageDriverBean.categories}"
+								label="Seleccione"
+								style="min-width: 15rem"
+								multiple="true"
+								filter="true"
+								filterMatchMode="startsWith"
+								panelStyle="width: 30rem"
+								scrollHeight="250">
+								<f:selectItems
+									value="#{manageDriverBean.categories}"
+									var="category"
+									itemLabel="#{category.code}"
+									itemValue="#{category.category}" />
+							</p:selectCheckboxMenu>
+						</div>						
+					</h:panelGroup>
+				</p:panelGrid>
+			</p:outputPanel>
+		</p:outputPanel>
+
+		<f:facet name="footer">
+			<p:commandButton
+				value="Salvar"
+				icon="pi pi-check"
+				actionListener="#{manageDriverBean.saveDriver}"
+				update="manage-driver-content"
+				process="manage-driver-content @this" />
+			<p:commandButton
+				value="Cancelar"
+				icon="pi pi-times"
+				onclick="PF('manageDriverDialog').hide()"
+				class="ui-button-secondary" />
+		</f:facet>
+	</p:dialog>
+</ui:composition>

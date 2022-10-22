@@ -23,11 +23,11 @@
 								value="Nuevo"
 								icon="pi pi-plus"
 								actionListener="#{manageDriverBean.openNew}"
-								update=":form:manage-user-content"
-								oncomplete="PF('manageUserDialog').show()"
+								update=":form:manage-driver-content"
+								oncomplete="PF('manageDriverDialog').show()"
 								styleClass="ui-button-success"
 								style="margin-right: 0.5rem">
-								<p:resetInput target=":form:manage-user-content" />
+								<p:resetInput target=":form:manage-driver-content" />
 							</p:commandButton>
 						</p:toolbarGroup>
 						<p:toolbarGroup align="right">
@@ -38,7 +38,7 @@
 								icon="pi pi-upload"
 								styleClass="ui-button-help"
 								ajax="false">
-								<p:dataExporter type="pdf" target="dt-users" fileName="users" />
+								<p:dataExporter type="pdf" target="dt-drivers" fileName="drivers" />
 							</p:commandButton>
 						</p:toolbarGroup>
 					</p:toolbar>
@@ -54,8 +54,8 @@
                 	  con mayor detalle ver el showcase.  
                  -->
 					<p:dataTable
-						id="dt-users"
-						widgetVar="dtUsers"
+						id="dt-drivers"
+						widgetVar="dtDrivers"
 						var="driver"
 						value="#{manageDriverBean.drivers}"
 						reflow="true"
@@ -69,7 +69,7 @@
 									<i class="pi pi-search"></i>
 									<p:inputText
 										id="globalFilter"
-										onkeyup="PF('dtUsers').filter()"
+										onkeyup="PF('dtDrivers').filter()"
 										placeholder="Buscar" />
 								</span>
 							</div>
@@ -105,24 +105,24 @@
 						<p:column exportable="false">
 							<p:commandButton
 								icon="pi pi-pencil"
-								action="#{manageUserBean.openForEdit}"
-								update=":form:manage-user-content"
-								oncomplete="PF('manageUserDialog').show()"
+								action="#{manageDriverBean.openForEdit}"
+								update=":form:manage-driver-content"
+								oncomplete="PF('manageDriverDialog').show()"
 								styleClass="edit-button rounded-button ui-button-success"
 								process="@this">
 								<f:setPropertyActionListener
-									value="#{user}"
-									target="#{manageUserBean.selectedUser}" />
-								<p:resetInput target=":form:manage-user-content" />
+									value="#{driver}"
+									target="#{manageDriverBean.selected}" />
+								<p:resetInput target=":form:manage-driver-content" />
 							</p:commandButton>
 							<p:commandButton
 								class="ui-button-warning rounded-button"
 								icon="pi pi-trash"
 								process="@this"
-								action="#{manageUserBean.deleteUser}">
+								action="#{manageDriverBean.deleteDriver}">
 								<f:setPropertyActionListener
-									value="#{user}"
-									target="#{manageUserBean.selectedUser}" />
+									value="#{driver}"
+									target="#{manageDriverBean.selected}" />
 								<p:confirm
 									header="Confirmar"
 									message="Está seguro de eliminar al usuario?"
@@ -132,7 +132,7 @@
 					</p:dataTable>
 
 					<!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
-					<ui:include src="/pages/security/users/user-form.xhtml"></ui:include>
+					<ui:include src="/pages/form/driver-form.xhtml"></ui:include>
 
 					<!-- Este comoponente se utiliza mucho para el caso de los eliminar, que es donde casi siempre se necesita confirmation,
 				su uso es bien sencillo, cada confirmDialog va atado a un p:confirm que es el que se definie dentro del button -->

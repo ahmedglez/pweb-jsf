@@ -7,7 +7,7 @@
     </context-param>
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>saga</param-value>
+        <param-value>arya</param-value>
     </context-param>
     <listener>
         <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
