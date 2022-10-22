@@ -36,7 +36,7 @@ public class ManageDriverBean {
   }
 
   //Se ejecuta al dar clic en el button Nuevo
-  public void openNew() {
+  public void newDriver() {
     this.selected = new DriverDto();
   }
 
@@ -91,6 +91,14 @@ public class ManageDriverBean {
 
   public List<DriversCategoriesDto> getCategories() {
     return categories;
+  }
+
+  public String getCategoryName(DriversCategoriesDto category) {
+    if (selected != null) {
+      return selected.getCategory().getCategory();
+    } else {
+      return category.getCategory();
+    }
   }
 
   public void setCategories(List<DriversCategoriesDto> categories) {

@@ -24,7 +24,14 @@ public class DriverDto {
     this.category = category;
   }
 
-  public DriverDto() {}
+  public DriverDto() {
+    this.code = 0;
+    this.id = "";
+    this.firstName = "";
+    this.lastName = "";
+    this.address = "";
+    this.category = null;
+  }
 
   public String getId() {
     return id;

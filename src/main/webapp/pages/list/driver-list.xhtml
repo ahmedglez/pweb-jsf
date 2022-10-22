@@ -22,7 +22,8 @@
 							<p:commandButton
 								value="Nuevo"
 								icon="pi pi-plus"
-								actionListener="#{manageDriverBean.openNew}"
+								actionListener="#{manageDriverBean.newDriver}"
+								action="#{manageDriverBean.newDriver()}"
 								update=":form:manage-driver-content"
 								oncomplete="PF('manageDriverDialog').show()"
 								styleClass="ui-button-success"
@@ -38,7 +39,10 @@
 								icon="pi pi-upload"
 								styleClass="ui-button-help"
 								ajax="false">
-								<p:dataExporter type="pdf" target="dt-drivers" fileName="drivers" />
+								<p:dataExporter
+									type="pdf"
+									target="dt-drivers"
+									fileName="drivers" />
 							</p:commandButton>
 						</p:toolbarGroup>
 					</p:toolbar>

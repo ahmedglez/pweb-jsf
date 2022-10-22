@@ -68,8 +68,9 @@
 								<f:selectItems
 									value="#{manageDriverBean.categories}"
 									var="category"
-									itemLabel="#{category.category}"
-									itemValue="#{category.category}" />
+									itemLabel="#{manageDriverBean.getCategoryName(category)}"
+									itemValue="#{manageDriverBean.getCategoryName(category)}" />}" 									
+									/>
 							</p:selectOneMenu>
 						</div>						
 					</h:panelGroup>
