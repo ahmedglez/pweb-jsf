@@ -27,15 +27,6 @@ public class DriverService implements CrudInterface {
     List<DriverDto> drivers = new ArrayList<DriverDto>();
     drivers.add(
       new DriverDto(
-        "84051436521",
-        "Pedro Luis",
-        "Sosa Ramirez",
-        "3era / 34 y 38 Playa",
-        new DriversCategoriesDto(0, "profesional")
-      )
-    );
-    drivers.add(
-      new DriverDto(
         "85051436521",
         "Pedro Luis",
         "Sosa Ramirez",

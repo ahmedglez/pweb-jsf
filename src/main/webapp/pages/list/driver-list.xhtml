@@ -105,7 +105,7 @@
 						<p:column exportable="false">
 							<p:commandButton
 								icon="pi pi-pencil"
-								action="#{manageDriverBean.openForEdit}"
+								action="#{manageDriverBean.openForEdit(driver)}"
 								update=":form:manage-driver-content"
 								oncomplete="PF('manageDriverDialog').show()"
 								styleClass="edit-button rounded-button ui-button-success"

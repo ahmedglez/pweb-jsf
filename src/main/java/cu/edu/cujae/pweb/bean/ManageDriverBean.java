@@ -31,7 +31,8 @@ public class ManageDriverBean {
   @PostConstruct
   public void init() {
     drivers = drivers == null ? driverService.getAll() : drivers;
-    categories = categories == null ? driverService.getCategories() : categories;
+    categories =
+      categories == null ? driverService.getCategories() : categories;
   }
 
   //Se ejecuta al dar clic en el button Nuevo
@@ -94,5 +95,9 @@ public class ManageDriverBean {
 
   public void setCategories(List<DriversCategoriesDto> categories) {
     this.categories = categories;
+  }
+
+  public void openForEdit(DriverDto driver) {
+    this.selected = driver;
   }
 }
