@@ -62,13 +62,33 @@ public class ManageDriverBean {
   }
 
   public void openForEdit(DriverDto driver) {
+    System.out.println(driver.getCode());
     this.selected = driver;
     this.selectedCategory = driver.getCategory().getCategory();
   }
 
   public void saveDriver() {
-    System.out.println("SELECTED CATEGORY");
-    System.out.println(selectedCategory);
+    if (this.selected.getCode() == 0) {
+      DriversCategoriesDto category = new DriversCategoriesDto(
+        this.selectedCategory
+      );
+      this.selected.setCategory(category);
+      this.drivers.add(this.selected);
+      JsfUtils.addMessageFromBundle(
+        null,
+        FacesMessage.SEVERITY_INFO,
+        "message_user_added"
+      ); //Este code permite mostrar un mensaje exitoso (FacesMessage.SEVERITY_INFO) obteniendo el mensage desde el fichero de recursos, con la llave message_user_added
+    } else {
+      JsfUtils.addMessageFromBundle(
+        null,
+        FacesMessage.SEVERITY_INFO,
+        "message_user_edited"
+      );
+    }
+
+    PrimeFaces.current().executeScript("PF('manageDriverDialog').hide()"); //Este code permite cerrar el dialog cuyo id es manageUserDialog. Este identificador es el widgetVar
+    PrimeFaces.current().ajax().update("form:dt-drivers"); // Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
   }
 
   /* Getters and Setters */
