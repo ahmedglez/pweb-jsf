@@ -57,7 +57,7 @@
 							<p:selectOneMenu
 								id="multiple"
 								required="true"
-								value="#{manageDriverBean.categories}"
+								value="#{manageDriverBean.selected.category.category}"
 								label="Seleccione"
 								style="min-width: 15rem"
 								multiple="true"
@@ -68,11 +68,10 @@
 								<f:selectItems
 									value="#{manageDriverBean.categories}"
 									var="category"
-									itemLabel="#{manageDriverBean.getCategoryName(category)}"
-									itemValue="#{manageDriverBean.getCategoryName(category)}" />}" 									
-									/>
+									itemLabel="#{category.category}"
+									itemValue="#{category.code}" />
 							</p:selectOneMenu>
-						</div>						
+						</div>
 					</h:panelGroup>
 				</p:panelGrid>
 			</p:outputPanel>
