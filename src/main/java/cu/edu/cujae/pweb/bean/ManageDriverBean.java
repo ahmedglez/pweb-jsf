@@ -22,6 +22,7 @@ public class ManageDriverBean {
   private DriverDto selected;
   private List<DriverDto> drivers;
   private List<DriversCategoriesDto> categories;
+  private String selectedCategory;
 
   @Autowired
   private DriverService driverService;
@@ -60,9 +61,35 @@ public class ManageDriverBean {
     }
   }
 
+  public void openForEdit(DriverDto driver) {
+    this.selected = driver;
+    this.selectedCategory = driver.getCategory().getCategory();
+  }
+
+  public void saveDriver() {
+    System.out.println("SELECTED CATEGORY");
+    System.out.println(selectedCategory);
+  }
+
   /* Getters and Setters */
   public DriverDto getDto() {
     return dto;
+  }
+
+  public String getSelectedCategory() {
+    return this.selectedCategory;
+  }
+
+  public void setSelectedCategory(String selectedCategory) {
+    this.selectedCategory = selectedCategory;
+  }
+
+  public DriverService getDriverService() {
+    return this.driverService;
+  }
+
+  public void setDriverService(DriverService driverService) {
+    this.driverService = driverService;
   }
 
   public void setDto(DriverDto driverDto) {
@@ -103,9 +130,5 @@ public class ManageDriverBean {
 
   public void setCategories(List<DriversCategoriesDto> categories) {
     this.categories = categories;
-  }
-
-  public void openForEdit(DriverDto driver) {
-    this.selected = driver;
   }
 }

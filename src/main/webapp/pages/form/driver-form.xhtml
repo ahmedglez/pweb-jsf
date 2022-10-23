@@ -21,6 +21,8 @@
 								required="true"
 								value="#{manageDriverBean.selected.id}"
 								maxlength="11" />
+							<p:keyFilter mask="num" />
+
 							<p:message for="@previous"></p:message>
 						</div>
 						<div class="p-field">
@@ -37,7 +39,6 @@
 								id="lastName"
 								required="true"
 								value="#{manageDriverBean.selected.lastName}">
-								<p:keyFilter mask="num" />
 							</p:inputText>
 							<p:message for="@previous"></p:message>
 						</div>
@@ -57,7 +58,7 @@
 							<p:selectOneMenu
 								id="multiple"
 								required="true"
-								value="#{manageDriverBean.selected.category.category}"
+								value="#{manageDriverBean.selectedCategory}"
 								label="Seleccione"
 								style="min-width: 15rem"
 								multiple="true"
