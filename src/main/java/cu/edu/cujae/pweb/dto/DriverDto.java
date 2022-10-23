@@ -10,11 +10,26 @@ public class DriverDto {
   private DriversCategoriesDto category;
 
   public DriverDto(
-    String id,
-    String firstName,
-    String lastName,
-    String address,
-    DriversCategoriesDto category
+          int code,
+          String id,
+          String firstName,
+          String lastName,
+          String address,
+          DriversCategoriesDto category
+  ) {
+    this.code = code;
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.address = address;
+    this.category = category;
+  }
+  public DriverDto(
+          String id,
+          String firstName,
+          String lastName,
+          String address,
+          DriversCategoriesDto category
   ) {
     this.code = code;
     this.id = id;
