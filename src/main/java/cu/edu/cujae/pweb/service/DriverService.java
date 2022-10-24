@@ -78,7 +78,9 @@ public class DriverService implements CrudInterface {
   private List<DriversCategoriesDto> initializeCategories() {
     List<DriversCategoriesDto> categorias = new ArrayList<DriversCategoriesDto>();
     categorias.add(new DriversCategoriesDto(0, "novato"));
-    categorias.add(new DriversCategoriesDto(1, "profesional"));
+    categorias.add(new DriversCategoriesDto(1, "intermedio"));
+
+    categorias.add(new DriversCategoriesDto(2, "profesional"));
     return categorias;
   }
 
@@ -125,6 +127,15 @@ public class DriverService implements CrudInterface {
         break;
       }
     }
+  }
+
+  public boolean existID(String id) {
+    for (DriverDto driver : drivers) {
+      if (driver.getId().equals(id)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   public List<DriversCategoriesDto> getCategories() {
