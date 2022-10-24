@@ -73,17 +73,27 @@ public class ManageDriverBean {
         this.selectedCategory
       );
       this.selected.setCategory(category);
-      this.drivers.add(this.selected);
-      JsfUtils.addMessageFromBundle(
-        null,
-        FacesMessage.SEVERITY_INFO,
-        "message_user_added"
-      ); //Este code permite mostrar un mensaje exitoso (FacesMessage.SEVERITY_INFO) obteniendo el mensage desde el fichero de recursos, con la llave message_user_added
+      boolean repeatedId = driverService.existID(this.selected.getId());
+      if (!repeatedId) {
+        driverService.create(this.selected);
+        drivers = driverService.getAll();
+        JsfUtils.addMessageFromBundle(
+          null,
+          FacesMessage.SEVERITY_INFO,
+          "message_driver_added"
+        );
+      } else {
+        JsfUtils.addMessageFromBundle(
+          null,
+          FacesMessage.SEVERITY_ERROR,
+          "message_error_id_already_exists"
+        );
+      }
     } else {
       JsfUtils.addMessageFromBundle(
         null,
         FacesMessage.SEVERITY_INFO,
-        "message_user_edited"
+        "message_driver_edited"
       );
     }
 

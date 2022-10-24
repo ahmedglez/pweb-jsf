@@ -129,6 +129,15 @@ public class DriverService implements CrudInterface {
     }
   }
 
+  public boolean existID(String id) {
+    for (DriverDto driver : drivers) {
+      if (driver.getId().equals(id)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public List<DriversCategoriesDto> getCategories() {
     return categories;
   }
