@@ -42,16 +42,16 @@ public class ManageDriverBean {
   }
 
   //Permite eliminar un chofer
-  public void deleteUser() {
+  public void deleteDriver() {
     try {
-      driverService.delete(selected.getId());
+      driverService.delete(this.selected.getId());
       this.selected = null;
       JsfUtils.addMessageFromBundle(
         null,
         FacesMessage.SEVERITY_INFO,
-        "message_user_removed"
+        "message_driver_deleted"
       );
-      PrimeFaces.current().ajax().update("form:dt-users"); // Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
+      PrimeFaces.current().ajax().update("form:dt-drivers"); // Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
     } catch (Exception e) {
       JsfUtils.addMessageFromBundle(
         null,
