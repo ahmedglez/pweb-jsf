@@ -101,7 +101,7 @@ public class ContractServices {
             ServicesLocator.getCarsServices().setCarStatusToRented(cod_car);
         }
     }
-
+ 
     public void updateContract(int code, int cod_tourist, int cod_car, int cod_bill, int cod_payment, int cod_driver, LocalDate starting_date, LocalDate final_date, int extension) throws SQLException, ClassNotFoundException {
         BillDto bill = ServicesLocator.getBillServices().returnBill(cod_bill);
         ContractDto contract = new ContractDto(bill, starting_date, final_date, extension);
@@ -140,7 +140,7 @@ public class ContractServices {
         ServicesLocator.getBillServices().deleteBill(bill.getCode());
         ServicesLocator.getCarsServices().setCarStatusToAvailable(car.getCode());
     }
-
+ 
     public ArrayList<ContractDto> getContractsByTouristId(int id) throws SQLException, ClassNotFoundException {
         ArrayList<ContractDto> result = new ArrayList<>();
         ArrayList<ContractDto> contracts = listContract();
