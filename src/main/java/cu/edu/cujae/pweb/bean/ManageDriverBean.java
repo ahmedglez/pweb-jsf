@@ -68,11 +68,11 @@ public class ManageDriverBean {
   }
 
   public void saveDriver() {
+    DriversCategoriesDto category = new DriversCategoriesDto(
+      this.selectedCategory
+    );
+    this.selected.setCategory(category);
     if (this.selected.getCode() == 0) {
-      DriversCategoriesDto category = new DriversCategoriesDto(
-        this.selectedCategory
-      );
-      this.selected.setCategory(category);
       boolean repeatedId = driverService.existID(this.selected.getId());
       if (!repeatedId) {
         driverService.create(this.selected);
@@ -90,6 +90,7 @@ public class ManageDriverBean {
         );
       }
     } else {
+      driverService.update(this.selected, this.selected.getId());
       JsfUtils.addMessageFromBundle(
         null,
         FacesMessage.SEVERITY_INFO,
