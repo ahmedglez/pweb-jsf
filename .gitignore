@@ -4,3 +4,12 @@ target/
 #ignore vscode folder
 .vscode/
 
+#ignore .DS_Store
+.DS_Store
+
+#ignore .idea folder
+.idea/
+
+#ignore pom.xml
+pom.xml
+
