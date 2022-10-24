@@ -1,0 +1,115 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <p:dialog
+            header="Conductor"
+            showEffect="fade"
+            modal="true"
+            widgetVar="manageTouristDialog"
+            responsive="true">
+        <p:outputPanel id="manage-tourist-content" class="ui-fluid">
+            <p:outputPanel rendered="#{not empty manageTouristBeanBean.selectedTourist}">
+                <p:panelGrid layout="grid" columns="2">
+                    <h:panelGroup>
+                        <div class="p-field">
+                            <p:outputLabel for="@next">Pasaporte</p:outputLabel>
+                            <p:inputText
+                                    id="passport"
+                                    required="true"
+                                    value="#{manageTouristBean.selectedTourist.idPassport}"
+                                    maxlength="7" />
+                            <p:message for="@previous"></p:message>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="@next">Nombre</p:outputLabel>
+                            <p:inputText
+                                    id="firstName"
+                                    required="true"
+                                    value="#{manageTouristBean.selectedTourist.name}" />
+                            <p:message for="@previous"></p:message>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="@next">Apellidos</p:outputLabel>
+                            <p:inputText
+                                    id="lastName"
+                                    required="true"
+                                    value="#{manageTouristBean.selectedTourist.lastName}">
+                                <p:keyFilter mask="num" />
+                            </p:inputText>
+                            <p:message for="@previous"></p:message>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="@next">Numero de telefono</p:outputLabel>
+                            <p:inputText
+                                    id="telephone"
+                                    required="true"
+                                    value="#{manageTouristBean.selectedTourist.telephoneNumber}">
+                            </p:inputText>
+                            <p:message for="@previous"></p:message>
+                        </div>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <div class="p-field">
+                            <p:outputLabel for="@next">Edad</p:outputLabel>
+                            <p:outputLabel for="@next" value="Horizontal after"/>
+                            <p:spinner id="horizontalAfter" value="#{manageTouristBean.selectedTourist.age}" buttons="horizontal-after"
+                                       upButtonStyleClass="ui-button-success" downButtonStyleClass="ui-button-danger"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="@next">Sexo</p:outputLabel>
+                            <p:selectOneMenu
+                                    id="multiple"
+                                    required="true"
+                                    value="#{manageTouristBean.selectedTourist.sex}"
+                                    label="Seleccione"
+                                    style="min-width: 15rem"
+                                    multiple="true"
+                                    filter="true"
+                                    filterMatchMode="startsWith"
+                                    panelStyle="width: 30rem"
+                                    scrollHeight="250">
+                                <f:selectItem value="masculino" itemLabel="masculino" />
+                                <f:selectItem value="femenino" itemValue="femenino" />
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="@next">Pais</p:outputLabel>
+                            <p:selectOneMenu
+                                    id="multiple2"
+                                    required="true"
+                                    value="#{manageTouristBean.selectedTourist.country}"
+                                    label="Seleccione"
+                                    style="min-width: 15rem"
+                                    multiple="true"
+                                    filter="true"
+                                    filterMatchMode="startsWith"
+                                    panelStyle="width: 30rem"
+                                    scrollHeight="250">
+                                <f:selectItem value="Cuba" itemLabel="Cuba" />
+                                <f:selectItem value="EEUU" itemValue="EEUU" />
+                                <f:selectItem value="Francia" itemValue="Francia" />
+                            </p:selectOneMenu>
+                        </div>
+                    </h:panelGroup>
+                </p:panelGrid>
+            </p:outputPanel>
+        </p:outputPanel>
+
+        <f:facet name="footer">
+            <p:commandButton
+                    value="Salvar"
+                    icon="pi pi-check"
+                    actionListener="#{manageTouristBean.saveTourist}"
+                    update="manage-driver-content"
+                    process="manage-driver-content @this" />
+            <p:commandButton
+                    value="Cancelar"
+                    icon="pi pi-times"
+                    onclick="PF('manageTouristDialog').hide()"
+                    class="ui-button-secondary" />
+        </f:facet>
+    </p:dialog>
+</ui:composition>

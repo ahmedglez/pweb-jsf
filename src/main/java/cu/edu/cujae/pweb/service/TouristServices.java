@@ -4,6 +4,7 @@ import cu.edu.cujae.pweb.dto.ContractDto;
 import cu.edu.cujae.pweb.dto.TouristDto;
 import cu.edu.cujae.pweb.utils.reportTables.TouristFailContractReport;
 import cu.edu.cujae.pweb.utils.reportTables.TouristReport;
+import org.springframework.stereotype.Service;
 
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
@@ -12,7 +13,88 @@ import java.sql.Types;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+@Service
 public class TouristServices {
+
+    private ArrayList<TouristDto> tou = initializerTou();
+
+    public ArrayList<TouristDto> initializerTou(){
+        ArrayList<TouristDto> tourists = new ArrayList<>();
+        tourists.add(new TouristDto(
+                0,
+                "Erne",
+                "Abella",
+                "G456778",
+                22,
+                "Masculino",
+                "7889654",
+                "Spain"
+        ));
+        tourists.add(new TouristDto(
+                0,
+                "Erne",
+                "Abella",
+                "G456778",
+                22,
+                "Masculino",
+                "7889654",
+                "Spain"
+        ));
+        tourists.add(new TouristDto(
+                0,
+                "Erne",
+                "Abella",
+                "G456778",
+                22,
+                "Masculino",
+                "7889654",
+                "Spain"
+        ));
+        tourists.add(new TouristDto(
+                0,
+                "Erne",
+                "Abella",
+                "G456778",
+                22,
+                "Masculino",
+                "7889654",
+                "Spain"
+        ));
+        tourists.add(new TouristDto(
+                0,
+                "Erne",
+                "Abella",
+                "G456778",
+                22,
+                "Masculino",
+                "7889654",
+                "Spain"
+        ));
+        tourists.add(new TouristDto(
+                0,
+                "Erne",
+                "Abella",
+                "G456778",
+                22,
+                "Masculino",
+                "7889654",
+                "Spain"
+        ));
+        tourists.add(new TouristDto(
+                0,
+                "Erne",
+                "Abella",
+                "G456778",
+                22,
+                "Masculino",
+                "7889654",
+                "Spain"
+        ));
+
+        return tourists;
+    }
+
+    public ArrayList<TouristDto> getAll(){return tou;}
 
     public void insertTourist(String name, String last_name, String passport, String country, String sex, int age, String telephone) throws SQLException, ClassNotFoundException {
         java.sql.Connection connection = ServicesLocator.getConnection();
@@ -160,4 +242,6 @@ public class TouristServices {
         connection.close();
         return report;
     }
+
+
 }

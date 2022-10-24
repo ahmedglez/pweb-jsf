@@ -21,6 +21,17 @@ public class TouristDto {
         this.country = country;
     }
 
+    public TouristDto() {
+        this.code = 0;
+        this.name = "";
+        this.lastName = "";
+        this.idPassport = "";
+        this.age = 0;
+        this.sex = "";
+        this.telephoneNumber = "";
+        this.country = "";
+    }
+
     public String getName() {
         return name;
     }
