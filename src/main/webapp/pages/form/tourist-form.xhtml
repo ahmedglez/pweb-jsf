@@ -37,7 +37,6 @@
                                     id="lastName"
                                     required="true"
                                     value="#{manageTouristBean.selectedTourist.lastName}">
-                                <p:keyFilter mask="num" />
                             </p:inputText>
                             <p:message for="@previous"></p:message>
                         </div>
@@ -53,10 +52,10 @@
                     </h:panelGroup>
                     <h:panelGroup>
                         <div class="p-field">
-                            <p:outputLabel for="@next">Edad</p:outputLabel>
-                            <p:outputLabel for="@next" value="Horizontal after"/>
+                            <p:outputLabel for="@next" value="Edad"/>
                             <p:spinner id="horizontalAfter" value="#{manageTouristBean.selectedTourist.age}" buttons="horizontal-after"
-                                       upButtonStyleClass="ui-button-success" downButtonStyleClass="ui-button-danger"/>
+                                       upButtonStyleClass="ui-button-success" downButtonStyleClass="ui-button-danger" min = "0"/>
+                            <p:message for="@previous"></p:message>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="@next">Sexo</p:outputLabel>
@@ -71,9 +70,11 @@
                                     filterMatchMode="startsWith"
                                     panelStyle="width: 30rem"
                                     scrollHeight="250">
-                                <f:selectItem value="masculino" itemLabel="masculino" />
-                                <f:selectItem value="femenino" itemValue="femenino" />
+                                <f:selectItem itemLabel="Selecione el sexo" itemValue="" noSelectionOption="true"/>
+                                <f:selectItem itemValue="masculino" itemLabel="masculino" />
+                                <f:selectItem itemValue="femenino" itemLabel="femenino" />
                             </p:selectOneMenu>
+                            <p:message for="@previous"></p:message>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="@next">Pais</p:outputLabel>
@@ -88,10 +89,12 @@
                                     filterMatchMode="startsWith"
                                     panelStyle="width: 30rem"
                                     scrollHeight="250">
-                                <f:selectItem value="Cuba" itemLabel="Cuba" />
-                                <f:selectItem value="EEUU" itemValue="EEUU" />
-                                <f:selectItem value="Francia" itemValue="Francia" />
+                                <f:selectItem itemLabel="Selecione el pais" itemValue="" noSelectionOption="true"/>
+                                <f:selectItem itemValue="Cuba" itemLabel="Cuba" />
+                                <f:selectItem itemValue="EEUU" itemLabel="EEUU" />
+                                <f:selectItem itemValue="Francia" itemLabel="Francia" />
                             </p:selectOneMenu>
+                            <p:message for="@previous"></p:message>
                         </div>
                     </h:panelGroup>
                 </p:panelGrid>

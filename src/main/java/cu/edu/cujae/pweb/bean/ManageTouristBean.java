@@ -1,5 +1,6 @@
 package cu.edu.cujae.pweb.bean;
 
+import cu.edu.cujae.pweb.dto.DriversCategoriesDto;
 import cu.edu.cujae.pweb.dto.TouristDto;
 import cu.edu.cujae.pweb.service.TouristServices;
 import cu.edu.cujae.pweb.utils.JsfUtils;
@@ -37,23 +38,56 @@ public class ManageTouristBean {
     this.selectedTourist = tourist;
   }
 
+
   public void deleteTourist() {
     try {
-      tourists.remove(selectedTourist);
+      service.delete(this.selectedTourist);
       this.selectedTourist = null;
       JsfUtils.addMessageFromBundle(
-        null,
-        FacesMessage.SEVERITY_INFO,
-        "message_user_removed"
+              null,
+              FacesMessage.SEVERITY_INFO,
+              "message_tourist_deleted"
       );
-      PrimeFaces.current().ajax().update("form:dt-users");
+      PrimeFaces.current().ajax().update("form:dt-tourist"); // Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
     } catch (Exception e) {
       JsfUtils.addMessageFromBundle(
-        null,
-        FacesMessage.SEVERITY_ERROR,
-        "message_error"
+              null,
+              FacesMessage.SEVERITY_ERROR,
+              "message_error"
       );
     }
+  }
+
+  public void saveTourist() {
+
+    if (this.selectedTourist.getCode() == 0) {
+      boolean repeatedId = service.existID(this.selectedTourist.getCode());
+      if (!repeatedId) {
+        service.create(this.selectedTourist);
+        tourists = service.getAll();
+        JsfUtils.addMessageFromBundle(
+                null,
+                FacesMessage.SEVERITY_INFO,
+                "message_tourist_added"
+        );
+      } else {
+        JsfUtils.addMessageFromBundle(
+                null,
+                FacesMessage.SEVERITY_ERROR,
+                "message_error_id_already_exists"
+        );
+      }
+    } else {
+      service.update(this.selectedTourist, this.selectedTourist.getCode());
+      JsfUtils.addMessageFromBundle(
+              null,
+              FacesMessage.SEVERITY_INFO,
+              "message_tourist_edited"
+      );
+    }
+
+    PrimeFaces.current().executeScript("PF('manageTouristDialog').hide()"); //Este code permite cerrar el dialog cuyo id es manageUserDialog. Este identificador es el widgetVar
+    PrimeFaces.current().ajax().update("form:dt-tourist"); // Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
   }
 
   public TouristDto getTourist() {
