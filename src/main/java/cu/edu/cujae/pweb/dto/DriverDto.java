@@ -1,5 +1,7 @@
 package cu.edu.cujae.pweb.dto;
 
+import java.util.Random;
+
 public class DriverDto {
 
   private int code;
@@ -31,7 +33,9 @@ public class DriverDto {
           String address,
           DriversCategoriesDto category
   ) {
-    this.code = code;
+    /* generate random code id */
+    Random random = new Random();
+    this.code = random.nextInt(1000);
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;

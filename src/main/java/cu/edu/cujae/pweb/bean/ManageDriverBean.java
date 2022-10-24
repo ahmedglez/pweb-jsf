@@ -22,6 +22,7 @@ public class ManageDriverBean {
   private DriverDto selected;
   private List<DriverDto> drivers;
   private List<DriversCategoriesDto> categories;
+  private String selectedCategory;
 
   @Autowired
   private DriverService driverService;
@@ -41,16 +42,16 @@ public class ManageDriverBean {
   }
 
   //Permite eliminar un chofer
-  public void deleteUser() {
+  public void deleteDriver() {
     try {
-      driverService.delete(selected.getId());
+      driverService.delete(this.selected.getId());
       this.selected = null;
       JsfUtils.addMessageFromBundle(
         null,
         FacesMessage.SEVERITY_INFO,
-        "message_user_removed"
+        "message_driver_deleted"
       );
-      PrimeFaces.current().ajax().update("form:dt-users"); // Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
+      PrimeFaces.current().ajax().update("form:dt-drivers"); // Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
     } catch (Exception e) {
       JsfUtils.addMessageFromBundle(
         null,
@@ -60,9 +61,66 @@ public class ManageDriverBean {
     }
   }
 
+  public void openForEdit(DriverDto driver) {
+    System.out.println(driver.getCode());
+    this.selected = driver;
+    this.selectedCategory = driver.getCategory().getCategory();
+  }
+
+  public void saveDriver() {
+    DriversCategoriesDto category = new DriversCategoriesDto(
+      this.selectedCategory
+    );
+    this.selected.setCategory(category);
+    if (this.selected.getCode() == 0) {
+      boolean repeatedId = driverService.existID(this.selected.getId());
+      if (!repeatedId) {
+        driverService.create(this.selected);
+        drivers = driverService.getAll();
+        JsfUtils.addMessageFromBundle(
+          null,
+          FacesMessage.SEVERITY_INFO,
+          "message_driver_added"
+        );
+      } else {
+        JsfUtils.addMessageFromBundle(
+          null,
+          FacesMessage.SEVERITY_ERROR,
+          "message_error_id_already_exists"
+        );
+      }
+    } else {
+      driverService.update(this.selected, this.selected.getId());
+      JsfUtils.addMessageFromBundle(
+        null,
+        FacesMessage.SEVERITY_INFO,
+        "message_driver_edited"
+      );
+    }
+
+    PrimeFaces.current().executeScript("PF('manageDriverDialog').hide()"); //Este code permite cerrar el dialog cuyo id es manageUserDialog. Este identificador es el widgetVar
+    PrimeFaces.current().ajax().update("form:dt-drivers"); // Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
+  }
+
   /* Getters and Setters */
   public DriverDto getDto() {
     return dto;
+  }
+
+  public String getSelectedCategory() {
+    return this.selectedCategory;
+  }
+
+  public void setSelectedCategory(String selectedCategory) {
+    this.selectedCategory = selectedCategory;
+  }
+
+  public DriverService getDriverService() {
+    return this.driverService;
+  }
+
+  public void setDriverService(DriverService driverService) {
+    this.driverService = driverService;
   }
 
   public void setDto(DriverDto driverDto) {
@@ -103,9 +161,5 @@ public class ManageDriverBean {
 
   public void setCategories(List<DriversCategoriesDto> categories) {
     this.categories = categories;
-  }
-
-  public void openForEdit(DriverDto driver) {
-    this.selected = driver;
   }
 }
