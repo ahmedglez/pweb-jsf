@@ -5,7 +5,13 @@ import java.util.Locale;
 
 public class Country {
 
-    public static ArrayList<String> getCountries(){
+    private String country;
+
+    public Country(String country){
+        this.country = country;
+    }
+
+    private static ArrayList<String> countries(){
         ArrayList<String> countries = new ArrayList<>();
         String[] countryCodes = Locale.getISOCountries();
 
@@ -15,5 +21,23 @@ public class Country {
         }
 
         return countries;
+    }
+
+    public static ArrayList<Country> getCountries(){
+
+        ArrayList<String> paises = countries();
+        ArrayList<Country> countries = new ArrayList<>();
+        for(String a : paises){
+            countries.add(new Country(a));
+        }
+        return countries;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

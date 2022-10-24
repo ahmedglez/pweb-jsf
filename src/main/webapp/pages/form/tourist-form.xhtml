@@ -90,9 +90,8 @@
                                     panelStyle="width: 30rem"
                                     scrollHeight="250">
                                 <f:selectItem itemLabel="Selecione el pais" itemValue="" noSelectionOption="true"/>
-                                <f:selectItem itemValue="Cuba" itemLabel="Cuba" />
-                                <f:selectItem itemValue="EEUU" itemLabel="EEUU" />
-                                <f:selectItem itemValue="Francia" itemLabel="Francia" />
+                                <f:selectItems value = "#{manageTouristBean.countries}"
+                                        itemValue="#{manageTouristBean.selectedCountry}" itemLabel="#{manageTouristBean.selectedCountry.country}"/>
                             </p:selectOneMenu>
                             <p:message for="@previous"></p:message>
                         </div>
