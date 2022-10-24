@@ -44,7 +44,6 @@ public class DriverDto {
   }
 
   public DriverDto() {
-    this.code = 0;
     this.id = "";
     this.firstName = "";
     this.lastName = "";
