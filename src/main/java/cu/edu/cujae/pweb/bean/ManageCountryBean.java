@@ -5,39 +5,49 @@ import cu.edu.cujae.pweb.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.ManagedBean;
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ViewScoped;
-import java.util.ArrayList;
 
+;
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import java.util.List;
+
+
+@ViewScoped
 @Component
 @ManagedBean
 public class ManageCountryBean {
 
-    private ArrayList<CountryDto> countries;
-    private CountryDto selectedCountryDto;
+    private CountryDto country;
+    private List<CountryDto> countries;
+
 
     @Autowired
-    private CountryService countryService;
+    private CountryService service;
 
     @PostConstruct
-    public void onInit(){
-        countries = countryService.getAll();
+    public void init() {
+
+        //countries
+        countries = service.getCountries();
+
     }
 
-    public ArrayList<CountryDto> getCountries() {
+
+    public CountryDto getCountry() {
+        return country;
+    }
+
+    public void setCountry(CountryDto country) {
+        this.country = country;
+    }
+
+    public List<CountryDto> getCountries() {
         return countries;
     }
 
-    public void setCountries(ArrayList<CountryDto> countries) {
-        this.countries = countries;
-    }
 
-    public CountryDto getSelectedCountry() {
-        return selectedCountryDto;
-    }
-
-    public void setSelectedCountry(CountryDto selectedCountryDto) {
-        this.selectedCountryDto = selectedCountryDto;
+    public void setService(CountryService service) {
+        this.service = service;
     }
 }

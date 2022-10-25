@@ -90,8 +90,8 @@
                                     panelStyle="width: 30rem"
                                     scrollHeight="250">
                                 <f:selectItem itemLabel="Selecione el pais" itemValue="" noSelectionOption="true"/>
-                                <f:selectItems value = "#{manageCountryBean.countries}"
-                                        itemValue="#{manageCountryBean.selectedCountryDto.country}" itemLabel="#{manageTouristBean.selectedCountryDto.country}"/>
+                                <f:selectItems value = "#{manageCountryBean.countries}" var = "country"
+                                               itemValue="#{country.name}" itemLabel="#{country.name}"/>
                             </p:selectOneMenu>
                             <p:message for="@previous"></p:message>
                         </div>

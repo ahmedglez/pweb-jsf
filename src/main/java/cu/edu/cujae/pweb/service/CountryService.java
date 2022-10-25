@@ -3,36 +3,30 @@ package cu.edu.cujae.pweb.service;
 import cu.edu.cujae.pweb.dto.CountryDto;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Locale;
+import javax.annotation.PostConstruct;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class CountryService {
 
-    private ArrayList<CountryDto> cou =  getCounties();
+    private List<CountryDto> countries;
 
-    private ArrayList<CountryDto> getCounties(){
-        ArrayList<CountryDto> countries = new ArrayList<>();
-        ArrayList<String> names = countries();
-        for(String a : names){
-            countries.add(new CountryDto(a));
-        }
-        return countries;
-    }
+    @PostConstruct
+    public void init() {
+        countries = new ArrayList<>();
 
+        String[] isoCodes = Locale.getISOCountries();
 
-    private ArrayList<String> countries(){
-        ArrayList<String> countries = new ArrayList<>();
-        String[] countryCodes = Locale.getISOCountries();
-
-        for (String countryCode : countryCodes) {
-            Locale obj = new Locale("", countryCode);
-            countries.add(obj.getDisplayCountry(Locale.ENGLISH));
+        for (int i = 0; i < isoCodes.length; i++) {
+            Locale locale = new Locale("", isoCodes[i]);
+            countries.add(new CountryDto(i, locale));
         }
 
-        return countries;
     }
 
-    public ArrayList<CountryDto> getAll(){return cou;}
+    public List<CountryDto> getCountries(){
+        return countries;
+    }
 
 }
