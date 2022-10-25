@@ -5,7 +5,7 @@
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
     <p:dialog
-            header="Turist"
+            header="Turista"
             showEffect="fade"
             modal="true"
             widgetVar="manageTouristDialog"
@@ -90,8 +90,8 @@
                                     panelStyle="width: 30rem"
                                     scrollHeight="250">
                                 <f:selectItem itemLabel="Selecione el pais" itemValue="" noSelectionOption="true"/>
-                                <f:selectItems value = "#{manageTouristBean.countries}"
-                                        itemValue="#{manageTouristBean.selectedCountry}" itemLabel="#{manageTouristBean.selectedCountry.country}"/>
+                                <f:selectItems value = "#{manageCountryBean.countries}"
+                                        itemValue="#{manageCountryBean.selectedCountryDto.country}" itemLabel="#{manageTouristBean.selectedCountryDto.country}"/>
                             </p:selectOneMenu>
                             <p:message for="@previous"></p:message>
                         </div>

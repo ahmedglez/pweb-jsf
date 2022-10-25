@@ -1,6 +1,5 @@
 package cu.edu.cujae.pweb.bean;
 
-import cu.edu.cujae.pweb.dto.DriversCategoriesDto;
 import cu.edu.cujae.pweb.dto.TouristDto;
 import cu.edu.cujae.pweb.service.TouristServices;
 import cu.edu.cujae.pweb.utils.JsfUtils;
@@ -10,7 +9,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 
-import cu.edu.cujae.pweb.utils.rawData.Country;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,17 +21,14 @@ public class ManageTouristBean {
   private TouristDto tourist;
   private TouristDto selectedTourist;
   private ArrayList<TouristDto> tourists;
-  private ArrayList<Country> countries;
-  private Country selectedCountry;
 
   @Autowired
   private TouristServices service;
 
+
   @PostConstruct
   public void onInit() {
     tourists = service.getAll();
-    countries = Country.getCountries();
-    System.out.println(countries.size());
   }
 
   public void newTourist() {
@@ -120,19 +115,5 @@ public class ManageTouristBean {
     this.tourists = tourists;
   }
 
-  public ArrayList<Country> getCountries() {
-    return countries;
-  }
 
-  public void setCountries(ArrayList<Country> countries) {
-    this.countries = countries;
-  }
-
-  public Country getSelectedCountry() {
-    return selectedCountry;
-  }
-
-  public void setSelectedCountry(Country selectedCountry) {
-    this.selectedCountry = selectedCountry;
-  }
 }
