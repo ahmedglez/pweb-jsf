@@ -1,22 +1,31 @@
 package cu.edu.cujae.pweb.dto;
 
-public class CarDto {
-    private int code ;
+import java.io.Serializable;
+
+public class CarDto implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	private int code ;
     private String carID;
     private String color;
     private CarStatusDto status;
     private BrandDto brand;
+//    private String status;
+//    private String brand;
     private double mileage;
 
     public CarDto(int code, String carID, CarStatusDto status, BrandDto brand, String color, double mileage) {
         this.code = code;
         this.carID = carID;
-        this.status = status;
-        this.brand = brand;
+//        this.status = status;
+//        this.brand = brand;
+        this.brand=brand;
+        this.status=status;
         this.color = color;
         this.mileage = mileage;
-
     }
+    
+    public CarDto() {}
 
 
     public void setCarID(String carID) {
@@ -43,6 +52,7 @@ public class CarDto {
         this.brand = brand;
     }
 
+
     public int getCode() { return code; }
 
     public void setCode(int code) { this.code = code; }
@@ -54,4 +64,5 @@ public class CarDto {
     public double getMileage() { return mileage; }
 
     public void setMileage(double mileage) { this.mileage = mileage; }
+
 }

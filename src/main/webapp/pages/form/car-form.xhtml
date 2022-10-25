@@ -1,0 +1,83 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <p:dialog
+            header="Car"
+            showEffect="fade"
+            modal="true"
+            widgetVar="manageCarDialog"
+            responsive="true">
+        <p:outputPanel id="manage-car-content" class="ui-fluid">
+            <p:outputPanel rendered="#{not empty carBean.selectedCar}">
+                <p:panelGrid layout="grid" columns="2">
+                    <h:panelGroup>
+                        <div class="p-field">
+                            <p:outputLabel for="@next">Plate</p:outputLabel>
+                            <p:inputText
+                                    id="plate"
+                                    required="true"
+                                    value="#{carBean.selectedCar.carID}"
+                                    />
+                            <p:message for="@previous"></p:message>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="@next">Color</p:outputLabel>
+                            <p:inputText
+                                    id="color"
+                                    required="true"
+                                    value="#{carBean.selectedCar.color}" />
+                            <p:message for="@previous"></p:message>
+                        </div>
+                                                <div class="p-field">
+                            <p:outputLabel for="@next">Brand</p:outputLabel>
+                            <p:inputText
+                                    id="brand"
+                                    required="true"
+                                    value="#{carBean.selectedBrand}"
+                                    />
+                            <p:message for="@previous"></p:message>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="@next">Mileage</p:outputLabel>
+                            <p:inputText
+                                    id="mileage"
+                                    required="true"
+                                    value="#{carBean.selectedCar.mileage}" />
+                            <p:message for="@previous"></p:message>
+                        </div>
+                          <div class="p-field">
+                            <p:outputLabel for="@next">Status</p:outputLabel>
+                            <p:inputText
+                                    id="status"
+                                    required="true"
+                                    value="#{carBean.selectedStatus}" />
+                            <p:message for="@previous"></p:message>
+                        </div>
+                        
+                        
+                        
+                    </h:panelGroup>
+                    
+                   
+                </p:panelGrid>
+            </p:outputPanel>
+        </p:outputPanel>
+
+        <f:facet name="footer">
+            <p:commandButton
+                    value="Salvar"
+                    icon="pi pi-check"
+                    actionListener="#{carBean.saveCar}"
+                    update="manage-car-content"
+                    process="manage-car-content @this" />
+            <p:commandButton
+                    value="Cancelar"
+                    icon="pi pi-times"
+                    onclick="PF('manageCarDialog').hide()"
+                    class="ui-button-secondary" />
+        </f:facet>
+    </p:dialog>
+</ui:composition>
