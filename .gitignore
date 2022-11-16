@@ -13,3 +13,17 @@ target/
 #ignore pom.xml
 pom.xml
 
+#ignore .classpath
+.classpath
+
+#ignore .project
+.project
+
+#ignore .settings folder
+.settings/
+
+#ignore .metadata folder
+.metadata/
+
+
+
