@@ -1,5 +1,8 @@
 package cu.edu.cujae.pweb.dto;
 
+
+
+
 import cu.edu.cujae.pweb.utils.DateController;
 
 import java.time.LocalDate;
@@ -15,40 +18,6 @@ public class ContractDto {
     private BillDto bill;
     private DriverDto driver;
     private float totalAmount;
-
-    public ContractDto(int code,TouristDto tourist, CarDto car, BillDto bill,PaymentsDto payment, DriverDto driver, LocalDate startingDate, LocalDate finalDate,int extension) {
-        this.code = code;
-        this.tourist = tourist;
-        this.car = car;
-        this.startingDate = startingDate;
-        this.finalDate = finalDate;
-        this.extension= extension;
-        this.payment = payment;
-        this.bill = bill;
-        this.driver = driver;
-        this.totalAmount = calculateTotalAmount();
-    }
-
-    public ContractDto(int code, TouristDto tourist, CarDto car, BillDto bill, PaymentsDto payment, LocalDate startingDate, LocalDate finalDate,int extension) {
-        this.code = code;
-        this.tourist = tourist;
-        this.car = car;
-        this.startingDate = startingDate;
-        this.finalDate = finalDate;
-        this.extension= extension;
-        this.payment = payment;
-        this.bill = bill;
-        this.driver = null;
-        this.totalAmount = calculateTotalAmount();
-    }
-
-    public ContractDto(BillDto bill, LocalDate startingDate, LocalDate finalDate, int extension) {
-        this.startingDate = startingDate;
-        this.finalDate = finalDate;
-        this.extension = extension;
-        this.bill = bill;
-        this.totalAmount = calculateTotalAmount();
-    }
 
     public TouristDto getTourist() {
         return tourist;
@@ -118,5 +87,5 @@ public class ContractDto {
 
     public void setCode(int code) { this.code = code; }
 
-    private float calculateTotalAmount(){ return (bill.getAmount()*DateController.extensionDate(startingDate,finalDate)) + (bill.getSpecialAmount() * extension); }
+    private float calculateTotalAmount(){return (bill.getAmount()*DateController.extensionDate(startingDate,finalDate)) + (bill.getSpecialAmount() * extension); }
 }

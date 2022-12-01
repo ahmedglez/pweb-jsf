@@ -6,6 +6,8 @@ import cu.edu.cujae.pweb.utils.CrudInterface;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 /* Implementamos CrudService para que cada uno de los servicios que hagamos
  * tengan los mismos metodos que esta interfaz, admeas les pueden añadir
@@ -14,131 +16,34 @@ import org.springframework.stereotype.Service;
 @Service
 public class DriverService implements CrudInterface {
 
-  /* Los metodos de la interfaz que reciben por parametros un tipo Object
-   * tienen que castearlo a su tipo correspondiente, en este caso DriverDto
-   * al inicio de cada metodo
-   */
-
-  private List<DriverDto> drivers = initializeDrivers();
-  private List<DriversCategoriesDto> categories = initializeCategories();
-
-  //Inicializamos la lista de choferes
-  private List<DriverDto> initializeDrivers() {
-    List<DriverDto> drivers = new ArrayList<DriverDto>();
-    drivers.add(
-      new DriverDto(
-        "85051436521",
-        "Pedro Luis",
-        "Sosa Ramirez",
-        "3era / 34 y 38 Playa",
-        new DriversCategoriesDto(0, "profesional")
-      )
-    );
-    drivers.add(
-      new DriverDto(
-        "84056736521",
-        "Jorge",
-        "Lopez Arango",
-        "Acosta / Damas y Cuba Habana Vieja",
-        new DriversCategoriesDto(0, "novato")
-      )
-    );
-    drivers.add(
-      new DriverDto(
-        "94051436521",
-        "Felipe",
-        "Garcia Fajardo",
-        "Concordia / Espada y San Francisco Habana Vieja",
-        new DriversCategoriesDto(0, "profesional")
-      )
-    );
-    drivers.add(
-      new DriverDto(
-        "78051436521",
-        "Humberto",
-        "Blanco Barrios",
-        "1era / 4 y 18 Playa",
-        new DriversCategoriesDto(0, "profesional")
-      )
-    );
-
-    drivers.add(
-      new DriverDto(
-        "79051436521",
-        "Mauricio",
-        "Acosta Bravo",
-        "J / K y 27 Vedado",
-        new DriversCategoriesDto(0, "profesional")
-      )
-    );
-
-    return drivers;
-  }
-
-  private List<DriversCategoriesDto> initializeCategories() {
-    List<DriversCategoriesDto> categorias = new ArrayList<DriversCategoriesDto>();
-    categorias.add(new DriversCategoriesDto(0, "novato"));
-    categorias.add(new DriversCategoriesDto(1, "intermedio"));
-
-    categorias.add(new DriversCategoriesDto(2, "profesional"));
-    return categorias;
-  }
-
-  //Obtenemos todos los choferes
   @Override
   public List<DriverDto> getAll() {
-    return drivers;
+    MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+
+    return null;
   }
 
   @Override
-  public DriverDto getById(String id) {
-    for (DriverDto driver : drivers) {
-      if (driver.getId().equals(id)) {
-        return driver;
-      }
-    }
+  public Object getById(String id) {
+    // TODO Auto-generated method stub
     return null;
   }
 
   @Override
   public void create(Object dto) {
-    DriverDto driver = (DriverDto) dto;
-    drivers.add(driver);
+    // TODO Auto-generated method stub
+
   }
 
   @Override
-  public void update(Object obj, String id) {
-    DriverDto dto = (DriverDto) obj;
-    for (DriverDto driver : drivers) {
-      if (driver.getId().equals(id)) {
-        driver.setFirstName(dto.getFirstName());
-        driver.setLastName(dto.getLastName());
-        driver.setAddress(dto.getAddress());
-        driver.setCategory(dto.getCategory());
-      }
-    }
+  public void update(Object dto, String id) {
+    // TODO Auto-generated method stub
+
   }
 
   @Override
   public void delete(String id) {
-    for (DriverDto driver : drivers) {
-      if (driver.getId().equals(id)) {
-        drivers.remove(driver);
-        break;
-      }
-    }
-  }
+    // TODO Auto-generated method stub
 
-  public boolean existID(String id) {
-    for (DriverDto driver : drivers) {
-      if (driver.getId().equals(id)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  public List<DriversCategoriesDto> getCategories() {
-    return categories;
   }
 }

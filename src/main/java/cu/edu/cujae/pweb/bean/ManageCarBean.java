@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ManagedBean
 @ViewScoped
-public class CarBean {
+public class ManageCarBean {
 
   private CarDto cardto;
   private CarDto selectedCar;
@@ -32,7 +32,7 @@ public class CarBean {
   @Autowired
   private Car_Service carService;
 
-  public CarBean() {}
+  public ManageCarBean() {}
 
   @PostConstruct
   public void init() {
