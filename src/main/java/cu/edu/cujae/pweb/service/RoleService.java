@@ -1,12 +1,12 @@
 package cu.edu.cujae.pweb.service;
 
-import java.util.List;
-
 import cu.edu.cujae.pweb.dto.RoleDto;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
-public interface RoleService {
-	List<RoleDto> getRoles();
-	List<RoleDto> getRolesByUser(Long userId);
-	List<RoleDto> getRolesByName(String name);
-	RoleDto getRolesById(Long roleId);
+@Service
+public class RoleService {
+
 }
