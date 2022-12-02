@@ -5,11 +5,12 @@
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
     <p:dialog
-            header="Turista"
+            header="Nuevo Turista"
             showEffect="fade"
             modal="true"
             widgetVar="manageTouristDialog"
-            responsive="true">
+            width="800"
+            height="500">
         <p:outputPanel id="manage-tourist-content" class="ui-fluid">
             <p:outputPanel rendered="#{not empty manageTouristBean.selectedTourist}">
                 <p:panelGrid layout="grid" columns="2">
@@ -21,7 +22,7 @@
                                     required="true"
                                     value="#{manageTouristBean.selectedTourist.idPassport}"
                                     maxlength="7" />
-                            <p:message for="@previous"></p:message>
+                            <p:message for="@previous">Error de validacion</p:message>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="@next">Nombre</p:outputLabel>
@@ -38,7 +39,7 @@
                                     required="true"
                                     value="#{manageTouristBean.selectedTourist.lastName}">
                             </p:inputText>
-                            <p:message for="@previous"></p:message>
+                            <p:message for="@previous" showDetail=""></p:message>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="@next">Numero de telefono</p:outputLabel>
@@ -49,8 +50,6 @@
                             </p:inputText>
                             <p:message for="@previous"></p:message>
                         </div>
-                    </h:panelGroup>
-                    <h:panelGroup>
                         <div class="p-field">
                             <p:outputLabel for="@next" value="Edad"/>
                             <p:spinner id="horizontalAfter" value="#{manageTouristBean.selectedTourist.age}" buttons="horizontal-after"
@@ -95,8 +94,11 @@
                             </p:selectOneMenu>
                             <p:message for="@previous"></p:message>
                         </div>
+
+                    </h:panelGroup>
+                    <h:panelGroup>
                         <div>
-                            <p:graphicImage name="tourist.png" library="images" />
+                            <p:graphicImage name="photo_tourist.jpg" library="images" width="300" height="500" />
                         </div>
                     </h:panelGroup>
                 </p:panelGrid>
@@ -114,6 +116,7 @@
                     value="Cancelar"
                     icon="pi pi-times"
                     onclick="PF('manageTouristDialog').hide()"
+                    update="manage-tourist-content"
                     class="ui-button-secondary" />
         </f:facet>
     </p:dialog>

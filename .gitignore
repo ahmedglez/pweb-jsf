@@ -7,8 +7,13 @@ target/
 #ignore .idea folder
 .idea/
 
+.gitignore
+
 #ignore .DS_Store
 .DS_Store
 
 #ignore pom.xml
 pom.xml
+
+#pweb
+pweb-jsf.iml
