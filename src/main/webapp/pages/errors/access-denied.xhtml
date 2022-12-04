@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Acceso Denegado</title>
+    	<h:outputStylesheet name="primeflex.min.css" library="css"></h:outputStylesheet>
+    </h:head>
+
+    <h:body>
+	    <h:form prependId="false">
+	        <p:growl for="securityMessages"  globalOnly="true" showDetail="true" showSummary="false" />	
+	    	<p:spacer height="50"></p:spacer>
+	    	<div class="p-grid p-ai-center vertical-container">
+			    <div class="p-col">
+			        
+			    </div>
+			    <div class="p-col">
+			       <p:card style="width: auto">
+					    <f:facet name="title">
+					        Acceso denegado 
+					    </f:facet>
+					    
+					    <p:staticMessage severity="error" summary="ERROR" detail="Usted no tiene permisos para acceder a este recurso" style="width: 100%"/>
+						
+					</p:card>
+			    </div>
+			    <div class="p-col">
+			        <div class="box"></div>
+			    </div>
+			</div>
+	        
+			
+		</h:form>
+    </h:body>
+</html>

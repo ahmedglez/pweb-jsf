@@ -4,6 +4,7 @@ import cu.edu.cujae.pweb.dto.TouristDto;
 import cu.edu.cujae.pweb.service.TouristServices;
 import cu.edu.cujae.pweb.utils.JsfUtils;
 import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -20,7 +21,7 @@ public class ManageTouristBean {
 
   private TouristDto tourist;
   private TouristDto selectedTourist;
-  private ArrayList<TouristDto> tourists;
+  private List<TouristDto> tourists;
 
   @Autowired
   private TouristServices service;
@@ -42,8 +43,9 @@ public class ManageTouristBean {
 
   public void deleteTourist() {
     try {
-      service.delete(this.selectedTourist);
+      service.delete(this.selectedTourist.getCode());
       this.selectedTourist = null;
+      tourists = service.getAll();
       JsfUtils.addMessageFromBundle(
               null,
               FacesMessage.SEVERITY_INFO,
@@ -79,7 +81,7 @@ public class ManageTouristBean {
         );
       }
     } else {
-      service.update(this.selectedTourist, this.selectedTourist.getCode());
+      service.update(this.selectedTourist);
       JsfUtils.addMessageFromBundle(
               null,
               FacesMessage.SEVERITY_INFO,
@@ -107,11 +109,11 @@ public class ManageTouristBean {
     this.selectedTourist = selectedTourist;
   }
 
-  public ArrayList<TouristDto> getTourists() {
+  public List<TouristDto> getTourists() {
     return tourists;
   }
 
-  public void setTourists(ArrayList<TouristDto> tourists) {
+  public void setTourists(List<TouristDto> tourists) {
     this.tourists = tourists;
   }
 

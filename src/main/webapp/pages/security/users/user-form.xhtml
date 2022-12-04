@@ -11,24 +11,9 @@
 				<p:panelGrid layout="grid" columns="2">
 					<h:panelGroup>
 						<div class="p-field">
-							<p:outputLabel for="@next">Nombre Completo</p:outputLabel>
-							<p:inputText id="name" required="true" 
-								value="#{manageUserBean.selectedUser.fullName}" />
-							<p:message for="@previous" ></p:message>
-						</div>
-						<div class="p-field">
 							<p:outputLabel for="@next">Usuario</p:outputLabel>
 							<p:inputText id="username" required="true"
 								value="#{manageUserBean.selectedUser.username}" />
-							<p:message for="@previous"></p:message>
-						</div>
-						<div class="p-field">
-							<p:outputLabel for="@next">Identificación</p:outputLabel>
-							<p:inputText id="ci" required="true"
-								value="#{manageUserBean.selectedUser.identification}"
-								maxlength="11">
-								<p:keyFilter mask="num" />
-							</p:inputText>
 							<p:message for="@previous"></p:message>
 						</div>
 						<div class="p-field">
@@ -51,25 +36,25 @@
 								filterMatchMode="startsWith" panelStyle="width: 30rem"
 								scrollHeight="250">
 								<f:selectItems value="#{manageUserBean.roles}" var="role"
-									itemLabel="#{role.description}" itemValue="#{role.id}" />
+									itemLabel="#{role.role}" itemValue="#{role.code}" />
 							</p:selectCheckboxMenu>
 						</div>
 						<div class="p-field">
-							<p:outputLabel for="@next" rendered="#{empty manageUserBean.selectedUser.id}">Contraseña</p:outputLabel>
+							<p:outputLabel for="@next" rendered="#{empty manageUserBean.selectedUser.code}">Contraseña</p:outputLabel>
 							<p:password id="password1" required="true"
-								rendered="#{empty manageUserBean.selectedUser.id}"
+								rendered="#{empty manageUserBean.selectedUser.code}"
 								value="#{manageUserBean.selectedUser.password}"
 								match="password2">
 							</p:password>
-							<p:message for="@previous" rendered="#{empty manageUserBean.selectedUser.id}"></p:message>
+							<p:message for="@previous" rendered="#{empty manageUserBean.selectedUser.code}"></p:message>
 						</div>
 						<div class="p-field">
-							<p:outputLabel for="@next" rendered="#{empty manageUserBean.selectedUser.id}">Repetir contraseña</p:outputLabel>
+							<p:outputLabel for="@next" rendered="#{empty manageUserBean.selectedUser.code}">Repetir contraseña</p:outputLabel>
 							<p:password id="password2" required="true"
 								value="#{manageUserBean.selectedUser.password}"
-								rendered="#{empty manageUserBean.selectedUser.id}">
+								rendered="#{empty manageUserBean.selectedUser.code}">
 							</p:password>
-							<p:message for="@previous" rendered="#{empty manageUserBean.selectedUser.id}"></p:message>
+							<p:message for="@previous" rendered="#{empty manageUserBean.selectedUser.code}"></p:message>
 						</div>
 						
 					</h:panelGroup>

@@ -6,12 +6,13 @@ import cu.edu.cujae.pweb.service.RoleService;
 import cu.edu.cujae.pweb.service.UserService;
 import cu.edu.cujae.pweb.utils.JsfUtils;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
+
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,7 @@ public class ManageUserBean {
   private UserDto userDto;
   private UserDto selectedUser;
   private List<UserDto> users;
-  private Long[] selectedRoles;
+  private Integer[] selectedRoles;
 
   private List<RoleDto> roles;
 
@@ -42,8 +43,8 @@ public class ManageUserBean {
   //Esta anotacioon permite que se ejecute code luego de haberse ejecuta el constructor de la clase.
   @PostConstruct
   public void init() {
-    users = users == null ? userService.getUsers() : users;
-    roles = roleService.getRoles();
+    users = users == null ? userService.getAll() : users;
+    roles = roleService.getAll();
   }
 
   //Se ejecuta al dar clic en el button Nuevo
@@ -56,19 +57,15 @@ public class ManageUserBean {
   public void openForEdit() {
     List<RoleDto> roles = this.selectedUser.getRoles();
     this.selectedRoles =
-      roles.stream().map(r -> r.getId()).toArray(Long[]::new);
+      roles.stream().map(r -> r.getCode()).toArray(Integer[]::new);
   }
 
   //Se ejecuta al dar clic en el button dentro del dialog para salvar o registrar al usuario
   public void saveUser() {
-    if (this.selectedUser.getId() == null) {
-      this.selectedUser.setId(
-          UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9)
-        );
-      this.selectedUser.setNewRecord(true);
+    if (this.selectedUser.getCode() == 0) {
       List<RoleDto> rolesToAdd = new ArrayList<RoleDto>();
       for (int i = 0; i < this.selectedRoles.length; i++) {
-        rolesToAdd.add(roleService.getRolesById(selectedRoles[i]));
+        rolesToAdd.add(roleService.getById(selectedRoles[i]));
       }
 
       this.users.add(this.selectedUser);
@@ -109,6 +106,7 @@ public class ManageUserBean {
     }
   }
 
+
   public UserDto getUserDto() {
     return userDto;
   }
@@ -133,11 +131,11 @@ public class ManageUserBean {
     this.users = users;
   }
 
-  public Long[] getSelectedRoles() {
+  public Integer[] getSelectedRoles() {
     return selectedRoles;
   }
 
-  public void setSelectedRoles(Long[] selectedRoles) {
+  public void setSelectedRoles(Integer[] selectedRoles) {
     this.selectedRoles = selectedRoles;
   }
 

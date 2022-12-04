@@ -9,7 +9,7 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 
 import com.sun.faces.config.FacesInitializer;
 
-/* Este el code que permite registrar a spring en el contexto de la aplicación */
+/* Este el code que permite registrar a spring en el contexto de la aplicacin */
 public class MainWebAppInitializer extends FacesInitializer implements WebApplicationInitializer {
     public void onStartup(ServletContext sc) throws ServletException {
         AnnotationConfigWebApplicationContext root = new AnnotationConfigWebApplicationContext();

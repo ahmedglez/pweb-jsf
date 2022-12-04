@@ -55,7 +55,7 @@ public class CarBean {
   //Permite eliminar un carro
   public void deleteCar() {
     try {
-      carService.delete(selectedCar.getCarID());
+      carService.delete(selectedCar.getCode());
       this.selectedCar = null;
       JsfUtils.addMessageFromBundle(
         null,
@@ -146,8 +146,8 @@ public class CarBean {
     CarStatusDto status = new CarStatusDto(this.selectedStatus);
     this.selectedCar.setBrand(brand);
     this.selectedCar.setStatus(status);
-    if (carService.exitCar(this.selectedCar.getCarID())) {
-      carService.update(this.selectedCar, this.selectedCar.getCarID());
+    if (carService.exitCar(this.selectedCar.getCode())) {
+      carService.update(this.selectedCar);
     } else {
       carService.create(this.selectedCar);
     }

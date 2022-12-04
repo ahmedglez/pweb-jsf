@@ -44,7 +44,7 @@ public class ManageDriverBean {
   //Permite eliminar un chofer
   public void deleteDriver() {
     try {
-      driverService.delete(this.selected.getId());
+      driverService.delete(this.selected.getCode());
       this.selected = null;
       JsfUtils.addMessageFromBundle(
         null,
@@ -73,7 +73,7 @@ public class ManageDriverBean {
     );
     this.selected.setCategory(category);
     if (this.selected.getCode() == 0) {
-      boolean repeatedId = driverService.existID(this.selected.getId());
+      boolean repeatedId = driverService.existID(this.selected.getCode());
       if (!repeatedId) {
         driverService.create(this.selected);
         drivers = driverService.getAll();
@@ -90,7 +90,7 @@ public class ManageDriverBean {
         );
       }
     } else {
-      driverService.update(this.selected, this.selected.getId());
+      driverService.update(this.selected);
       JsfUtils.addMessageFromBundle(
         null,
         FacesMessage.SEVERITY_INFO,
