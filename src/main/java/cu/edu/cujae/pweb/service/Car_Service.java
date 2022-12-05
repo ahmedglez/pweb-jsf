@@ -1,14 +1,11 @@
 package cu.edu.cujae.pweb.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import cu.edu.cujae.pweb.dto.BrandDto;
-import cu.edu.cujae.pweb.dto.CarDto;
 import cu.edu.cujae.pweb.dto.CarStatusDto;
-import cu.edu.cujae.pweb.dto.ModelDto;
 import cu.edu.cujae.pweb.utils.CrudInterface;
 
 

@@ -1,70 +1,53 @@
 package cu.edu.cujae.pweb.dto;
 
-import java.util.Random;
 
 public class DriverDto {
 
   private int code;
-  private String id;
-  private String firstName;
+  private String ci;
+  private String name;
   private String lastName;
   private String address;
   private DriversCategoriesDto category;
 
   public DriverDto(
           int code,
-          String id,
-          String firstName,
+          String ci,
+          String name,
           String lastName,
           String address,
           DriversCategoriesDto category
   ) {
     this.code = code;
-    this.id = id;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.address = address;
-    this.category = category;
-  }
-  public DriverDto(
-          String id,
-          String firstName,
-          String lastName,
-          String address,
-          DriversCategoriesDto category
-  ) {
-    /* generate random code id */
-    Random random = new Random();
-    this.code = random.nextInt(1000);
-    this.id = id;
-    this.firstName = firstName;
+    this.ci = ci;
+    this.name = name;
     this.lastName = lastName;
     this.address = address;
     this.category = category;
   }
 
   public DriverDto() {
-    this.id = "";
-    this.firstName = "";
+    this.ci = "";
+    this.name = "";
     this.lastName = "";
     this.address = "";
     this.category = null;
   }
 
-  public String getId() {
-    return id;
+  public String getCi() {
+    return ci;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setCi(String ci) {
+    this.ci = ci;
   }
 
-  public String getFirstName() {
-    return firstName;
+  public String getName() {
+    return name;
   }
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
+  public void setName(String name) {
+    this.name = name;
   }
 
   public String getLastName() {

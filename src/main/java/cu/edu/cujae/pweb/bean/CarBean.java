@@ -47,9 +47,12 @@ public class CarBean {
 
   //Se ejecuta al dar clic en el button con el lapicito
   public void openForEdit(CarDto car) {
+    /*
     this.selectedCar = car;
     this.selectedBrand = this.selectedCar.getBrand().getBrand();
     this.selectedStatus = this.selectedCar.getStatus().getStatus();
+
+     */
   }
 
   //Permite eliminar un carro
@@ -132,16 +135,20 @@ public class CarBean {
       return status.getStatus();
     }
   }
-
+/*
   public String getBrandName(BrandDto brand) {
     if (selectedCar != null) {
       return selectedCar.getBrand().getBrand();
     } else {
       return brand.getBrand();
     }
+
   }
 
+ */
+
   public void saveCar() {
+    /*
     BrandDto brand = new BrandDto(this.selectedBrand);
     CarStatusDto status = new CarStatusDto(this.selectedStatus);
     this.selectedCar.setBrand(brand);
@@ -155,6 +162,8 @@ public class CarBean {
 
     PrimeFaces.current().executeScript("PF('manageCarDialog').hide()");
     PrimeFaces.current().ajax().update("form:dt-car");
+
+     */
   }
 
   public String getSelectedStatus() {

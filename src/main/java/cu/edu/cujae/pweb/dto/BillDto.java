@@ -11,6 +11,8 @@ public class BillDto {
         this.specialAmount = specialAmount;
     }
 
+    public BillDto(){}
+
     public float getAmount() {
         return amount;
     }

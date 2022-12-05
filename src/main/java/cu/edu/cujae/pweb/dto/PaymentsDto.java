@@ -5,12 +5,15 @@ public class PaymentsDto {
     private String payment;
 
     public PaymentsDto(int code, String payment) {
-
         this.payment = payment;
         this.code=code;
     }
 
-    public String getPaymentText() { return payment; }
+    public PaymentsDto(){}
+
+    public String getPayment() {
+        return payment;
+    }
 
     public void setPayment(String payment) {
         this.payment = payment;
