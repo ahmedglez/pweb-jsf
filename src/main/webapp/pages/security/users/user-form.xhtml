@@ -38,23 +38,22 @@
 								<f:selectItems value="#{manageUserBean.roles}" var="role"
 									itemLabel="#{role.role}" itemValue="#{role.code}" />
 							</p:selectCheckboxMenu>
+							<p:message for="@previous" ></p:message>
 						</div>
 						<div class="p-field">
-							<p:outputLabel for="@next" rendered="#{empty manageUserBean.selectedUser.code}">Contraseña</p:outputLabel>
+							<p:outputLabel for="@next" >Contraseña</p:outputLabel>
 							<p:password id="password1" required="true"
-								rendered="#{empty manageUserBean.selectedUser.code}"
 								value="#{manageUserBean.selectedUser.password}"
 								match="password2">
 							</p:password>
-							<p:message for="@previous" rendered="#{empty manageUserBean.selectedUser.code}"></p:message>
+							<p:message for="@previous" ></p:message>
 						</div>
 						<div class="p-field">
-							<p:outputLabel for="@next" rendered="#{empty manageUserBean.selectedUser.code}">Repetir contraseña</p:outputLabel>
+							<p:outputLabel for="@next" >Repetir contraseña</p:outputLabel>
 							<p:password id="password2" required="true"
-								value="#{manageUserBean.selectedUser.password}"
-								rendered="#{empty manageUserBean.selectedUser.code}">
+								value="#{manageUserBean.selectedUser.password}">
 							</p:password>
-							<p:message for="@previous" rendered="#{empty manageUserBean.selectedUser.code}"></p:message>
+							<p:message for="@previous" ></p:message>
 						</div>
 						
 					</h:panelGroup>

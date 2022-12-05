@@ -12,6 +12,14 @@ public class UserDto {
   private List<RoleDto> roles;
   private List<String> rolesName = new ArrayList<>();
 
+  public UserDto(){
+    code = 0;
+    username = "";
+    password = "";
+    email = "";
+    roles = new ArrayList<>();
+  }
+
   public String getUsername() {
     return username;
   }

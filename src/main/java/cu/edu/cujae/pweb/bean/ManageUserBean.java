@@ -67,14 +67,22 @@ public class ManageUserBean {
       for (int i = 0; i < this.selectedRoles.length; i++) {
         rolesToAdd.add(roleService.getById(selectedRoles[i]));
       }
-
-      this.users.add(this.selectedUser);
+      selectedUser.setRoles(rolesToAdd);
+      userService.create(selectedUser);
+      users = userService.getAll();
       JsfUtils.addMessageFromBundle(
         null,
         FacesMessage.SEVERITY_INFO,
         "message_user_added"
       ); //Este code permite mostrar un mensaje exitoso (FacesMessage.SEVERITY_INFO) obteniendo el mensage desde el fichero de recursos, con la llave message_user_added
     } else {
+      List<RoleDto> rolesToAdd = new ArrayList<RoleDto>();
+      for (int i = 0; i < this.selectedRoles.length; i++) {
+        rolesToAdd.add(roleService.getById(selectedRoles[i]));
+      }
+      selectedUser.setRoles(rolesToAdd);
+      userService.update(selectedUser);
+      users = userService.getAll();
       JsfUtils.addMessageFromBundle(
         null,
         FacesMessage.SEVERITY_INFO,
@@ -89,12 +97,13 @@ public class ManageUserBean {
   //Permite eliminar un usuario
   public void deleteUser() {
     try {
-      this.users.remove(this.selectedUser);
+      userService.delete(selectedUser.getCode());
       this.selectedUser = null;
+      users = userService.getAll();
       JsfUtils.addMessageFromBundle(
         null,
         FacesMessage.SEVERITY_INFO,
-        "message_user_removed"
+        "message_user_deleted"
       );
       PrimeFaces.current().ajax().update("form:dt-users"); // Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
     } catch (Exception e) {

@@ -3,7 +3,6 @@ package cu.edu.cujae.pweb.bean;
 import cu.edu.cujae.pweb.dto.TouristDto;
 import cu.edu.cujae.pweb.service.TouristServices;
 import cu.edu.cujae.pweb.utils.JsfUtils;
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -25,7 +24,6 @@ public class ManageTouristBean {
 
   @Autowired
   private TouristServices service;
-
 
   @PostConstruct
   public void onInit() {
