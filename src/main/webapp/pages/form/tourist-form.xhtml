@@ -20,11 +20,11 @@
                             <p:inputText
                                     id="passport"
                                     required="true"
-                                    onchange="setTimeout(function() { $('#msg').html(''); }, 3000);"
                                     requiredMessage="Pasaporte requerido"
+                                    onclick="setTimeout(function() { $('[id$=msgPass]').hide(1000); }, 2000);"
                                     value="#{manageTouristBean.selectedTourist.idPassport}"
                                     maxlength="7" />
-                            <p:message for="passport" id = "msg"></p:message>
+                            <p:message for="passport" id = "msgPass" ></p:message>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="@next">Nombre</p:outputLabel>
@@ -32,109 +32,112 @@
                                     id="firstName"
                                     required="true"
                                     requiredMessage="Nombre requerido"
-                                    value="#{manageTouristBean.selectedTourist.name}" />
-                            <p:message for="firstName"></p:message>
-                        </div>
-                        <div class="p-field">
-                            <p:outputLabel for="@next">Apellidos</p:outputLabel>
-                            <p:inputText
-                                    id="lastName"
-                                    required="true"
-                                    requiredMessage="Apellidos requeridos"
-                                    value="#{manageTouristBean.selectedTourist.lastName}">
-                            </p:inputText>
-                            <p:message for="lastName" ></p:message>
-                        </div>
-                        <div class="p-field">
-                            <p:outputLabel for="@next">Numero de telefono</p:outputLabel>
-                            <p:inputText
-                                    id="telephone"
-                                    required="true"
-                                    requiredMessage="Telefono requerido"
-                                    maxlength="8"
-                                    value="#{manageTouristBean.selectedTourist.telephoneNumber}">
-                            </p:inputText>
-                            <p:message for="telephone"></p:message>
-                        </div>
-                        <div class="p-field">
-                            <p:outputLabel for="@next" value="Edad"/>
-                            <p:spinner id="horizontalAfter"
-                                       value="#{manageTouristBean.selectedTourist.age}"
-                                       buttons="horizontal-after"
-                                       upButtonStyleClass="ui-button-success"
-                                       downButtonStyleClass="ui-button-danger"
-                                       min = "18"
-                            />
-                            <p:message for="@previous"></p:message>
-                        </div>
-                        <div class="p-field">
-                            <p:outputLabel for="@next">Sexo</p:outputLabel>
-                            <p:selectOneMenu
-                                    id="multiple"
-                                    required="true"
-                                    value="#{manageTouristBean.selectedTourist.sex}"
-                                    label="Seleccione"
-                                    style="min-width: 15rem"
-                                    multiple="true"
-                                    filter="true"
-                                    requiredMessage="Seleccione un sexo"
-                                    filterMatchMode="startsWith"
-                                    panelStyle="width: 30rem"
-                                    scrollHeight="250">
-                                <f:selectItem itemLabel="Selecione el sexo" itemValue="" noSelectionOption="true"/>
-                                <f:selectItem itemValue="M" itemLabel="masculino" />
-                                <f:selectItem itemValue="F" itemLabel="femenino" />
-                            </p:selectOneMenu>
-                            <p:message for="multiple"></p:message>
-                        </div>
-                        <div class="p-field">
-                            <p:outputLabel for="@next">Pais</p:outputLabel>
-                            <p:selectOneMenu
-                                    id="multiple2"
-                                    required="true"
-                                    value="#{manageTouristBean.selectedTourist.country}"
-                                    label="Seleccione"
-                                    style="min-width: 15rem"
-                                    multiple="true"
-                                    filter="true"
-                                    requiredMessage="Seleccione un pais"
-                                    filterMatchMode="startsWith"
-                                    panelStyle="width: 30rem"
-                                    scrollHeight="250">
-                                <f:selectItem itemLabel="Selecione el pais" itemValue="" noSelectionOption="true"/>
-                                <f:selectItems value = "#{manageCountryBean.countries}" var = "country"
-                                               itemValue="#{country.name}" itemLabel="#{country.name}"/>
-                            </p:selectOneMenu>
-                            <p:message for="multiple2"></p:message>
-                        </div>
+                                    onclick="setTimeout(function() { $('[id$=msgName]').hide(1000); }, 2000);"
+                            value="#{manageTouristBean.selectedTourist.name}" />
+                    <p:message for="firstName" id = "msgName"></p:message>
+                </div>
+                <div class="p-field">
+                    <p:outputLabel for="@next">Apellidos</p:outputLabel>
+                    <p:inputText
+                            id="lastName"
+                            required="true"
+                            requiredMessage="Apellidos requeridos"
+                            value="#{manageTouristBean.selectedTourist.lastName}">
+                    </p:inputText>
+                    <p:message for="lastName" ></p:message>
+                </div>
+                <div class="p-field">
+                    <p:outputLabel for="@next">Numero de telefono</p:outputLabel>
+                    <p:inputText
+                            id="telephone"
+                            required="true"
+                            requiredMessage="Telefono requerido"
+                            maxlength="8"
+                            value="#{manageTouristBean.selectedTourist.telephoneNumber}">
+                    </p:inputText>
+                    <p:message for="telephone"></p:message>
+                </div>
+                <div class="p-field">
+                    <p:outputLabel for="@next" value="Edad"/>
+                    <p:spinner id="horizontalAfter"
+                               value="#{manageTouristBean.selectedTourist.age}"
+                               buttons="horizontal-after"
+                               upButtonStyleClass="ui-button-success"
+                               downButtonStyleClass="ui-button-danger"
+                               min = "18"
+                    />
+                    <p:message for="@previous"></p:message>
+                </div>
+                <div class="p-field">
+                    <p:outputLabel for="@next">Sexo</p:outputLabel>
+                    <p:selectOneMenu
+                            id="multiple"
+                            required="true"
+                            value="#{manageTouristBean.selectedTourist.sex}"
+                            label="Seleccione"
+                            style="min-width: 15rem"
+                            multiple="true"
+                            filter="true"
+                            requiredMessage="Seleccione un sexo"
+                            filterMatchMode="startsWith"
+                            panelStyle="width: 30rem"
+                            scrollHeight="250">
+                        <f:selectItem itemLabel="Selecione el sexo" itemValue="" noSelectionOption="true"/>
+                        <f:selectItem itemValue="M" itemLabel="masculino" />
+                        <f:selectItem itemValue="F" itemLabel="femenino" />
+                    </p:selectOneMenu>
+                    <p:message for="multiple"></p:message>
+                </div>
+                <div class="p-field">
+                    <p:outputLabel for="@next">Pais</p:outputLabel>
+                    <p:selectOneMenu
+                            id="multiple2"
+                            required="true"
+                            value="#{manageTouristBean.selectedTourist.country}"
+                            label="Seleccione"
+                            style="min-width: 15rem"
+                            multiple="true"
+                            filter="true"
+                            requiredMessage="Seleccione un pais"
+                            filterMatchMode="startsWith"
+                            panelStyle="width: 30rem"
+                            scrollHeight="250">
+                        <f:selectItem itemLabel="Selecione el pais" itemValue="" noSelectionOption="true"/>
+                        <f:selectItems value = "#{manageCountryBean.countries}" var = "country"
+                                       itemValue="#{country.name}" itemLabel="#{country.name}"/>
+                    </p:selectOneMenu>
+                    <p:message for="multiple2"></p:message>
+                </div>
 
-                    </h:panelGroup>
-                    <h:panelGroup>
-                        <div>
-                            <p:graphicImage name="photo_tourist.jpg" library="images" width="350" height="450" />
-                        </div>
-                    </h:panelGroup>
-                </p:panelGrid>
-            </p:outputPanel>
-        </p:outputPanel>
+            </h:panelGroup>
+            <h:panelGroup>
+                <div>
+                    <p:graphicImage name="photo_tourist.jpg" library="images" width="350" height="450" />
+                </div>
+            </h:panelGroup>
+        </p:panelGrid>
+    </p:outputPanel>
+</p:outputPanel>
 
-        <f:facet name="footer">
-            <p:commandButton
-                    value="Salvar"
-                    icon="pi pi-check"
-                    actionListener="#{manageTouristBean.saveTourist}"
-                    update="manage-tourist-content"
-                    process="manage-tourist-content @this" />
-            <p:commandButton
-                    value="Cancelar"
-                    icon="pi pi-times"
-                    onclick="PF('manageTouristDialog').hide()"
-                    update="manage-tourist-content"
-                    class="ui-button-secondary"
-                    actionListener="#{manageTouristBean.onCancel}"
-                    action="#{manageTouristBean.onCancel()}"
-                    process="@this"
-            />
-        </f:facet>
-    </p:dialog>
+<f:facet name="footer">
+    <p:commandButton
+            value="Salvar"
+            icon="pi pi-check"
+            actionListener="#{manageTouristBean.saveTourist}"
+            update="manage-tourist-content"
+            process="manage-tourist-content @this" />
+    <p:commandButton
+            value="Cancelar"
+            icon="pi pi-times"
+            onclick="PF('manageTouristDialog').hide()"
+            update="manage-tourist-content"
+            class="ui-button-secondary"
+            actionListener="#{manageTouristBean.onCancel}"
+            action="#{manageTouristBean.onCancel()}"
+            process="@this"
+    />
+    <p:ajax event="close" listener="#{manageTouristBean.onCancel}" process="@this"
+            update="manage-tourist-content" />
+</f:facet>
+</p:dialog>
 </ui:composition>
