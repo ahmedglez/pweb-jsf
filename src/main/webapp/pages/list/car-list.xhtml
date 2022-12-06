@@ -91,8 +91,11 @@
 							filterBy="#{car.color}">
 							<h:outputText value="#{car.color}" />
 						</p:column>
-						<p:column headerText="Brand" sortBy="#{car.brand.brand}">
-							<h:outputText value="#{car.brand.brand}" />
+						<p:column headerText="Model" sortBy="#{car.model.model}">
+							<h:outputText value="#{car.model.model}" />
+						</p:column>
+						<p:column headerText="Brand" sortBy="#{car.model.brand.brand}">
+							<h:outputText value="#{car.model.brand.brand}" />
 						</p:column>
 						<p:column
 							headerText="Mileage"
@@ -102,8 +105,8 @@
 						</p:column>
 						<p:column
 							headerText="Status"
-							sortBy="#{car.status}"
-							filterBy="#{car.status}">
+							sortBy="#{car.status.status}"
+							filterBy="#{car.status.status}">
 							<h:outputText value="#{car.status.status}" />
 						</p:column>
 						

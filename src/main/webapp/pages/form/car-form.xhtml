@@ -31,13 +31,42 @@
                                     value="#{carBean.selectedCar.color}" />
                             <p:message for="@previous"></p:message>
                         </div>
-                                                <div class="p-field">
-                            <p:outputLabel for="@next">Brand</p:outputLabel>
-                            <p:inputText
-                                    id="brand"
+                        <div class="p-field">
+                            <p:outputLabel for="@next">Models</p:outputLabel>
+                            <p:selectOneMenu
+                                    id="multiple"
+                                    required="true"
+                                    value="#{carBean.selectedModel}"
+                                    label="Seleccione"
+                                    style="min-width: 15rem"
+                                    multiple="true"
+                                    filter="true"
+                                    filterMatchMode="startsWith"
+                                    panelStyle="width: 30rem"
+                                    scrollHeight="250">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value = "#{carBean.models}" var = "model"
+                                               itemValue="#{model.code}" itemLabel="#{model.model}"/>
+                            </p:selectOneMenu>
+                            <p:message for="@previous"></p:message>
+                        </div>
+                         <div class="p-field">
+                            <p:outputLabel for="@next">Brands</p:outputLabel>
+                            <p:selectOneMenu
+                                    id="multiple2"
                                     required="true"
                                     value="#{carBean.selectedBrand}"
-                                    />
+                                    label="Seleccione"
+                                    style="min-width: 15rem"
+                                    multiple="true"
+                                    filter="true"
+                                    filterMatchMode="startsWith"
+                                    panelStyle="width: 30rem"
+                                    scrollHeight="250">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value = "#{carBean.brands}" var = "brand"
+                                               itemValue="#{brand.code}" itemLabel="#{brand.brand}"/>
+                            </p:selectOneMenu>
                             <p:message for="@previous"></p:message>
                         </div>
                         <div class="p-field">
@@ -48,12 +77,23 @@
                                     value="#{carBean.selectedCar.mileage}" />
                             <p:message for="@previous"></p:message>
                         </div>
-                          <div class="p-field">
+                        <div class="p-field">
                             <p:outputLabel for="@next">Status</p:outputLabel>
-                            <p:inputText
-                                    id="status"
+                            <p:selectOneMenu
+                                    id="multiple3"
                                     required="true"
-                                    value="#{carBean.selectedStatus}" />
+                                    value="#{carBean.selectedStatus}"
+                                    label="Seleccione"
+                                    style="min-width: 15rem"
+                                    multiple="true"
+                                    filter="true"
+                                    filterMatchMode="startsWith"
+                                    panelStyle="width: 30rem"
+                                    scrollHeight="250">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value = "#{carBean.statuses}" var = "status"
+                                               itemValue="#{status.code}" itemLabel="#{status.status}"/>
+                            </p:selectOneMenu>
                             <p:message for="@previous"></p:message>
                         </div>
                         
