@@ -45,7 +45,7 @@ public class CarService implements CrudInterface {
     }
 
     @Override
-    public CarDto getById(int code) {
+    public CarDto getByCode(int code) {
         CarDto car = null;
 
         try {

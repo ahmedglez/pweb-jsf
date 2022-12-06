@@ -48,7 +48,7 @@ public class RoleService implements CrudInterface {
 	}
 
 	@Override
-	public RoleDto getById(int code) {
+	public RoleDto getByCode(int code) {
 		RoleDto role = null;
 		try {
 			MultiValueMap<String, String> params = new LinkedMultiValueMap<>();

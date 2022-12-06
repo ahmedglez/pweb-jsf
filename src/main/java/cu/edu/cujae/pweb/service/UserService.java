@@ -48,7 +48,7 @@ public class UserService implements CrudInterface {
 	}
 
 	@Override
-	public UserDto getById(int code) {
+	public UserDto getByCode(int code) {
 		UserDto user = null;
 
 		try {

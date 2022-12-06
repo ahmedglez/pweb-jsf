@@ -91,6 +91,11 @@ public class ManageTouristBean {
     PrimeFaces.current().ajax().update("form:dt-tourist"); // Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
   }
 
+  public void onCancel(){
+    PrimeFaces.current().ajax().update("form:dt-tourist");
+    this.selectedTourist = null;
+  }
+
   public TouristDto getTourist() {
     return tourist;
   }

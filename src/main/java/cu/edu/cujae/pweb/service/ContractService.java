@@ -35,7 +35,7 @@ public class ContractService implements CrudInterface {
     }
 
     @Override
-    public ContractDto getById(int code) {
+    public ContractDto getByCode(int code) {
         ContractDto contract = null;
 
         try {

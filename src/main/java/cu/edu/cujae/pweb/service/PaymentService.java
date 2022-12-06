@@ -36,7 +36,7 @@ public class PaymentService implements CrudInterface {
     }
 
     @Override
-    public PaymentsDto getById(int code) {
+    public PaymentsDto getByCode(int code) {
         PaymentsDto payment = null;
 
         try {

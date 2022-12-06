@@ -21,15 +21,6 @@ public class CarStatusService implements CrudInterface{
     @Autowired
     private RestService restService;
 
-    public List<CarStatusDto> getStatusByCar(Long carId) {
-        return null;
-    }
-
-    public List<CarStatusDto> getStatusByName(String name) {
-        return null;
-    }
-
-
     @Override
     public  List<CarStatusDto> getAll() {
         List<CarStatusDto> statuses = new ArrayList<CarStatusDto>();
@@ -45,46 +36,44 @@ public class CarStatusService implements CrudInterface{
     }
 
     @Override
-    public CarStatusDto getById(int code) {
-//        CarStatusDto status = null;
-//        try {
-//            MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-//            ApiRestMapper<CarStatusDto> apiRestMapper = new ApiRestMapper<>();
-//
-//            UriTemplate template = new UriTemplate("/status/{code}");
-//            String uri = template.expand(code).toString();
-//            String response = (String)restService.GET(uri, params, String.class).getBody();
-//            status = apiRestMapper.mapOne(response, CarStatusDto.class);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return status;
-        return null;
+    public CarStatusDto getByCode(int code) {
+        CarStatusDto status = null;
+        try {
+            MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+            ApiRestMapper<CarStatusDto> apiRestMapper = new ApiRestMapper<>();
+
+            UriTemplate template = new UriTemplate("/cars/status/{code}");
+            String uri = template.expand(code).toString();
+            String response = (String)restService.GET(uri, params, String.class).getBody();
+            status = apiRestMapper.mapOne(response, CarStatusDto.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return status;
     }
 
     @Override
     public void create(Object dto) {
-//        CarStatusDto user = (CarStatusDto) dto;
-//        String response = (String) restService.POST("/roles/", user, String.class).getBody();
-//        System.out.println(response);
+        CarStatusDto status = (CarStatusDto) dto;
+        String response = (String) restService.POST("/cars/status/", status, String.class).getBody();
+        System.out.println(response);
 
     }
 
     @Override
     public void update(Object dto) {
-//        RoleDto user = (RoleDto) dto;
-//        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-//        String response = (String) restService.PUT("/roles/", params, user, String.class).getBody();
-//        System.out.println(response);
-
+        CarStatusDto status = (CarStatusDto) dto;
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        String response = (String) restService.PUT("/cars/status/", params, status, String.class).getBody();
+        System.out.println(response);
     }
 
     @Override
     public void delete(int code) {
-//        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-//        UriTemplate template = new UriTemplate("/roles/{code}");
-//        String uri = template.expand(code).toString();
-//        String response = (String) restService.DELETE(uri, params, String.class).getBody();
-//        System.out.println(response);
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        UriTemplate template = new UriTemplate("/cars/status/{code}");
+        String uri = template.expand(code).toString();
+        String response = (String) restService.DELETE(uri, params, String.class).getBody();
+        System.out.println(response);
     }
 }

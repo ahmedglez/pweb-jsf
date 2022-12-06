@@ -37,7 +37,7 @@ public class BillService implements CrudInterface {
     }
 
     @Override
-    public BillDto getById(int code) {
+    public BillDto getByCode(int code) {
         BillDto bill = null;
 
         try {

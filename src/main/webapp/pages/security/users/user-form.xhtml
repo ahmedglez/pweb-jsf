@@ -66,7 +66,8 @@
 				actionListener="#{manageUserBean.saveUser}"
 				update="manage-user-content" process="manage-user-content @this" />
 			<p:commandButton value="Cancelar" icon="pi pi-times"
-				onclick="PF('manageUserDialog').hide()" class="ui-button-secondary" />
+				onclick="PF('manageUserDialog').hide()" class="ui-button-secondary"
+			action="#{manageUserBean.onCancel()}" actionListener="#{manageUserBean.onCancel}" process="@this"/>
 		</f:facet>
 	</p:dialog>
 </ui:composition>

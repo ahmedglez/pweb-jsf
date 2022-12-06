@@ -2,8 +2,11 @@ package cu.edu.cujae.pweb.bean;
 
 import cu.edu.cujae.pweb.dto.DriverDto;
 import cu.edu.cujae.pweb.dto.DriversCategoriesDto;
+import cu.edu.cujae.pweb.service.DriverCategoryService;
 import cu.edu.cujae.pweb.service.DriverService;
 import cu.edu.cujae.pweb.utils.JsfUtils;
+
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -22,18 +25,20 @@ public class ManageDriverBean {
   private DriverDto selected;
   private List<DriverDto> drivers;
   private List<DriversCategoriesDto> categories;
-  private String selectedCategory;
+  private int selectedCategory;
 
   @Autowired
   private DriverService driverService;
+  @Autowired
+  private DriverCategoryService driverCategoryService;
 
   public ManageDriverBean() {}
 
   @PostConstruct
   public void init() {
-    drivers = drivers == null ? driverService.getAll() : drivers;
+    drivers = drivers == null ? getAllWithOutSinDriver() : drivers;
     categories =
-      categories == null ? driverService.getCategories() : categories;
+      categories == null ? getAllWithOutSinCategory() : categories;
   }
 
   //Se ejecuta al dar clic en el button Nuevo
@@ -45,6 +50,7 @@ public class ManageDriverBean {
   public void deleteDriver() {
     try {
       driverService.delete(this.selected.getCode());
+      drivers = getAllWithOutSinDriver();
       this.selected = null;
       JsfUtils.addMessageFromBundle(
         null,
@@ -61,34 +67,27 @@ public class ManageDriverBean {
     }
   }
 
+  public void onCancel(){
+    PrimeFaces.current().ajax().update("form:dt-drivers");
+    this.selected = null;
+  }
+
   public void openForEdit(DriverDto driver) {
-    System.out.println(driver.getCode());
     this.selected = driver;
-    this.selectedCategory = driver.getCategory().getCategory();
+    this.selectedCategory = driver.getCategory().getCode();
   }
 
   public void saveDriver() {
-    DriversCategoriesDto category = new DriversCategoriesDto(
-      this.selectedCategory
-    );
+    DriversCategoriesDto category = driverCategoryService.getByCode(selectedCategory);
     this.selected.setCategory(category);
     if (this.selected.getCode() == 0) {
-      boolean repeatedId = driverService.existID(this.selected.getCode());
-      if (!repeatedId) {
         driverService.create(this.selected);
-        drivers = driverService.getAll();
+        drivers = getAllWithOutSinDriver();
         JsfUtils.addMessageFromBundle(
           null,
           FacesMessage.SEVERITY_INFO,
           "message_driver_added"
         );
-      } else {
-        JsfUtils.addMessageFromBundle(
-          null,
-          FacesMessage.SEVERITY_ERROR,
-          "message_error_id_already_exists"
-        );
-      }
     } else {
       driverService.update(this.selected);
       JsfUtils.addMessageFromBundle(
@@ -97,9 +96,28 @@ public class ManageDriverBean {
         "message_driver_edited"
       );
     }
-
     PrimeFaces.current().executeScript("PF('manageDriverDialog').hide()"); //Este code permite cerrar el dialog cuyo id es manageUserDialog. Este identificador es el widgetVar
     PrimeFaces.current().ajax().update("form:dt-drivers"); // Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
+  }
+
+  private List<DriverDto> getAllWithOutSinDriver(){
+    List<DriverDto> allWhitOutSinDriver = new ArrayList<>();
+    for(DriverDto d: driverService.getAll()){
+      if(d.getCode()!=0){
+        allWhitOutSinDriver.add(d);
+      }
+    }
+    return allWhitOutSinDriver;
+  }
+
+  private List<DriversCategoriesDto> getAllWithOutSinCategory(){
+    List<DriversCategoriesDto> allWhitOutSinCategory = new ArrayList<>();
+    for(DriversCategoriesDto d: driverCategoryService.getAll()){
+      if(d.getCode()!=0){
+        allWhitOutSinCategory.add(d);
+      }
+    }
+    return allWhitOutSinCategory;
   }
 
   /* Getters and Setters */
@@ -107,11 +125,11 @@ public class ManageDriverBean {
     return dto;
   }
 
-  public String getSelectedCategory() {
+  public Integer getSelectedCategory() {
     return this.selectedCategory;
   }
 
-  public void setSelectedCategory(String selectedCategory) {
+  public void setSelectedCategory(Integer selectedCategory) {
     this.selectedCategory = selectedCategory;
   }
 
@@ -149,14 +167,6 @@ public class ManageDriverBean {
 
   public List<DriversCategoriesDto> getCategories() {
     return categories;
-  }
-
-  public String getCategoryName(DriversCategoriesDto category) {
-    if (selected != null) {
-      return selected.getCategory().getCategory();
-    } else {
-      return category.getCategory();
-    }
   }
 
   public void setCategories(List<DriversCategoriesDto> categories) {

@@ -79,9 +79,9 @@ public class CarBean {
   
   public void saveCar() {
       if(this.selectedCar.getCode()==0) {
-              this.selectedCar.setModel(modelService.getById(selectedModel));
-              this.selectedCar.setStatus(statusService.getById(selectedStatus)); 
-              this.selectedCar.getModel().setBrand(brandService.getById(selectedBrand));
+              this.selectedCar.setModel(modelService.getByCode(selectedModel));
+              this.selectedCar.setStatus(statusService.getByCode(selectedStatus));
+              this.selectedCar.getModel().setBrand(brandService.getByCode(selectedBrand));
               carService.create(this.selectedCar);
               cars = carService.getAll();
               JsfUtils.addMessageFromBundle(
@@ -91,9 +91,9 @@ public class CarBean {
               
             
           } else {
-              this.selectedCar.setModel(modelService.getById(selectedModel));
-              this.selectedCar.setStatus(statusService.getById(selectedStatus)); 
-              this.selectedCar.getModel().setBrand(brandService.getById(selectedBrand));
+              this.selectedCar.setModel(modelService.getByCode(selectedModel));
+              this.selectedCar.setStatus(statusService.getByCode(selectedStatus));
+              this.selectedCar.getModel().setBrand(brandService.getByCode(selectedBrand));
               carService.update(this.selectedCar);
               cars = carService.getAll();
             JsfUtils.addMessageFromBundle(

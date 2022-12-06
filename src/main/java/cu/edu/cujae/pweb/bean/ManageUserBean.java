@@ -6,7 +6,6 @@ import cu.edu.cujae.pweb.service.RoleService;
 import cu.edu.cujae.pweb.service.UserService;
 import cu.edu.cujae.pweb.utils.JsfUtils;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -65,7 +64,7 @@ public class ManageUserBean {
     if (this.selectedUser.getCode() == 0) {
       List<RoleDto> rolesToAdd = new ArrayList<RoleDto>();
       for (int i = 0; i < this.selectedRoles.length; i++) {
-        rolesToAdd.add(roleService.getById(selectedRoles[i]));
+        rolesToAdd.add(roleService.getByCode(selectedRoles[i]));
       }
       selectedUser.setRoles(rolesToAdd);
       userService.create(selectedUser);
@@ -78,7 +77,7 @@ public class ManageUserBean {
     } else {
       List<RoleDto> rolesToAdd = new ArrayList<RoleDto>();
       for (int i = 0; i < this.selectedRoles.length; i++) {
-        rolesToAdd.add(roleService.getById(selectedRoles[i]));
+        rolesToAdd.add(roleService.getByCode(selectedRoles[i]));
       }
       selectedUser.setRoles(rolesToAdd);
       userService.update(selectedUser);
@@ -92,6 +91,11 @@ public class ManageUserBean {
 
     PrimeFaces.current().executeScript("PF('manageUserDialog').hide()"); //Este code permite cerrar el dialog cuyo id es manageUserDialog. Este identificador es el widgetVar
     PrimeFaces.current().ajax().update("form:dt-users"); // Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
+  }
+
+  public void onCancel(){
+    PrimeFaces.current().ajax().update("form:dt-users");
+    this.selectedUser = null;
   }
 
   //Permite eliminar un usuario

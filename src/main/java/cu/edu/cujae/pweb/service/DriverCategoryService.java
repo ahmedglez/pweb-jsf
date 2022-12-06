@@ -1,7 +1,6 @@
 package cu.edu.cujae.pweb.service;
 
-
-import cu.edu.cujae.pweb.dto.TouristDto;
+import cu.edu.cujae.pweb.dto.DriversCategoriesDto;
 import cu.edu.cujae.pweb.utils.ApiRestMapper;
 import cu.edu.cujae.pweb.utils.CrudInterface;
 import cu.edu.cujae.pweb.utils.RestService;
@@ -16,76 +15,65 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class TouristServices implements CrudInterface {
+public class DriverCategoryService implements CrudInterface {
 
     @Autowired
     RestService restService;
 
     @Override
-    public  List<TouristDto> getAll() {
-        List<TouristDto> tourists = new ArrayList<TouristDto>();
+    public List<DriversCategoriesDto> getAll() {
+        List<DriversCategoriesDto> categories = new ArrayList<DriversCategoriesDto>();
         try {
             MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-            ApiRestMapper<TouristDto> apiRestMapper = new ApiRestMapper<>();
-            String response = (String)restService.GET("/tourists/all", params, String.class).getBody();
-            tourists = apiRestMapper.mapList(response, TouristDto.class);
+            ApiRestMapper<DriversCategoriesDto> apiRestMapper = new ApiRestMapper<>();
+            String response = (String)restService.GET("/drivers/categories/all", params, String.class).getBody();
+            categories = apiRestMapper.mapList(response, DriversCategoriesDto.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return tourists;
+        return categories;
     }
 
     @Override
-    public TouristDto getByCode(int code) {
-        TouristDto tourist = null;
+    public DriversCategoriesDto getByCode(int code){
+        DriversCategoriesDto category = null;
 
         try {
             MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-            ApiRestMapper<TouristDto> apiRestMapper = new ApiRestMapper<>();
+            ApiRestMapper<DriversCategoriesDto> apiRestMapper = new ApiRestMapper<>();
 
-            UriTemplate template = new UriTemplate("/tourists/{code}");
+            UriTemplate template = new UriTemplate("/drivers/categories/{code}");
             String uri = template.expand(code).toString();
             String response = (String)restService.GET(uri, params, String.class).getBody();
-            tourist = apiRestMapper.mapOne(response, TouristDto.class);
+            category = apiRestMapper.mapOne(response, DriversCategoriesDto.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return tourist;
+        return category;
+
     }
 
     @Override
     public void create(Object dto) {
-        TouristDto tourist = (TouristDto) dto;
-        String response = (String) restService.POST("/tourists/", tourist, String.class).getBody();
+        DriversCategoriesDto category = (DriversCategoriesDto) dto;
+        String response = (String) restService.POST("/drivers/categories/", category, String.class).getBody();
         System.out.println(response);
     }
 
     @Override
     public void update(Object dto) {
-        TouristDto tourist = (TouristDto) dto;
+        DriversCategoriesDto category = (DriversCategoriesDto) dto;
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        String response = (String) restService.PUT("/tourists/", params, tourist, String.class).getBody();
+        String response = (String) restService.PUT("/drivers/categories/", params, category, String.class).getBody();
         System.out.println(response);
     }
 
     @Override
     public void delete(int code) {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        UriTemplate template = new UriTemplate("/tourists/{code}");
+        UriTemplate template = new UriTemplate("/drivers/categories/{code}");
         String uri = template.expand(code).toString();
         String response = (String) restService.DELETE(uri, params, String.class).getBody();
         System.out.println(response);
-    }
-
-    public boolean existID(int code){
-        boolean exist = false;
-        List<TouristDto> tourists = getAll();
-        for(int i = 0; i < tourists.size();i++){
-            if(tourists.get(i).getCode() == code){
-                exist = true;
-                i = tourists.size();
-            }
-        }
-        return exist;
     }
 }

@@ -12,7 +12,7 @@ public interface CrudInterface {
   <T> List<T> getAll();
 
   //Metodo para obtener un registro de la tabla
-  Object getById(int code);
+  Object getByCode(int code);
 
   //Metodo para insertar un registro en la tabla
   void create(Object dto);
