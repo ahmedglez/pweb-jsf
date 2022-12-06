@@ -1,16 +1,20 @@
 package cu.edu.cujae.pweb.bean;
 
+
 import cu.edu.cujae.pweb.dto.BrandDto;
 import cu.edu.cujae.pweb.dto.CarDto;
 import cu.edu.cujae.pweb.dto.CarStatusDto;
-import cu.edu.cujae.pweb.service.Car_Service;
+import cu.edu.cujae.pweb.dto.CarModelDto;
+import cu.edu.cujae.pweb.service.CarStatusService;
+import cu.edu.cujae.pweb.service.BrandService;
+import cu.edu.cujae.pweb.service.CarService;
+import cu.edu.cujae.pweb.service.ModelService;
 import cu.edu.cujae.pweb.utils.JsfUtils;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,44 +27,94 @@ public class CarBean {
   private CarDto cardto;
   private CarDto selectedCar;
   private List<CarDto> cars;
-  private List<BrandDto> brands;
+  private List<CarModelDto> models;
   private List<CarStatusDto> statuses;
-  private String selectedBrand;
-  private String selectedStatus;
+  private List<BrandDto> brands;
+  private Integer selectedModel;
+  private Integer selectedStatus;
+  private Integer selectedBrand;
 
-  @Inject
   @Autowired
-  private Car_Service carService;
+  private CarService carService;
+  
+  @Autowired
+  private ModelService modelService;
+  
+  @Autowired
+  private CarStatusService statusService;
+
+  @Autowired
+  private BrandService brandService;
 
   public CarBean() {}
 
   @PostConstruct
   public void init() {
-    cars = cars == null ? carService.getAll() : cars;
-    brands = brands == null ? carService.getBrands() : brands;
-    statuses = statuses == null ? carService.getStatus() : statuses;
+//    cars = cars == null ? carService.getAll() : cars;
+    cars = carService.getAll();
+    models = modelService.getAll();
+    statuses = statusService.getAll();
+    brands = brandService.getAll();
   }
 
   public void newCar() {
     this.selectedCar = new CarDto();
+    this.selectedModel = 0;
+    this.selectedStatus = 0;
+    this.selectedBrand = 0;
   }
 
   //Se ejecuta al dar clic en el button con el lapicito
-  public void openForEdit(CarDto car) {
-    /*
-    this.selectedCar = car;
-    this.selectedBrand = this.selectedCar.getBrand().getBrand();
-    this.selectedStatus = this.selectedCar.getStatus().getStatus();
-
-     */
+  public void openForEdit() {
+    
+    CarModelDto model = this.selectedCar.getModel();
+    this.selectedModel = model.getCode();
+    
+    CarStatusDto status = this.selectedCar.getStatus();
+    this.selectedStatus = status.getCode();
+    
+    BrandDto brand = this.selectedCar.getModel().getBrand();
+    this.selectedBrand = brand.getCode();
   }
+  
+  public void saveCar() {
+      if(this.selectedCar.getCode()==0) {
+              this.selectedCar.setModel(modelService.getById(selectedModel));
+              this.selectedCar.setStatus(statusService.getById(selectedStatus)); 
+              this.selectedCar.getModel().setBrand(brandService.getById(selectedBrand));
+              carService.create(this.selectedCar);
+              cars = carService.getAll();
+              JsfUtils.addMessageFromBundle(
+                      null,
+                      FacesMessage.SEVERITY_INFO,
+                      "message_car_added");
+              
+            
+          } else {
+              this.selectedCar.setModel(modelService.getById(selectedModel));
+              this.selectedCar.setStatus(statusService.getById(selectedStatus)); 
+              this.selectedCar.getModel().setBrand(brandService.getById(selectedBrand));
+              carService.update(this.selectedCar);
+              cars = carService.getAll();
+            JsfUtils.addMessageFromBundle(
+                    null,
+                    FacesMessage.SEVERITY_INFO,
+                    "message_car_edited"
+            );
+          }
+
+
+      PrimeFaces.current().executeScript("PF('manageCarDialog').hide()");
+      PrimeFaces.current().ajax().update("form:dt-car");
+    }
 
   //Permite eliminar un carro
   public void deleteCar() {
     try {
-      carService.delete(selectedCar.getCode());
-      this.selectedCar = null;
-      JsfUtils.addMessageFromBundle(
+        this.cars.remove(this.selectedCar);
+        this.selectedCar = null;
+     
+        JsfUtils.addMessageFromBundle(
         null,
         FacesMessage.SEVERITY_INFO,
         "message_car_removed"
@@ -74,111 +128,81 @@ public class CarBean {
       );
     }
   }
+  
+  //SETTERS AND GETTERS
 
-  //setters and getters
-  public CarDto getCardto() {
+public CarDto getCardto() {
     return cardto;
-  }
+}
 
-  public void setCardto(CarDto cardto) {
+public void setCardto(CarDto cardto) {
     this.cardto = cardto;
-  }
+}
 
-  public CarDto getSelectedCar() {
+public CarDto getSelectedCar() {
     return selectedCar;
-  }
+}
 
-  public void setSelectedCar(CarDto selectedCar) {
+public void setSelectedCar(CarDto selectedCar) {
     this.selectedCar = selectedCar;
-  }
+}
 
-  public List<CarDto> getCars() {
+public List<CarDto> getCars() {
     return cars;
-  }
+}
 
-  public void setCars(List<CarDto> cars) {
+public void setCars(List<CarDto> cars) {
     this.cars = cars;
-  }
+}
 
-  public Car_Service getCarService() {
-    return carService;
-  }
+public List<CarModelDto> getModels() {
+    return models;
+}
 
-  public void setCarService(Car_Service carService) {
-    this.carService = carService;
-  }
+public void setModels(List<CarModelDto> models) {
+    this.models = models;
+}
 
-  public List<CarDto> getAll() {
-    return carService.getAll();
-  }
-
-  public List<BrandDto> getBrands() {
-    return brands;
-  }
-
-  public void setBrands(List<BrandDto> brands) {
-    this.brands = brands;
-  }
-
-  public List<CarStatusDto> getStatuses() {
+public List<CarStatusDto> getStatuses() {
     return statuses;
-  }
+}
 
-  public void setStatuses(List<CarStatusDto> statuses) {
+public void setStatuses(List<CarStatusDto> statuses) {
     this.statuses = statuses;
-  }
+}
 
-  public String getStatusName(CarStatusDto status) {
-    if (selectedCar != null) {
-      return selectedCar.getStatus().getStatus();
-    } else {
-      return status.getStatus();
-    }
-  }
-/*
-  public String getBrandName(BrandDto brand) {
-    if (selectedCar != null) {
-      return selectedCar.getBrand().getBrand();
-    } else {
-      return brand.getBrand();
-    }
+public int getSelectedModel() {
+    return selectedModel;
+}
 
-  }
+public void setSelectedModel(int selectedModel) {
+    this.selectedModel = selectedModel;
+}
 
- */
-
-  public void saveCar() {
-    /*
-    BrandDto brand = new BrandDto(this.selectedBrand);
-    CarStatusDto status = new CarStatusDto(this.selectedStatus);
-    this.selectedCar.setBrand(brand);
-    this.selectedCar.setStatus(status);
-    if (carService.exitCar(this.selectedCar.getCode())) {
-      carService.update(this.selectedCar);
-    } else {
-      carService.create(this.selectedCar);
-    }
-    cars = carService.getAll();
-
-    PrimeFaces.current().executeScript("PF('manageCarDialog').hide()");
-    PrimeFaces.current().ajax().update("form:dt-car");
-
-     */
-  }
-
-  public String getSelectedStatus() {
+public int getSelectedStatus() {
     return selectedStatus;
-  }
+}
 
-  public void setSelectedStatus(String selectedStatus) {
+public void setSelectedStatus(int selectedStatus) {
     this.selectedStatus = selectedStatus;
-  }
+}
 
-  public String getSelectedBrand() {
+public List<BrandDto> getBrands() {
+    return brands;
+}
+
+public void setBrands(List<BrandDto> brands) {
+    this.brands = brands;
+}
+
+public int getSelectedBrand() {
     return selectedBrand;
-  }
+}
 
-  public void setSelectedBrand(String selectedBrand) {
+public void setSelectedBrand(int selectedBrand) {
     this.selectedBrand = selectedBrand;
-  }
+}
+  
+
+
 }
