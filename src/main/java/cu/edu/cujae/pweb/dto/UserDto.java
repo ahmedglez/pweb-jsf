@@ -9,6 +9,34 @@ public class UserDto {
   private String username;
   private String password;
   private String email;
+  private String recoverCode;
+  private String firstName;
+  private String lastName;
+
+  public String getRecoverCode() {
+    return recoverCode;
+  }
+
+  public void setRecoverCode(String recoverCode) {
+    this.recoverCode = recoverCode;
+  }
+
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
   private List<RoleDto> roles;
   private List<String> rolesName = new ArrayList<>();
 
@@ -17,6 +45,9 @@ public class UserDto {
     username = "";
     password = "";
     email = "";
+    firstName = "";
+    lastName = "";
+    recoverCode = "";
     roles = new ArrayList<>();
   }
 

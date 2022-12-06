@@ -67,6 +67,12 @@
 					<p:column headerText="Usuario" sortBy="#{user.username}" filterBy="#{user.username}">
 						<h:outputText value="#{user.username}" />
 					</p:column>
+					<p:column headerText="Full name" sortBy="#{user.firstName}" filterBy="#{user.firstName}">
+						<h:outputText value="#{user.firstName}" />
+					</p:column>
+					<p:column headerText="Last name" sortBy="#{user.lastName}" filterBy="#{user.lastName}">
+						<h:outputText value="#{user.lastName}" />
+					</p:column>
 					<p:column headerText="Contraseña" sortBy="#{user.password}" filterBy="#{user.password}">
 						<h:outputText value="#{user.password}" />
 					</p:column>

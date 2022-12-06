@@ -17,3 +17,13 @@ pom.xml
 
 #pweb
 pweb-jsf.iml
+
+#WEB-INF
+WEB-INF/
+
+
+#ignore .xml
+*.xml
+
+#ignore .properties
+*.properties
