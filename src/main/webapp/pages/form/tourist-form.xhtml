@@ -4,6 +4,7 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
+    <h:form id="tourist-form">
     <p:dialog
             header="Nuevo Turista"
             showEffect="fade"
@@ -21,10 +22,8 @@
                                     id="passport"
                                     required="true"
                                     requiredMessage="Pasaporte requerido"
-                                    onclick="setTimeout(function() { $('[id$=msgPass]').hide(1000); }, 2000);"
                                     value="#{manageTouristBean.selectedTourist.idPassport}"
                                     maxlength="7" />
-                            <p:message for="passport" id = "msgPass" ></p:message>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="@next">Nombre</p:outputLabel>
@@ -32,9 +31,8 @@
                                     id="firstName"
                                     required="true"
                                     requiredMessage="Nombre requerido"
-                                    onclick="setTimeout(function() { $('[id$=msgName]').hide(1000); }, 2000);"
                             value="#{manageTouristBean.selectedTourist.name}" />
-                    <p:message for="firstName" id = "msgName"></p:message>
+
                 </div>
                 <div class="p-field">
                     <p:outputLabel for="@next">Apellidos</p:outputLabel>
@@ -44,7 +42,6 @@
                             requiredMessage="Apellidos requeridos"
                             value="#{manageTouristBean.selectedTourist.lastName}">
                     </p:inputText>
-                    <p:message for="lastName" ></p:message>
                 </div>
                 <div class="p-field">
                     <p:outputLabel for="@next">Numero de telefono</p:outputLabel>
@@ -55,7 +52,6 @@
                             maxlength="8"
                             value="#{manageTouristBean.selectedTourist.telephoneNumber}">
                     </p:inputText>
-                    <p:message for="telephone"></p:message>
                 </div>
                 <div class="p-field">
                     <p:outputLabel for="@next" value="Edad"/>
@@ -64,9 +60,8 @@
                                buttons="horizontal-after"
                                upButtonStyleClass="ui-button-success"
                                downButtonStyleClass="ui-button-danger"
-                               min = "18"
+                               min = "1"
                     />
-                    <p:message for="@previous"></p:message>
                 </div>
                 <div class="p-field">
                     <p:outputLabel for="@next">Sexo</p:outputLabel>
@@ -74,6 +69,7 @@
                             id="multiple"
                             required="true"
                             value="#{manageTouristBean.selectedTourist.sex}"
+                            hideNoSelectionOption="#{not empty manageTouristBean.selectedTourist.sex}"
                             label="Seleccione"
                             style="min-width: 15rem"
                             multiple="true"
@@ -82,18 +78,18 @@
                             filterMatchMode="startsWith"
                             panelStyle="width: 30rem"
                             scrollHeight="250">
+                        <p:ajax update="@this" process="@this"/>
                         <f:selectItem itemLabel="Selecione el sexo" itemValue="" noSelectionOption="true"/>
                         <f:selectItem itemValue="M" itemLabel="masculino" />
                         <f:selectItem itemValue="F" itemLabel="femenino" />
                     </p:selectOneMenu>
-                    <p:message for="multiple"></p:message>
                 </div>
                 <div class="p-field">
                     <p:outputLabel for="@next">Pais</p:outputLabel>
                     <p:selectOneMenu
                             id="multiple2"
                             required="true"
-                            value="#{manageTouristBean.selectedTourist.country}"
+                            value="#{manageTouristBean.selectedCountry}"
                             label="Seleccione"
                             style="min-width: 15rem"
                             multiple="true"
@@ -103,12 +99,10 @@
                             panelStyle="width: 30rem"
                             scrollHeight="250">
                         <f:selectItem itemLabel="Selecione el pais" itemValue="" noSelectionOption="true"/>
-                        <f:selectItems value = "#{manageCountryBean.countries}" var = "country"
-                                       itemValue="#{country.name}" itemLabel="#{country.name}"/>
+                        <f:selectItems value = "#{manageTouristBean.countries}" var = "country"
+                                       itemValue="#{country.id}" itemLabel="#{country.name}"/>
                     </p:selectOneMenu>
-                    <p:message for="multiple2"></p:message>
                 </div>
-
             </h:panelGroup>
             <h:panelGroup>
                 <div>
@@ -117,27 +111,24 @@
             </h:panelGroup>
         </p:panelGrid>
     </p:outputPanel>
-</p:outputPanel>
+    </p:outputPanel>
 
-<f:facet name="footer">
-    <p:commandButton
+    <f:facet name="footer">
+        <p:commandButton
             value="Salvar"
             icon="pi pi-check"
             actionListener="#{manageTouristBean.saveTourist}"
             update="manage-tourist-content"
             process="manage-tourist-content @this" />
-    <p:commandButton
+        <p:commandButton
             value="Cancelar"
             icon="pi pi-times"
             onclick="PF('manageTouristDialog').hide()"
-            update="manage-tourist-content"
             class="ui-button-secondary"
-            actionListener="#{manageTouristBean.onCancel}"
-            action="#{manageTouristBean.onCancel()}"
-            process="@this"
-    />
-    <p:ajax event="close" listener="#{manageTouristBean.onCancel}" process="@this"
-            update="manage-tourist-content" />
+            type="button"
+        />
+
 </f:facet>
 </p:dialog>
+    </h:form>
 </ui:composition>

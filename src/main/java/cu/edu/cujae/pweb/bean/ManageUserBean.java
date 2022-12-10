@@ -37,8 +37,6 @@ public class ManageUserBean {
   @Autowired
   private RoleService roleService;
 
-  public ManageUserBean() {}
-
   //Esta anotacioon permite que se ejecute code luego de haberse ejecuta el constructor de la clase.
   @PostConstruct
   public void init() {

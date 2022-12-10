@@ -7,8 +7,8 @@
 	<ui:composition template="/pages/template/layout.xhtml">
 		<ui:define name="title"> Listado de Conductores </ui:define>
 		<ui:define name="layout">
-			<h:form id="form">
 				<div class="card crud-demo">
+					<h:form id="form">
 					<p:toolbar>
 						<p:toolbarGroup>
 							<!-- 
@@ -24,11 +24,11 @@
 								icon="pi pi-plus"
 								actionListener="#{manageDriverBean.newDriver}"
 								action="#{manageDriverBean.newDriver()}"
-								update=":form:manage-driver-content"
+								update=":form1:manage-driver-content"
 								oncomplete="PF('manageDriverDialog').show()"
 								styleClass="ui-button-success"
 								style="margin-right: 0.5rem">
-								<p:resetInput target=":form:manage-driver-content" />
+								<p:resetInput target="form1:manage-driver-content" />
 							</p:commandButton>
 						</p:toolbarGroup>
 						<p:toolbarGroup align="right">
@@ -109,15 +109,17 @@
 						<p:column exportable="false">
 							<p:commandButton
 								icon="pi pi-pencil"
-								action="#{manageDriverBean.openForEdit(driver)}"
-								update=":form:manage-driver-content"
+								update=":form1:manage-driver-content"
 								oncomplete="PF('manageDriverDialog').show()"
 								styleClass="edit-button rounded-button ui-button-success"
 								process="@this">
 								<f:setPropertyActionListener
 									value="#{driver}"
-									target="#{manageDriverBean.selected}" />
-								<p:resetInput target=":form:manage-driver-content" />
+									target="#{manageDriverBean.selectedDriver}" />
+								<f:setPropertyActionListener
+										value="#{driver.category.code}"
+										target="#{manageDriverBean.selectedCategory}" />
+								<p:resetInput target=":form1:manage-driver-content" />
 							</p:commandButton>
 							<p:commandButton
 								class="ui-button-warning rounded-button"
@@ -126,7 +128,7 @@
 								action="#{manageDriverBean.deleteDriver}">
 								<f:setPropertyActionListener
 									value="#{driver}"
-									target="#{manageDriverBean.selected}" />
+									target="#{manageDriverBean.selectedDriver}" />
 								<p:confirm
 									header="Confirmar"
 									message="Está seguro de eliminar al usuario?"
@@ -134,6 +136,7 @@
 							</p:commandButton>
 						</p:column>
 					</p:dataTable>
+					</h:form>
 
 					<!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
 					<ui:include src="/pages/form/driver-form.xhtml"></ui:include>
@@ -152,8 +155,8 @@
 							styleClass="ui-confirmdialog-no ui-button-secondary"
 							icon="pi pi-times" />
 					</p:confirmDialog>
+
 				</div>
-			</h:form>
 		</ui:define>
 	</ui:composition>
 </html>

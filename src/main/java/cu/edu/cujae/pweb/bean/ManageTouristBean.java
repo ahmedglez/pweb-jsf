@@ -1,6 +1,8 @@
  package cu.edu.cujae.pweb.bean;
 
+import cu.edu.cujae.pweb.dto.CountryDto;
 import cu.edu.cujae.pweb.dto.TouristDto;
+import cu.edu.cujae.pweb.service.CountryService;
 import cu.edu.cujae.pweb.service.TouristServices;
 import cu.edu.cujae.pweb.utils.JsfUtils;
 import java.util.List;
@@ -21,6 +23,11 @@ public class ManageTouristBean {
   private TouristDto tourist;
   private TouristDto selectedTourist;
   private List<TouristDto> tourists;
+  private List<CountryDto> countries;
+  private int selectedCountry;
+
+  @Autowired
+  private CountryService countryService;
 
   @Autowired
   private TouristServices service;
@@ -28,16 +35,17 @@ public class ManageTouristBean {
   @PostConstruct
   public void onInit() {
     tourists = service.getAll();
+    countries = countryService.getCountries();
   }
 
   public void newTourist() {
     this.selectedTourist = new TouristDto();
+    this.selectedCountry = -1;
   }
 
-  public void updateTourist(TouristDto tourist) {
-    this.selectedTourist = tourist;
+  public void openForEdit(TouristDto tourist){
+    selectedCountry = countryService.getCountryIdByCountryName(tourist.getCountry());
   }
-
 
   public void deleteTourist() {
     try {
@@ -64,6 +72,7 @@ public class ManageTouristBean {
     if (this.selectedTourist.getCode() == 0) {
       boolean repeatedId = service.existID(this.selectedTourist.getCode());
       if (!repeatedId) {
+        this.selectedTourist.setCountry(countryService.getCountryByCode(selectedCountry).getName());
         service.create(this.selectedTourist);
         tourists = service.getAll();
         JsfUtils.addMessageFromBundle(
@@ -79,6 +88,7 @@ public class ManageTouristBean {
         );
       }
     } else {
+      this.selectedTourist.setCountry(countryService.getCountryByCode(selectedCountry).getName());
       service.update(this.selectedTourist);
       JsfUtils.addMessageFromBundle(
               null,
@@ -89,11 +99,6 @@ public class ManageTouristBean {
 
     PrimeFaces.current().executeScript("PF('manageTouristDialog').hide()"); //Este code permite cerrar el dialog cuyo id es manageUserDialog. Este identificador es el widgetVar
     PrimeFaces.current().ajax().update("form:dt-tourist"); // Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
-  }
-
-  public void onCancel(){
-    PrimeFaces.current().ajax().update("form:dt-tourist");
-    this.selectedTourist = null;
   }
 
   public TouristDto getTourist() {
@@ -120,5 +125,20 @@ public class ManageTouristBean {
     this.tourists = tourists;
   }
 
+  public List<CountryDto> getCountries() {
+    return countries;
+  }
+
+  public void setCountries(List<CountryDto> countries) {
+    this.countries = countries;
+  }
+
+  public int getSelectedCountry() {
+    return selectedCountry;
+  }
+
+  public void setSelectedCountry(int selectedCountry) {
+    this.selectedCountry = selectedCountry;
+  }
 
 }

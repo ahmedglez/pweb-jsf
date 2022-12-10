@@ -14,10 +14,27 @@ public class ContractDto {
     private PaymentsDto payment;
     private BillDto bill;
     private DriverDto driver;
-    private float totalAmount;
+    private double totalAmount;
 
+    public ContractDto(){
+    }
 
-    public ContractDto(){}
+    public ContractDto(int code, TouristDto tourist, CarDto car, String startingDate, String finalDate, int extension, PaymentsDto payment, BillDto bill, DriverDto driver, double totalAmount) {
+        this.code = code;
+        this.tourist = tourist;
+        this.car = car;
+        this.startingDate = startingDate;
+        this.finalDate = finalDate;
+        this.extension = extension;
+        this.payment = payment;
+        this.bill = bill;
+        this.driver = driver;
+        this.totalAmount = totalAmount;
+    }
+
+    public ContractDto clone(){
+        return new ContractDto(getCode(),getTourist(),getCar(),getStartingDate(),getFinalDate(),getExtension(),getPayment(),getBill(),getDriver(),getTotalAmount());
+    }
 
     public TouristDto getTourist() {
         return tourist;
@@ -75,9 +92,9 @@ public class ContractDto {
         this.driver = driver;
     }
 
-    public float getTotalAmount() { return totalAmount; }
+    public double getTotalAmount() { return totalAmount; }
 
-    public void setTotalAmount(float totalAmount) { this.totalAmount = totalAmount; }
+    public void setTotalAmount(double totalAmount) { this.totalAmount = totalAmount; }
 
     public int getExtension() { return extension; }
 
@@ -87,5 +104,5 @@ public class ContractDto {
 
     public void setCode(int code) { this.code = code; }
 
-    //private float calculateTotalAmount(){ return (bill.getAmount()*DateController.extensionDate(startingDate,finalDate)) + (bill.getSpecialAmount() * extension); }
+    public double calculateTotalAmount(LocalDate startingDate, LocalDate finalDate){ return (bill.getAmount()*DateController.extensionDate(startingDate,finalDate)) + (bill.getSpecialAmount() * extension); }
 }

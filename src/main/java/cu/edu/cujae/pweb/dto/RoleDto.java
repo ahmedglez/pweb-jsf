@@ -6,6 +6,8 @@ public class RoleDto {
   private String role;
   private String description;
 
+  public RoleDto(){}
+
   public int getCode() {
     return code;
   }

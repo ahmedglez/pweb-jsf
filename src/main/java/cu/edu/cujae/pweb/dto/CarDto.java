@@ -8,7 +8,23 @@ public class CarDto {
     private CarStatusDto status;
     private CarModelDto model;
     private double mileage;
-    
+
+    public CarDto(){}
+
+    public CarDto(int code, String carID, String color, CarStatusDto status, CarModelDto model, double mileage) {
+        this.code = code;
+        this.carID = carID;
+        this.color = color;
+        this.status = status;
+        this.model = model;
+        this.mileage = mileage;
+    }
+
+    @Override
+    public CarDto clone(){
+        return new CarDto(getCode(),getCarID(),getColor(),getStatus(),getModel(),getMileage());
+    }
+
     public int getCode() {
         return code;
     }

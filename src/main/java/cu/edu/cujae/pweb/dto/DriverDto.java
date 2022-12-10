@@ -26,12 +26,11 @@ public class DriverDto {
     this.category = category;
   }
 
-  public DriverDto() {
-    this.ci = "";
-    this.name = "";
-    this.lastName = "";
-    this.address = "";
-    this.category = null;
+  public DriverDto() {}
+
+  @Override
+  public DriverDto clone(){
+    return new DriverDto(getCode(),getCi(),getName(),getLastName(),getAddress(),getCategory());
   }
 
   public String getCi() {

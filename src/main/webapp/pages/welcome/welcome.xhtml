@@ -1,28 +1,126 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/pages/template/layout.xhtml">
-        <ui:define name="title">
-		    Inicio
-		</ui:define>
-    	<ui:define name="layout">
-    		<h:form>
-		    	<p:card style="width: 100%; margin-bottom: 2em">
-				    <f:facet name="title">
-				        Bievenidos al demo de pweb
-				    </f:facet>
-				
-				    <p>Este demo servirá de guía para el desarrollo de los proyectos de curso de la asignatura. Poco a poco lo iremos actualizando con diversas funcionalidades y casos de estudio. </p>
-				    <ul>
-				    	<li>Plantilla con Facelets </li>
-				    	<li>Login </li>
-				    	<li>Crud de usuario </li>
-				    </ul>
-				</p:card>
-			</h:form>
-    	</ui:define>
-    </ui:composition>
+<ui:composition template="/pages/template/layout.xhtml">
+    <ui:define name="title">
+        Car Rent Company
+    </ui:define>
+    <ui:define name="layout">
+        <h:form>
+            <f:facet name="title">
+                Bienvenidos
+            </f:facet>
+
+            <div>
+
+                <p:graphicImage name="bugaty.jpg" library="images" width="1275vw" height="550vh"/>
+            </div>
+            <p:card
+                    style="
+      width: 100%;
+      margin-bottom: 2em;
+      display: flex;
+      flex-direction: column; ;
+     ">
+                <f:facet name="title"> Proyecto de programación web 2022 </f:facet>
+
+                <!-- project description -->
+                <h2>Descripcion del proyecto</h2>
+                <ul
+                        style="
+       margin: 0;
+       padding: 0;
+       margin-bottom: 20px;
+       margin-left: 20px;
+      ">
+                    <li style="margin: 0; padding: 0">
+                        <p:outputLabel value="Nombre del proyecto: "/>
+                        <p:outputLabel value="Sistema de gestión de alquiler de carros"/>
+                    </li>
+                    <li style="margin: 0; padding: 0">
+                        <p:outputLabel value="Lenguaje de programación: "/>
+                        <p:outputLabel value="Java"/>
+                    </li>
+                    <li style="margin: 0; padding: 0">
+                        <p:outputLabel value="Framework de desarrollo: "/>
+                        <p:outputLabel value="Spring"/>
+                    </li>
+                    <li style="margin: 0; padding: 0">
+                        <p:outputLabel value="Framework de diseño: "/>
+                        <p:outputLabel value="Primefaces"/>
+                    </li>
+                    <li style="margin: 0; padding: 0">
+                        <p:outputLabel value="Base de datos: "/>
+                        <p:outputLabel value="PostgreSQL"/>
+                    </li>
+                    <li style="margin: 0; padding: 0">
+                        <p:outputLabel value="Servidor de aplicaciones: "/>
+                        <p:outputLabel value="Apache Tomcat"/>
+                    </li>
+                    <li style="margin: 0; padding: 0">
+                        <p:outputLabel value="Servidor de base de datos: "/>
+                        <p:outputLabel value="PostgreSQL"/>
+                    </li>
+                    <li style="margin: 0; padding: 0">
+                        <p:outputLabel value="Sistema operativo: "/>
+                        <p:outputLabel value="Windows 10"/>
+                    </li>
+                </ul>
+
+                <!-- project features -->
+                <h2>Funcionalidades</h2>
+                <ul
+                        style="
+       margin: 0;
+       padding: 0;
+       margin-bottom: 20px;
+       margin-left: 20px;
+      ">
+                    <li style="margin: 0; padding: 0">
+                        <p:outputLabel value="Gestión de usuarios"/>
+                    </li>
+                    <li style="margin: 0; padding: 0">
+                        <p:outputLabel value="Gestión de carros"/>
+                    </li>
+                    <li style="margin: 0; padding: 0">
+                        <p:outputLabel value="Gestión de alquileres"/>
+                    </li>
+                    <li style="margin: 0; padding: 0">
+                        <p:outputLabel value="Gestión de clientes"/>
+                    </li>
+                    <li style="margin: 0; padding: 0">
+                        <p:outputLabel value="Gestión de empleados"/>
+                    </li>
+
+                    <li style="margin: 0; padding: 0">
+                        <p:outputLabel value="Gestión de reportes"/>
+                    </li>
+                </ul>
+
+                <!-- project colaborators-->
+                <h2>Colaboradores</h2>
+                <ul
+                        style="
+       margin: 0;
+       padding: 0;
+       margin-bottom: 20px;
+       margin-left: 20px;
+      ">
+                    <li style="margin: 0; padding: 0">
+                        <p:outputLabel value="Ahmed Ivan Gonzalez Betancourt"/>
+                    </li>
+                    <li style="margin: 0; padding: 0">
+                        <p:outputLabel value="Ernesto Abella Diaz"/>
+                    </li>
+                    <li style="margin: 0; padding: 0">
+                        <p:outputLabel value="Jeankarlo Santana Romero"/>
+                    </li>
+                </ul>
+            </p:card>
+        </h:form>
+    </ui:define>
+</ui:composition>
 </html>

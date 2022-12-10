@@ -2,28 +2,27 @@ package cu.edu.cujae.pweb.dto;
 
 public class BillDto {
     private int code;
-    private float amount;
-    private float specialAmount;
+    private double amount;
+    private double specialAmount;
 
-    public BillDto(int code, float amount, float specialAmount) {
-        this.code = code;
+    public BillDto(double amount, double specialAmount) {
         this.amount = amount;
         this.specialAmount = specialAmount;
     }
 
     public BillDto(){}
 
-    public float getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(float amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
-    public float getSpecialAmount() { return specialAmount; }
+    public double getSpecialAmount() { return specialAmount; }
 
-    public void setSpecialAmount(float specialAmount) { this.specialAmount = specialAmount; }
+    public void setSpecialAmount(double specialAmount) { this.specialAmount = specialAmount; }
 
     public int getCode() { return code; }
 

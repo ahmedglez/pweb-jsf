@@ -5,6 +5,8 @@ public class CarModelDto {
     private String model;
     private BrandDto brand;
 
+    public CarModelDto(){}
+
     public int getCode() {
         return code;
     }

@@ -22,14 +22,11 @@ public class TouristDto {
     }
 
     public TouristDto() {
-        this.code = 0;
-        this.name = "";
-        this.lastName = "";
-        this.idPassport = "";
-        this.age = 0;
-        this.sex = "";
-        this.telephoneNumber = "";
-        this.country = "";
+    }
+
+    @Override
+    public TouristDto clone(){
+        return new TouristDto(getCode(),getName(),getLastName(),getIdPassport(),getAge(),getSex(),getTelephoneNumber(),getCountry());
     }
 
     public String getName() {

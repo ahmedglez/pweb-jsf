@@ -17,28 +17,30 @@ import java.util.List;
 @ManagedBean
 public class ManageCountryBean {
 
-    private CountryDto country;
+    private CountryDto selectedCountry;
     private List<CountryDto> countries;
 
 
     @Autowired
     private CountryService service;
 
+    public void setCountries(List<CountryDto> countries) {
+        this.countries = countries;
+    }
+
     @PostConstruct
     public void init() {
-
         //countries
         countries = service.getCountries();
-
+        selectedCountry = new CountryDto();
+    }
+    
+    public CountryDto getSelectedCountry() {
+        return selectedCountry;
     }
 
-
-    public CountryDto getCountry() {
-        return country;
-    }
-
-    public void setCountry(CountryDto country) {
-        this.country = country;
+    public void setSelectedCountry(CountryDto selectedCountry) {
+        this.selectedCountry = selectedCountry;
     }
 
     public List<CountryDto> getCountries() {

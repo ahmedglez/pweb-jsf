@@ -12,18 +12,6 @@ public class DriversCategoriesDto {
 
   public DriversCategoriesDto() {}
 
-  public DriversCategoriesDto(String name) {
-    if (name.equals("novato")) {
-      this.code = 0;
-      this.category = "novato";
-    } else if (name.equals("intermedio")) {
-      this.code = 1;
-      this.category = "intermedio";
-    } else if (name.equals("profesional")) {
-      this.code = 2;
-      this.category = "profesional";
-    }
-  }
 
   public String getCategory() {
     return category;

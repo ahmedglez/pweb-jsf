@@ -16,9 +16,7 @@
 									id="username"
 									required="true"
 									requiredMessage="Usuario requerido"
-									onclick="setTimeout(function() { $('[id$=msgUser]').hide(1000); }, 2000);"
 								    value="#{manageUserBean.selectedUser.username}" />
-							<p:message for="username" id = "msgUser"></p:message>
 						</div>
 						<div class="p-field">
 							<p:outputLabel for="@next">Frist name</p:outputLabel>
@@ -26,9 +24,7 @@
 									id="firstname"
 									required="true"
 									requiredMessage="Nombre requerido"
-									oninvalid="setTimeout(function() { $('[id$=msgName]').hide(1000); }, 2000);"
 									value="#{manageUserBean.selectedUser.firstName}" />
-							<p:message for="firstname" id="msgName"></p:message>
 						</div>
 						<div class="p-field">
 							<p:outputLabel for="@next">Last name</p:outputLabel>
@@ -36,9 +32,7 @@
 									id="lastname"
 									required="true"
 									requiredMessage="Apellidos requeridos"
-									onclick="setTimeout(function() { $('[id$=msgLastname]').hide(1000); }, 2000);"
 									value="#{manageUserBean.selectedUser.lastName}" />
-							<p:message for="lastname" id="msgLastname"></p:message>
 						</div>
 						<div class="p-field">
 							<p:outputLabel for="@next">Correo</p:outputLabel>
@@ -48,12 +42,10 @@
 								    value="#{manageUserBean.selectedUser.email}"
 								    validatorMessage="Email mal formado"
 									requiredMessage="Email requerido"
-									onclick="setTimeout(function() { $('[id$=msgEmail]').hide(1000); }, 2000);"
 							>
 								<f:validateRegex
 									pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 							</p:inputText>
-							<p:message for="email" id = "msgEmail"></p:message>
 						</div>
 					</h:panelGroup>
 					<h:panelGroup>
@@ -65,38 +57,32 @@
 								    value="#{manageUserBean.selectedRoles}" label="Seleccione un rol"
 								    style="min-width: 15rem" multiple="true" filter="true"
 									requiredMessage="Selecione un rol"
-									onHide="setTimeout(function() { $('[id$=msgRoles]').hide(1000); }, 2000);"
 								    filterMatchMode="startsWith" panelStyle="width: 30rem"
 								    scrollHeight="250">
 								<f:selectItems value="#{manageUserBean.roles}" var="role"
 									itemLabel="#{role.role}" itemValue="#{role.code}" />
 							</p:selectCheckboxMenu>
-							<p:message for="multiple" id="msgRoles" ></p:message>
 						</div>
 						<div class="p-field">
 							<p:outputLabel for="@next" >Contraseña</p:outputLabel>
 							<p:password id="password1" required="true"
 										requiredMessage="Contraseña requerida"
 										validatorMessage="Las contraseñas deben coincidir"
-										onclick="setTimeout(function() { $('[id$=msgpass1]').hide(1000); }, 2000);"
 								value="#{manageUserBean.selectedUser.password}"
 								match="password2">
 							</p:password>
-							<p:message for="password1" id="msgpass1" ></p:message>
 						</div>
 						<div class="p-field">
 							<p:outputLabel for="@next" >Repetir contraseña</p:outputLabel>
 							<p:password id="password2" required="true"
 										requiredMessage="Contraseña requerida"
 										validatorMessage="Las contraseñas deben coincidir"
-										onclick="setTimeout(function() { $('[id$=msgpass2]').hide(1000); }, 2000);"
 								value="#{manageUserBean.selectedUser.password}">
 							</p:password>
-							<p:message for="password2" id="msgpass2"></p:message>
 						</div>
-						
 					</h:panelGroup>
 				</p:panelGrid>
+
 			</p:outputPanel>
 		</p:outputPanel>
 

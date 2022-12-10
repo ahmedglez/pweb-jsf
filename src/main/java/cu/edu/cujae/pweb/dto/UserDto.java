@@ -41,14 +41,22 @@ public class UserDto {
   private List<String> rolesName = new ArrayList<>();
 
   public UserDto(){
-    code = 0;
-    username = "";
-    password = "";
-    email = "";
-    firstName = "";
-    lastName = "";
-    recoverCode = "";
-    roles = new ArrayList<>();
+  }
+
+  public UserDto(int code, String username, String password, String email, String recoverCode, String firstName, String lastName, List<RoleDto> roles) {
+    this.code = code;
+    this.username = username;
+    this.password = password;
+    this.email = email;
+    this.recoverCode = recoverCode;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.roles = roles;
+  }
+
+  @Override
+  public UserDto clone(){
+    return new UserDto(getCode(),getUsername(),getPassword(),getEmail(),getRecoverCode(),getFirstName(),getLastName(),getRoles());
   }
 
   public String getUsername() {

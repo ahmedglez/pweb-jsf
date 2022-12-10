@@ -75,4 +75,5 @@ public class ContractService implements CrudInterface {
         String response = (String) restService.DELETE(uri, params, String.class).getBody();
         System.out.println(response);
     }
+
 }

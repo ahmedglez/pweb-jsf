@@ -7,8 +7,8 @@
 <ui:composition template="/pages/template/layout.xhtml">
     <ui:define name="title"> Listado de Contratos </ui:define>
     <ui:define name="layout">
-        <h:form id="form">
             <div class="card crud-demo">
+                <h:form id="form">
                 <p:toolbar>
                     <p:toolbarGroup>
                         <!--
@@ -22,13 +22,12 @@
                         <p:commandButton
                                 value="Nuevo"
                                 icon="pi pi-plus"
-                                actionListener="#{manageContractBean.newContract}"
                                 action="#{manageContractBean.newContract()}"
-                                update=":form:manage-tourist-content"
-                                oncomplete="PF('manageTouristDialog').show()"
+                                update=":contract-form:manage-contract-content"
+                                oncomplete="PF('manageContractDialog').show()"
                                 styleClass="ui-button-success"
                                 style="margin-right: 0.5rem">
-                            <p:resetInput target=":form:manage-tourist-content" />
+                            <p:resetInput target=":contract-form:manage-contract-content" />
                         </p:commandButton>
                     </p:toolbarGroup>
                     <p:toolbarGroup align="right">
@@ -83,7 +82,7 @@
                             headerText="Turista"
                             sortBy="#{contract.tourist.name}"
                             filterBy="#{contract.tourist.name}">
-                        <h:outputText value="#{contract.tourist.name}" />
+                        <h:outputText value="#{contract.tourist.name} #{contract.tourist.lastName}" />
                     </p:column>
                     <p:column
                             headerText="Carro"
@@ -142,15 +141,15 @@
                     <p:column exportable="false">
                         <p:commandButton
                                 icon="pi pi-pencil"
-                                action="#{manageContractBean.updateContract(contract)}"
-                                update=":form:manage-tourist-content"
-                                oncomplete="PF('manageTouristDialog').show()"
+                                action="#{manageContractBean.openForEdit(contract)}"
+                                update=":contract-form:manage-contract-content"
+                                oncomplete="PF('manageContractDialog').show()"
                                 styleClass="edit-button rounded-button ui-button-success"
                                 process="@this">
                             <f:setPropertyActionListener
                                     value="#{contract}"
                                     target="#{manageContractBean.selectedContract}" />
-                            <p:resetInput target=":form:manage-tourist-content" />
+                            <p:resetInput target=":contract-form:manage-contract-content" />
                         </p:commandButton>
                         <p:commandButton
                                 class="ui-button-warning rounded-button"
@@ -167,9 +166,10 @@
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>
+        </h:form>
 
                 <!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
-                <ui:include src="/pages/form/tourist-form.xhtml"></ui:include>
+                <ui:include src="/pages/form/contract-form.xhtml"></ui:include>
 
                 <!-- Este comoponente se utiliza mucho para el caso de los eliminar, que es donde casi siempre se necesita confirmation,
                 su uso es bien sencillo, cada confirmDialog va atado a un p:confirm que es el que se definie dentro del button -->
@@ -186,7 +186,6 @@
                             icon="pi pi-times" />
                 </p:confirmDialog>
             </div>
-        </h:form>
     </ui:define>
 </ui:composition>
 </html>

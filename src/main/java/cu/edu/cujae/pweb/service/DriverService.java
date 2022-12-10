@@ -37,7 +37,7 @@ public class DriverService implements CrudInterface {
   }
 
   @Override
-  public Object getByCode(int code) {
+  public DriverDto getByCode(int code) {
     DriverDto driver = null;
 
     try {

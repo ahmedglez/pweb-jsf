@@ -21,8 +21,8 @@ import org.springframework.stereotype.Component;
 @ViewScoped
 public class ManageDriverBean {
 
-  private DriverDto dto;
-  private DriverDto selected;
+  private DriverDto driverDto;
+  private DriverDto selectedDriver;
   private List<DriverDto> drivers;
   private List<DriversCategoriesDto> categories;
   private int selectedCategory;
@@ -31,8 +31,6 @@ public class ManageDriverBean {
   private DriverService driverService;
   @Autowired
   private DriverCategoryService driverCategoryService;
-
-  public ManageDriverBean() {}
 
   @PostConstruct
   public void init() {
@@ -43,15 +41,16 @@ public class ManageDriverBean {
 
   //Se ejecuta al dar clic en el button Nuevo
   public void newDriver() {
-    this.selected = new DriverDto();
+    this.selectedDriver = new DriverDto();
+    this.selectedCategory = -1;
   }
 
   //Permite eliminar un chofer
   public void deleteDriver() {
     try {
-      driverService.delete(this.selected.getCode());
+      driverService.delete(this.selectedDriver.getCode());
       drivers = getAllWithOutSinDriver();
-      this.selected = null;
+      this.selectedDriver = null;
       JsfUtils.addMessageFromBundle(
         null,
         FacesMessage.SEVERITY_INFO,
@@ -67,21 +66,11 @@ public class ManageDriverBean {
     }
   }
 
-  public void onCancel(){
-    PrimeFaces.current().ajax().update("form:dt-drivers");
-    this.selected = null;
-  }
-
-  public void openForEdit(DriverDto driver) {
-    this.selected = driver;
-    this.selectedCategory = driver.getCategory().getCode();
-  }
-
   public void saveDriver() {
     DriversCategoriesDto category = driverCategoryService.getByCode(selectedCategory);
-    this.selected.setCategory(category);
-    if (this.selected.getCode() == 0) {
-        driverService.create(this.selected);
+    this.selectedDriver.setCategory(category);
+    if (this.selectedDriver.getCode() == 0) {
+        driverService.create(this.selectedDriver);
         drivers = getAllWithOutSinDriver();
         JsfUtils.addMessageFromBundle(
           null,
@@ -89,7 +78,7 @@ public class ManageDriverBean {
           "message_driver_added"
         );
     } else {
-      driverService.update(this.selected);
+      driverService.update(this.selectedDriver);
       JsfUtils.addMessageFromBundle(
         null,
         FacesMessage.SEVERITY_INFO,
@@ -121,8 +110,8 @@ public class ManageDriverBean {
   }
 
   /* Getters and Setters */
-  public DriverDto getDto() {
-    return dto;
+  public DriverDto getDriverDto() {
+    return driverDto;
   }
 
   public Integer getSelectedCategory() {
@@ -141,16 +130,16 @@ public class ManageDriverBean {
     this.driverService = driverService;
   }
 
-  public void setDto(DriverDto driverDto) {
-    this.dto = driverDto;
+  public void setDriverDto(DriverDto driverDto) {
+    this.driverDto = driverDto;
   }
 
-  public DriverDto getSelected() {
-    return selected;
+  public DriverDto getSelectedDriver() {
+    return selectedDriver;
   }
 
-  public void setSelected(DriverDto selected) {
-    this.selected = selected;
+  public void setSelectedDriver(DriverDto selectedDriver) {
+    this.selectedDriver = selectedDriver;
   }
 
   public List<DriverDto> getAll() {
@@ -171,5 +160,9 @@ public class ManageDriverBean {
 
   public void setCategories(List<DriversCategoriesDto> categories) {
     this.categories = categories;
+  }
+
+  public void setSelectedCategory(int selectedCategory) {
+    this.selectedCategory = selectedCategory;
   }
 }

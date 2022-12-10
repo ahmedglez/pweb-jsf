@@ -5,7 +5,7 @@ public class CarStatusDto {
 	private int code;
 	private String status;
 	
-
+	public CarStatusDto(){}
 	
 	public int getCode() {
 		return code;

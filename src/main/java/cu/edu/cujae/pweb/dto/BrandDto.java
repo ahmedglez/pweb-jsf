@@ -5,6 +5,7 @@ public class BrandDto {
     private int code;
     private String brand;
     
+    public BrandDto(){}
 
     public int getCode() {
         return code;

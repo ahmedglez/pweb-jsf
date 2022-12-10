@@ -65,16 +65,14 @@ public class CarBean {
   }
 
   //Se ejecuta al dar clic en el button con el lapicito
-  public void openForEdit() {
-    
-    CarModelDto model = this.selectedCar.getModel();
-    this.selectedModel = model.getCode();
-    
-    CarStatusDto status = this.selectedCar.getStatus();
-    this.selectedStatus = status.getCode();
-    
-    BrandDto brand = this.selectedCar.getModel().getBrand();
-    this.selectedBrand = brand.getCode();
+  public void openForEdit(CarDto car) {
+      this.selectedCar = car;
+
+    this.selectedModel = car.getModel().getCode();
+
+    this.selectedStatus = car.getStatus().getCode();
+
+    this.selectedBrand = car.getModel().getBrand().getCode();
   }
   
   public void saveCar() {

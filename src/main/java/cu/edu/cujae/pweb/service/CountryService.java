@@ -29,4 +29,26 @@ public class CountryService {
         return countries;
     }
 
+    public CountryDto getCountryByCode(int code){
+        CountryDto country = new CountryDto();
+        for(int i = 0; i < countries.size(); i++){
+            if(countries.get(i).getId() == code){
+                country = countries.get(i);
+                i = countries.size();
+            }
+        }
+        return country;
+    }
+
+    public int getCountryIdByCountryName(String countryName){
+        int country = -1;
+        for(int i = 0; i < countries.size(); i++){
+            if(countries.get(i).getName().equals(countryName)){
+                country = countries.get(i).getId();
+                i = countries.size();
+            }
+        }
+        return country;
+    }
+
 }
