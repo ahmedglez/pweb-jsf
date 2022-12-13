@@ -1,65 +1,85 @@
 package cu.edu.cujae.pweb.dto;
 
+
 public class CarDto {
-	private int code ;
-	private String carID;
-	private String color;
-	private CarStatusDto status;
-	private CarModelDto model;
-	private double mileage;
-	
+    private int code ;
+    private String carID;
+    private String color;
+    private CarStatusDto status;
+    private CarModelDto model;
+    private double mileage;
 
-	public int getCode() {
-		return code;
-	}
+    public CarDto(){
+        this.status = new CarStatusDto();
+        this.model = new CarModelDto();
+    }
 
-	public void setCode(int code) {
-		this.code = code;
-	}
+    public CarDto(int code, String carID, String color, CarStatusDto status, CarModelDto model, double mileage) {
+        this.code = code;
+        this.carID = carID;
+        this.color = color;
+        this.status = status;
+        this.model = model;
+        this.mileage = mileage;
+    }
 
-	public String getCarID() {
-		return carID;
-	}
+    @Override
+    public CarDto clone(){
+        return new CarDto(getCode(),getCarID(),getColor(),getStatus(),getModel(),getMileage());
+    }
 
-	public void setCarID(String carID) {
-		this.carID = carID;
-	}
+    public int getCode() {
+        return code;
+    }
 
-	public String getColor() {
-		return color;
-	}
+    public void setCode(int code) {
+        this.code = code;
+    }
 
-	public void setColor(String color) {
-		this.color = color;
-	}
+    public String getCarID() {
+        return carID;
+    }
 
-	public CarStatusDto getStatus() {
-		return status;
-	}
+    public void setCarID(String carID) {
+        this.carID = carID;
+    }
 
-	public void setStatus(CarStatusDto status) {
-		this.status = status;
-	}
+    public String getColor() {
+        return color;
+    }
 
-	
+    public void setColor(String color) {
+        this.color = color;
+    }
 
-	public double getMileage() {
-		return mileage;
-	}
+    public CarStatusDto getStatus() {
+        return status;
+    }
 
-	public void setMileage(double mileage) {
-		this.mileage = mileage;
-	}
+    public void setStatus(CarStatusDto status) {
+        this.status = status;
+    }
 
-	public CarModelDto getModel() {
-		return model;
-	}
+    
 
-	public void setModel(CarModelDto model) {
-		this.model = model;
-	}
-	
-	
+    public double getMileage() {
+        return mileage;
+    }
+
+    public void setMileage(double mileage) {
+        this.mileage = mileage;
+    }
+
+    public CarModelDto getModel() {
+        return model;
+    }
+
+    public void setModel(CarModelDto model) {
+        this.model = model;
+    }
+
+
+    
 
 }
 

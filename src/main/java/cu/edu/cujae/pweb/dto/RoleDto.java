@@ -1,11 +1,12 @@
 package cu.edu.cujae.pweb.dto;
 
-
 public class RoleDto {
 
   private int code;
   private String role;
   private String description;
+
+  public RoleDto(){}
 
   public int getCode() {
     return code;

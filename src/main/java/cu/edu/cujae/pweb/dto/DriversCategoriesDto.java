@@ -5,26 +5,13 @@ public class DriversCategoriesDto {
   private int code;
   private String category;
 
-  public DriversCategoriesDto(String category) {
-    switch (category) {
-      case "Sin categoria":
-        this.code = 0;
-        this.category = category;
-        break;
-      case "Bachiller":
-        this.code = 1;
-        this.category = category;
-        break;
-      case "Universitario":
-        this.code = 2;
-        this.category = category;
-        break;
-      case "Tecnico medio":
-        this.code = 3;
-        this.category = category;
-        break;
-    }
+  public DriversCategoriesDto(int code, String category) {
+    this.code = code;
+    this.category = category;
   }
+
+  public DriversCategoriesDto() {}
+
 
   public String getCategory() {
     return category;

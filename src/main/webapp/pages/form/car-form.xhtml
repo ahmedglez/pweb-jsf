@@ -4,6 +4,7 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
+    <h:form id = "car-form">
     <p:dialog
             header="Car"
             showEffect="fade"
@@ -31,13 +32,42 @@
                                     value="#{carBean.selectedCar.color}" />
                             <p:message for="@previous"></p:message>
                         </div>
-                                                <div class="p-field">
-                            <p:outputLabel for="@next">Brand</p:outputLabel>
-                            <p:inputText
-                                    id="brand"
+                        <div class="p-field">
+                            <p:outputLabel for="@next">Models</p:outputLabel>
+                            <p:selectOneMenu
+                                    id="multiple"
+                                    required="true"
+                                    value="#{carBean.selectedModel}"
+                                    label="Seleccione"
+                                    style="min-width: 15rem"
+                                    multiple="true"
+                                    filter="true"
+                                    filterMatchMode="startsWith"
+                                    panelStyle="width: 30rem"
+                                    scrollHeight="250">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value = "#{carBean.models}" var = "model"
+                                               itemValue="#{model.code}" itemLabel="#{model.model}"/>
+                            </p:selectOneMenu>
+                            <p:message for="@previous"></p:message>
+                        </div>
+                         <div class="p-field">
+                            <p:outputLabel for="@next">Brands</p:outputLabel>
+                            <p:selectOneMenu
+                                    id="multiple2"
                                     required="true"
                                     value="#{carBean.selectedBrand}"
-                                    />
+                                    label="Seleccione"
+                                    style="min-width: 15rem"
+                                    multiple="true"
+                                    filter="true"
+                                    filterMatchMode="startsWith"
+                                    panelStyle="width: 30rem"
+                                    scrollHeight="250">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value = "#{carBean.brands}" var = "brand"
+                                               itemValue="#{brand.code}" itemLabel="#{brand.brand}"/>
+                            </p:selectOneMenu>
                             <p:message for="@previous"></p:message>
                         </div>
                         <div class="p-field">
@@ -48,20 +78,32 @@
                                     value="#{carBean.selectedCar.mileage}" />
                             <p:message for="@previous"></p:message>
                         </div>
-                          <div class="p-field">
+                        <div class="p-field">
                             <p:outputLabel for="@next">Status</p:outputLabel>
-                            <p:inputText
-                                    id="status"
+                            <p:selectOneMenu
+                                    id="multiple3"
                                     required="true"
-                                    value="#{carBean.selectedStatus}" />
+                                    value="#{carBean.selectedStatus}"
+                                    label="Seleccione"
+                                    style="min-width: 15rem"
+                                    multiple="true"
+                                    filter="true"
+                                    filterMatchMode="startsWith"
+                                    panelStyle="width: 30rem"
+                                    scrollHeight="250">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value = "#{carBean.statuses}" var = "status"
+                                               itemValue="#{status.code}" itemLabel="#{status.status}"/>
+                            </p:selectOneMenu>
                             <p:message for="@previous"></p:message>
                         </div>
-                        
-                        
-                        
+
                     </h:panelGroup>
-                    
-                   
+                    <h:panelGroup>
+                        <div>
+                            <p:graphicImage name="carpic.jpeg" library="images" width="350" height="450" />
+                        </div>
+                    </h:panelGroup>
                 </p:panelGrid>
             </p:outputPanel>
         </p:outputPanel>
@@ -80,4 +122,5 @@
                     class="ui-button-secondary" />
         </f:facet>
     </p:dialog>
+    </h:form>
 </ui:composition>

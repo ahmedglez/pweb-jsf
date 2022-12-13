@@ -1,34 +1,36 @@
 package cu.edu.cujae.pweb.dto;
 
 public class CarModelDto {
-	private int code;
-	private String model;
-	private BrandDto brand;
+    private int code;
+    private String model;
+    private BrandDto brand;
 
-	public int getCode() {
-		return code;
-	}
+    public CarModelDto(){}
 
-	public void setCode(int code) {
-		this.code = code;
-	}
+    public int getCode() {
+        return code;
+    }
 
-	public String getModel() {
-		return model;
-	}
+    public void setCode(int code) {
+        this.code = code;
+    }
 
-	public void setModel(String model) {
-		this.model = model;
-	}
+    public String getModel() {
+        return model;
+    }
 
-	public BrandDto getBrand() {
-		return brand;
-	}
+    public void setModel(String model) {
+        this.model = model;
+    }
 
-	public void setBrand(BrandDto brand) {
-		this.brand = brand;
-	}
-	
-	
-	
+    public BrandDto getBrand() {
+        return brand;
+    }
+
+    public void setBrand(BrandDto brand) {
+        this.brand = brand;
+    }
+    
+    
+    
 }

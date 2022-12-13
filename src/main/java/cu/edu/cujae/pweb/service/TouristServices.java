@@ -1,128 +1,91 @@
 package cu.edu.cujae.pweb.service;
 
-import cu.edu.cujae.pweb.dto.TouristDto;
-import org.springframework.stereotype.Service;
 
+import cu.edu.cujae.pweb.dto.TouristDto;
+import cu.edu.cujae.pweb.utils.ApiRestMapper;
+import cu.edu.cujae.pweb.utils.CrudInterface;
+import cu.edu.cujae.pweb.utils.RestService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.util.UriTemplate;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
-public class TouristServices {
+public class TouristServices implements CrudInterface {
 
-    private ArrayList<TouristDto> tou = initializerTou();
+    @Autowired
+    RestService restService;
 
-    public void delete(TouristDto tourist) {
-        tou.remove(tourist);
+    @Override
+    public  List<TouristDto> getAll() {
+        List<TouristDto> tourists = new ArrayList<TouristDto>();
+        try {
+            MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+            ApiRestMapper<TouristDto> apiRestMapper = new ApiRestMapper<>();
+            String response = (String)restService.GET("/tourists/all", params, String.class).getBody();
+            tourists = apiRestMapper.mapList(response, TouristDto.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return tourists;
     }
 
+    @Override
+    public TouristDto getByCode(int code) {
+        TouristDto tourist = null;
+
+        try {
+            MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+            ApiRestMapper<TouristDto> apiRestMapper = new ApiRestMapper<>();
+
+            UriTemplate template = new UriTemplate("/tourists/{code}");
+            String uri = template.expand(code).toString();
+            String response = (String)restService.GET(uri, params, String.class).getBody();
+            tourist = apiRestMapper.mapOne(response, TouristDto.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tourist;
+    }
+
+    @Override
     public void create(Object dto) {
         TouristDto tourist = (TouristDto) dto;
-        tou.add(tourist);
+        String response = (String) restService.POST("/tourists/", tourist, String.class).getBody();
+        System.out.println(response);
     }
 
-    public void update(TouristDto tourist, int code) {
-        for (TouristDto t : tou) {
-            if (t.getCode() == code) {
-                t.setName(tourist.getName());
-                t.setLastName(tourist.getLastName());
-                t.setIdPassport(tourist.getIdPassport());
-                t.setAge(tourist.getAge());
-                t.setSex(tourist.getSex());
-                t.setTelephoneNumber(tourist.getTelephoneNumber());
-                t.setCountry(tourist.getCountry());
-            }
-        }
+    @Override
+    public void update(Object dto) {
+        TouristDto tourist = (TouristDto) dto;
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        String response = (String) restService.PUT("/tourists/", params, tourist, String.class).getBody();
+        System.out.println(response);
     }
 
-    public boolean existID(int code) {
+    @Override
+    public void delete(int code) {
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        UriTemplate template = new UriTemplate("/tourists/{code}");
+        String uri = template.expand(code).toString();
+        String response = (String) restService.DELETE(uri, params, String.class).getBody();
+        System.out.println(response);
+    }
+
+    public boolean existID(int code){
         boolean exist = false;
-        for (int i = 0; i < tou.size(); i++) {
-            if (tou.get(i).getCode() == code) {
+        List<TouristDto> tourists = getAll();
+        for(int i = 0; i < tourists.size();i++){
+            if(tourists.get(i).getCode() == code){
                 exist = true;
-                i = tou.size();
+                i = tourists.size();
             }
         }
         return exist;
     }
-
-
-    public ArrayList<TouristDto> initializerTou() {
-        ArrayList<TouristDto> tourists = new ArrayList<>();
-        tourists.add(new TouristDto(
-                0,
-                "Erne",
-                "Abella",
-                "G456778",
-                22,
-                "Masculino",
-                "7889654",
-                "Spain"
-        ));
-        tourists.add(new TouristDto(
-                1,
-                "Erne",
-                "Abella",
-                "G456778",
-                22,
-                "Masculino",
-                "7889654",
-                "Spain"
-        ));
-        tourists.add(new TouristDto(
-                2,
-                "Erne",
-                "Abella",
-                "G456778",
-                22,
-                "Masculino",
-                "7889654",
-                "Spain"
-        ));
-        tourists.add(new TouristDto(
-                3,
-                "Erne",
-                "Abella",
-                "G456778",
-                22,
-                "Masculino",
-                "7889654",
-                "Spain"
-        ));
-        tourists.add(new TouristDto(
-                4,
-                "Erne",
-                "Abella",
-                "G456778",
-                22,
-                "Masculino",
-                "7889654",
-                "Spain"
-        ));
-        tourists.add(new TouristDto(
-                5,
-                "Erne",
-                "Abella",
-                "G456778",
-                22,
-                "Masculino",
-                "7889654",
-                "Spain"
-        ));
-        tourists.add(new TouristDto(
-                6,
-                "Erne",
-                "Abella",
-                "G456778",
-                22,
-                "Masculino",
-                "7889654",
-                "Spain"
-        ));
-
-        return tourists;
-    }
-
-    public ArrayList<TouristDto> getAll() {
-        return tou;
-    }
-
 }

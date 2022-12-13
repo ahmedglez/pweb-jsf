@@ -12,14 +12,14 @@ public interface CrudInterface {
   <T> List<T> getAll();
 
   //Metodo para obtener un registro de la tabla
-  Object getById(String id);
+  Object getByCode(int code);
 
   //Metodo para insertar un registro en la tabla
   void create(Object dto);
 
   //Metodo para actualizar un registro en la tabla
-  void update(Object dto, String id);
+  void update(Object dto);
 
   //Metodo para eliminar un registro de la tabla
-  void delete(String id);
+  void delete(int code);
 }

@@ -67,16 +67,22 @@
 					<p:column headerText="Usuario" sortBy="#{user.username}" filterBy="#{user.username}">
 						<h:outputText value="#{user.username}" />
 					</p:column>
-					<p:column headerText="Ci" sortBy="#{user.identification}"
-						filterBy="#{user.identification}">
-						<h:outputText value="#{user.identification}" />
+					<p:column headerText="Full name" sortBy="#{user.firstName}" filterBy="#{user.firstName}">
+						<h:outputText value="#{user.firstName}" />
 					</p:column>
-					<p:column headerText="Nombre" sortBy="#{user.fullName}">
-						<h:outputText value="#{user.fullName}" />
+					<p:column headerText="Last name" sortBy="#{user.lastName}" filterBy="#{user.lastName}">
+						<h:outputText value="#{user.lastName}" />
+					</p:column>
+					<p:column headerText="Contraseña" sortBy="#{user.password}" filterBy="#{user.password}">
+						<h:outputText value="#{user.password}" />
 					</p:column>
 					<p:column headerText="Correo" sortBy="#{user.email}"
 						filterBy="#{user.email}">
 						<h:outputText value="#{user.email}" />
+					</p:column>
+					<p:column headerText="Roles" sortBy="#{user.roles}"
+							  filterBy="#{user.roles}">
+						<h:outputText value="#{user.rolesName}" />
 					</p:column>
 					<p:column exportable="false">
 						<p:commandButton icon="pi pi-pencil" action="#{manageUserBean.openForEdit}"

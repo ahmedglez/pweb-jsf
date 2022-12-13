@@ -1,57 +1,64 @@
 <html
-	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-	<h:head>
-		<title>Caso de estudio Login</title>
-		<h:outputStylesheet
+		xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Caso de estudio Login</title>
+	<h:outputStylesheet
 			name="primeflex.min.css"
 			library="css"></h:outputStylesheet>
-	</h:head>
+</h:head>
 
-	<h:body>
-		<h:form>
-			<p:spacer height="50"></p:spacer>
-			<div class="p-grid p-ai-center vertical-container">
-				<div class="p-col"></div>
-				<div class="p-col">
-					<p:card style="width: auto">
-						<f:facet name="title"> Login </f:facet>
-						<h:outputLabel value="user: panitas y pass: 1234"></h:outputLabel>
-						<p:panelGrid columns="1" layout="grid">
-							<h:panelGroup>
-								<p:outputLabel for="@next" value="#{msgs.label_username}" />
-								<p:inputText
+<h:body>
+	<h:form>
+		<p:spacer height="50"></p:spacer>
+		<div class="p-grid p-ai-center vertical-container">
+			<div class="p-col"></div>
+			<div class="p-col">
+				<p:card style="width: auto">
+					<f:facet name="title"> Login </f:facet>
+					<p:panelGrid columns="1" layout="grid">
+						<h:panelGroup>
+							<p:outputLabel for="@next" value="#{msgs.label_username}" />
+							<p:inputText
 									value="#{userBean.username}"
 									style="width: 100%"
 									required="true" />
-								<p:message for="@previous" />
-							</h:panelGroup>
+							<p:message for="@previous" />
+						</h:panelGroup>
 
-							<h:panelGroup>
-								<p:outputLabel for="@next" value="#{msgs.label_password}" />
-								<p:password
+						<h:panelGroup>
+							<p:outputLabel for="@next" value="#{msgs.label_password}" />
+							<p:password
 									style="width: 100%"
 									value="#{userBean.password}"
 									required="true" />
-								<p:message for="@previous" />
-							</h:panelGroup>
-						</p:panelGrid>
+							<p:message for="@previous" />
+						</h:panelGroup>
+					</p:panelGrid>
 
-						<f:facet name="footer">
-							<p:commandButton
+					<f:facet name="footer">
+						<p:commandButton
 								ajax="false"
 								icon="pi pi-sign-in"
 								value="#{msgs.btn_login}"
-								action="#{userBean.login}" />
-						</f:facet>
-					</p:card>
-				</div>
-				<div class="p-col">
-					<div class="box"></div>
-				</div>
+								action="#{userBean.login(userBean.username,userBean.password)}" />
+						<!-- forgot password -->
+						<p:commandButton
+								value="Olvidaste tu contraseña?"
+								icon="pi pi-question-circle"
+								styleClass="p-button-outlined"
+								onclick="PF('forgotPasswordDialog').show()"
+								action="#{userBean.forgotPassword(userBean.username)}"
+						/>
+					</f:facet>
+				</p:card>
 			</div>
-		</h:form>
-	</h:body>
+			<div class="p-col">
+				<div class="box"></div>
+			</div>
+		</div>
+	</h:form>
+</h:body>
 </html>

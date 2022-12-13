@@ -1,6 +1,5 @@
 package cu.edu.cujae.pweb.dto;
 
-
 public class TouristDto {
     private int code;
     private String name;
@@ -10,6 +9,25 @@ public class TouristDto {
     private String sex;
     private String telephoneNumber;
     private String country;
+
+    public TouristDto( int code, String name, String lastName, String idPassport, int age, String sex, String telephoneNumber, String country) {
+        this.code = code;
+        this.name = name;
+        this.lastName = lastName;
+        this.idPassport = idPassport;
+        this.age = age;
+        this.sex = sex;
+        this.telephoneNumber = telephoneNumber;
+        this.country = country;
+    }
+
+    public TouristDto() {
+    }
+
+    @Override
+    public TouristDto clone(){
+        return new TouristDto(getCode(),getName(),getLastName(),getIdPassport(),getAge(),getSex(),getTelephoneNumber(),getCountry());
+    }
 
     public String getName() {
         return name;

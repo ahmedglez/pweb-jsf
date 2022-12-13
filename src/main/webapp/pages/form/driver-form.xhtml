@@ -4,6 +4,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
+	<h:form id = "form1">
 	<p:dialog
 		header="Conductor"
 		showEffect="fade"
@@ -11,7 +12,7 @@
 		widgetVar="manageDriverDialog"
 		responsive="true">
 		<p:outputPanel id="manage-driver-content" class="ui-fluid">
-			<p:outputPanel rendered="#{not empty manageDriverBean.selected}">
+			<p:outputPanel rendered="#{not empty manageDriverBean.selectedDriver}">
 				<p:panelGrid layout="grid" columns="2">
 					<h:panelGroup>
 						<div class="p-field">
@@ -19,7 +20,7 @@
 							<p:inputText
 								id="ci"
 								required="true"
-								value="#{manageDriverBean.selected.id}"
+								value="#{manageDriverBean.selectedDriver.ci}"
 								maxlength="11" />
 							<p:keyFilter mask="num" />
 
@@ -30,7 +31,8 @@
 							<p:inputText
 								id="firstName"
 								required="true"
-								value="#{manageDriverBean.selected.firstName}" />
+								requiredMessage="Se require el nombre"
+								value="#{manageDriverBean.selectedDriver.name}" />
 							<p:message for="@previous"></p:message>
 						</div>
 						<div class="p-field">
@@ -38,7 +40,7 @@
 							<p:inputText
 								id="lastName"
 								required="true"
-								value="#{manageDriverBean.selected.lastName}">
+								value="#{manageDriverBean.selectedDriver.lastName}">
 							</p:inputText>
 							<p:message for="@previous"></p:message>
 						</div>
@@ -47,30 +49,29 @@
 							<p:inputText
 								id="address"
 								required="true"
-								value="#{manageDriverBean.selected.address}">
+								value="#{manageDriverBean.selectedDriver.address}">
 							</p:inputText>
 							<p:message for="@previous"></p:message>
 						</div>
 					</h:panelGroup>
 					<h:panelGroup>
-						<div class="p-field">
-							<p:outputLabel for="@next">Categoría</p:outputLabel>
+					<p:outputLabel for="@next">Categoría</p:outputLabel>
+						<div class="p-field" style="display: flex; flex-direction: row; ">
 							<p:selectOneMenu
-								id="multiple"
-								required="true"
-								value="#{manageDriverBean.selectedCategory}"
-								label="Seleccione"
-								style="min-width: 15rem"
-								multiple="true"
-								filter="true"
-								filterMatchMode="startsWith"
-								panelStyle="width: 30rem"
-								scrollHeight="250">
-								<f:selectItems
-									value="#{manageDriverBean.categories}"
-									var="category"
-									itemLabel="#{category.category}"
-									itemValue="#{category.category}" />
+									id="multiple2"
+									required="true"
+									value="#{manageDriverBean.selectedCategory}"
+									label="Seleccione"
+									style="min-width: 15rem"
+									multiple="true"
+									filter="true"
+									requiredMessage="Seleccione un pais"
+									filterMatchMode="startsWith"
+									panelStyle="width: 30rem"
+									scrollHeight="250">
+								<f:selectItem itemLabel="Selecione una categoria" itemValue="-1" noSelectionOption="true"/>
+								<f:selectItems value="#{manageDriverBean.categories}" var="category"
+												itemLabel="#{category.category}" itemValue="#{category.code}"/>
 							</p:selectOneMenu>
 						</div>
 					</h:panelGroup>
@@ -89,7 +90,9 @@
 				value="Cancelar"
 				icon="pi pi-times"
 				onclick="PF('manageDriverDialog').hide()"
-				class="ui-button-secondary" />
+				class="ui-button-secondary"
+				type="button"/>
 		</f:facet>
 	</p:dialog>
+	</h:form>
 </ui:composition>

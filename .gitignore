@@ -4,26 +4,26 @@ target/
 #ignore vscode folder
 .vscode/
 
-#ignore .DS_Store
-.DS_Store
-
 #ignore .idea folder
 .idea/
+
+.gitignore
+
+#ignore .DS_Store
+.DS_Store
 
 #ignore pom.xml
 pom.xml
 
-#ignore .classpath
-.classpath
+#pweb
+pweb-jsf.iml
 
-#ignore .project
-.project
-
-#ignore .settings folder
-.settings/
-
-#ignore .metadata folder
-.metadata/
+#WEB-INF
+WEB-INF/
 
 
+#ignore .xml
+*.xml
 
+#ignore .properties
+*.properties

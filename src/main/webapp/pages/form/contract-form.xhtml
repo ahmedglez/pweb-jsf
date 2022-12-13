@@ -1,0 +1,150 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:form id="contract-form">
+    <p:dialog
+            header="Nuevo Contrato"
+            showEffect="fade"
+            modal="true"
+            widgetVar="manageContractDialog"
+            width="800"
+            height="520">
+        <p:outputPanel id="manage-contract-content" class="ui-fluid">
+            <p:outputPanel rendered="#{not empty manageContractBean.contracts}">
+                <p:panelGrid layout="grid" columns="2">
+                    <h:panelGroup>
+                        <div class="p-field">
+                            <p:outputLabel for="@next">Turista</p:outputLabel>
+                            <p:selectOneMenu
+                                    id="turista"
+                                    required="true"
+                                    value="#{manageContractBean.selectedTourist}"
+                                    label="Seleccione un turista"
+                                    style="min-width: 15rem"
+                                    multiple="true"
+                                    filter="true"
+                                    requiredMessage="Seleccione un turista"
+                                    filterMatchMode="startsWith"
+                                    panelStyle="width: 30rem"
+                                    scrollHeight="250">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value = "#{manageContractBean.tourists}" var = "tourist"
+                                               itemValue="#{tourist.code}" itemLabel="#{tourist.name} #{tourist.lastName}"/>
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="@next">Carro</p:outputLabel>
+                            <p:selectOneMenu
+                                    id="carro"
+                                    required="true"
+                                    value="#{manageContractBean.selectedCar}"
+                                    label="Seleccione un carro"
+                                    style="min-width: 15rem"
+                                    multiple="true"
+                                    filter="true"
+                                    requiredMessage="Seleccione un carro"
+                                    filterMatchMode="startsWith"
+                                    panelStyle="width: 30rem"
+                                    scrollHeight="250">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value = "#{manageContractBean.cars}" var = "car"
+                                               itemValue="#{car.code}" itemLabel="#{car.carID}"/>
+                            </p:selectOneMenu>
+
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="@next">Conductores</p:outputLabel>
+                            <p:selectOneMenu
+                                    id="driver"
+                                    required="true"
+                                    value="#{manageContractBean.selectedDriver}"
+                                    label="Seleccione un conductor"
+                                    style="min-width: 15rem"
+                                    multiple="true"
+                                    filter="true"
+                                    requiredMessage="Seleccione un conductor"
+                                    filterMatchMode="startsWith"
+                                    panelStyle="width: 30rem"
+                                    scrollHeight="250">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value = "#{manageContractBean.drivers}" var = "driver"
+                                               itemValue="#{driver.code}" itemLabel="#{driver.name} #{driver.lastName}"/>
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="@next">Tipo de pago</p:outputLabel>
+                            <p:selectOneMenu
+                                    id="payment"
+                                    required="true"
+                                    value="#{manageContractBean.selectedPayment}"
+                                    label="Seleccione un conductor"
+                                    style="min-width: 15rem"
+                                    multiple="true"
+                                    filter="true"
+                                    requiredMessage="Seleccione un conductor"
+                                    filterMatchMode="startsWith"
+                                    panelStyle="width: 30rem"
+                                    scrollHeight="250">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value = "#{manageContractBean.payments}" var = "payment"
+                                               itemValue="#{payment.code}" itemLabel="#{payment.payment}"/>
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="@next">Tarifa normal</p:outputLabel>
+                            <p:inputNumber id="tarifa" value="#{manageContractBean.normalBill}"  required="true" requiredMessage="Se requeire normal bill"  minValue="200" maxValue="2000"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="@next">Tarifa especial</p:outputLabel>
+                            <p:inputNumber id="tarifa1" value="#{manageContractBean.especialBill}"  required="true" requiredMessage="Se requeire especial bill" minValue="400" maxValue="40000"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="@next" value="Fecha inicio"/>
+                            <p:datePicker id="fecha1" value="#{manageContractBean.startingDate}"  required="true" requiredMessage="Seleccione una fecha de inicio"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="@next" value="Fecha fin"/>
+                            <p:datePicker id="fecha2" value="#{manageContractBean.finalDate}" required="true" requiredMessage="Seleccione una fecha de fin"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="@next" value="Extension"/>
+                            <p:spinner id="horizontalAfter"
+                                       value="#{manageContractBean.selectedContract.extension}"
+                                       buttons="horizontal-after"
+                                       upButtonStyleClass="ui-button-success"
+                                       downButtonStyleClass="ui-button-danger"
+                                       min = "0"
+                            />
+                        </div>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <div>
+                            <p:graphicImage name="lambo.png" library="images" width="350" height="450" />
+                        </div>
+                    </h:panelGroup>
+                </p:panelGrid>
+            </p:outputPanel>
+        </p:outputPanel>
+
+        <f:facet name="footer">
+            <p:commandButton
+                    value="Salvar"
+                    icon="pi pi-check"
+                    actionListener="#{manageContractBean.saveContract}"
+                    update="manage-contract-content"
+                    process="manage-contract-content @this" />
+            <p:commandButton
+                    value="Cancelar"
+                    icon="pi pi-times"
+                    onclick="PF('manageContractDialog').hide()"
+                    class="ui-button-secondary"
+                    type="button">
+                <p:resetInput target=":manage-contract-content" />
+            </p:commandButton>
+        </f:facet>
+    </p:dialog>
+    </h:form>
+</ui:composition>

@@ -1,7 +1,6 @@
 package cu.edu.cujae.pweb.dto;
 
 
-
 import java.util.Locale;
 import java.util.Objects;
 

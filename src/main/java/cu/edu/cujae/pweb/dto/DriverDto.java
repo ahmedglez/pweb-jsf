@@ -9,15 +9,41 @@ public class DriverDto {
   private String lastName;
   private String address;
   private DriversCategoriesDto category;
-  
 
+  public DriverDto(
+          int code,
+          String ci,
+          String name,
+          String lastName,
+          String address,
+          DriversCategoriesDto category
+  ) {
+    this.code = code;
+    this.ci = ci;
+    this.name = name;
+    this.lastName = lastName;
+    this.address = address;
+    this.category = category;
+  }
 
-  
+  public DriverDto() {}
+
+  @Override
+  public DriverDto clone(){
+    return new DriverDto(getCode(),getCi(),getName(),getLastName(),getAddress(),getCategory());
+  }
+
+  public String getCi() {
+    return ci;
+  }
+
+  public void setCi(String ci) {
+    this.ci = ci;
+  }
+
   public String getName() {
     return name;
   }
-
-  
 
   public void setName(String name) {
     this.name = name;
@@ -53,17 +79,5 @@ public class DriverDto {
 
   public void setCode(int code) {
     this.code = code;
-  }
-
-
-
-  public String getCi() {
-    return ci;
-  }
-
-
-
-  public void setCi(String ci) {
-    this.ci = ci;
   }
 }

@@ -1,16 +1,16 @@
-package cu.edu.cujae.pweb.bean;
+ package cu.edu.cujae.pweb.bean;
 
-import cu.edu.cujae.pweb.dto.DriversCategoriesDto;
+import cu.edu.cujae.pweb.dto.CountryDto;
 import cu.edu.cujae.pweb.dto.TouristDto;
+import cu.edu.cujae.pweb.service.CountryService;
 import cu.edu.cujae.pweb.service.TouristServices;
 import cu.edu.cujae.pweb.utils.JsfUtils;
-import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 
-import cu.edu.cujae.pweb.utils.rawData.Country;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,9 +22,12 @@ public class ManageTouristBean {
 
   private TouristDto tourist;
   private TouristDto selectedTourist;
-  private ArrayList<TouristDto> tourists;
-  private ArrayList<Country> countries;
-  private Country selectedCountry;
+  private List<TouristDto> tourists;
+  private List<CountryDto> countries;
+  private int selectedCountry;
+
+  @Autowired
+  private CountryService countryService;
 
   @Autowired
   private TouristServices service;
@@ -32,23 +35,23 @@ public class ManageTouristBean {
   @PostConstruct
   public void onInit() {
     tourists = service.getAll();
-    countries = Country.getCountries();
-    System.out.println(countries.size());
+    countries = countryService.getCountries();
   }
 
   public void newTourist() {
     this.selectedTourist = new TouristDto();
+    this.selectedCountry = -1;
   }
 
-  public void updateTourist(TouristDto tourist) {
-    this.selectedTourist = tourist;
+  public void openForEdit(TouristDto tourist){
+    selectedCountry = countryService.getCountryIdByCountryName(tourist.getCountry());
   }
-
 
   public void deleteTourist() {
     try {
-      service.delete(this.selectedTourist);
+      service.delete(this.selectedTourist.getCode());
       this.selectedTourist = null;
+      tourists = service.getAll();
       JsfUtils.addMessageFromBundle(
               null,
               FacesMessage.SEVERITY_INFO,
@@ -69,6 +72,7 @@ public class ManageTouristBean {
     if (this.selectedTourist.getCode() == 0) {
       boolean repeatedId = service.existID(this.selectedTourist.getCode());
       if (!repeatedId) {
+        this.selectedTourist.setCountry(countryService.getCountryByCode(selectedCountry).getName());
         service.create(this.selectedTourist);
         tourists = service.getAll();
         JsfUtils.addMessageFromBundle(
@@ -84,7 +88,8 @@ public class ManageTouristBean {
         );
       }
     } else {
-      service.update(this.selectedTourist, this.selectedTourist.getCode());
+      this.selectedTourist.setCountry(countryService.getCountryByCode(selectedCountry).getName());
+      service.update(this.selectedTourist);
       JsfUtils.addMessageFromBundle(
               null,
               FacesMessage.SEVERITY_INFO,
@@ -112,27 +117,28 @@ public class ManageTouristBean {
     this.selectedTourist = selectedTourist;
   }
 
-  public ArrayList<TouristDto> getTourists() {
+  public List<TouristDto> getTourists() {
     return tourists;
   }
 
-  public void setTourists(ArrayList<TouristDto> tourists) {
+  public void setTourists(List<TouristDto> tourists) {
     this.tourists = tourists;
   }
 
-  public ArrayList<Country> getCountries() {
+  public List<CountryDto> getCountries() {
     return countries;
   }
 
-  public void setCountries(ArrayList<Country> countries) {
+  public void setCountries(List<CountryDto> countries) {
     this.countries = countries;
   }
 
-  public Country getSelectedCountry() {
+  public int getSelectedCountry() {
     return selectedCountry;
   }
 
-  public void setSelectedCountry(Country selectedCountry) {
+  public void setSelectedCountry(int selectedCountry) {
     this.selectedCountry = selectedCountry;
   }
+
 }
