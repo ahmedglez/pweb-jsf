@@ -4,6 +4,7 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
+    <h:form id = "car-form">
     <p:dialog
             header="Car"
             showEffect="fade"
@@ -96,12 +97,13 @@
                             </p:selectOneMenu>
                             <p:message for="@previous"></p:message>
                         </div>
-                        
-                        
-                        
+
                     </h:panelGroup>
-                    
-                   
+                    <h:panelGroup>
+                        <div>
+                            <p:graphicImage name="carpic.jpeg" library="images" width="350" height="450" />
+                        </div>
+                    </h:panelGroup>
                 </p:panelGrid>
             </p:outputPanel>
         </p:outputPanel>
@@ -120,4 +122,5 @@
                     class="ui-button-secondary" />
         </f:facet>
     </p:dialog>
+    </h:form>
 </ui:composition>

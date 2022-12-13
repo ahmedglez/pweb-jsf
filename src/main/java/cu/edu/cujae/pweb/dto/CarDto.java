@@ -9,7 +9,10 @@ public class CarDto {
     private CarModelDto model;
     private double mileage;
 
-    public CarDto(){}
+    public CarDto(){
+        this.status = new CarStatusDto();
+        this.model = new CarModelDto();
+    }
 
     public CarDto(int code, String carID, String color, CarStatusDto status, CarModelDto model, double mileage) {
         this.code = code;

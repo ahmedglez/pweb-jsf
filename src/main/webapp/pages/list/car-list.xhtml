@@ -7,8 +7,9 @@
 	<ui:composition template="/pages/template/layout.xhtml">
 		<ui:define name="title"> Listado de Carros </ui:define>
 		<ui:define name="layout">
-			<h:form id="form">
+
 				<div class="card crud-demo">
+					<h:form id="form">
 					<p:toolbar>
 						<p:toolbarGroup>
 							<!--
@@ -24,11 +25,11 @@
 								icon="pi pi-plus"
 								actionListener="#{carBean.newCar}"
 								action="#{carBean.newCar()}"
-								update=":form:manage-car-content"
+								update=":car-form:manage-car-content"
 								oncomplete="PF('manageCarDialog').show()"
 								styleClass="ui-button-success"
 								style="margin-right: 0.5rem">
-								<p:resetInput target=":form:manage-car-content" />
+								<p:resetInput target=":car-form:manage-car-content" />
 							</p:commandButton>
 						</p:toolbarGroup>
 						<p:toolbarGroup align="right">
@@ -114,14 +115,14 @@
 							<p:commandButton
 								icon="pi pi-pencil"
 								action="#{carBean.openForEdit(car)}"
-								update=":form:manage-car-content"
+								update=":car-form:manage-car-content"
 								oncomplete="PF('manageCarDialog').show()"
 								styleClass="edit-button rounded-button ui-button-success"
 								process="@this">
 								<f:setPropertyActionListener
 									value="#{car}"
 									target="#{carBean.selectedCar}" />
-								<p:resetInput target=":form:manage-car-content" />
+								<p:resetInput target=":car-form:manage-car-content" />
 							</p:commandButton>
 							<p:commandButton
 								class="ui-button-warning rounded-button"
@@ -138,6 +139,7 @@
 							</p:commandButton>
 						</p:column>
 					</p:dataTable>
+					</h:form>
 
 					<!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
 					<ui:include src="/pages/form/car-form.xhtml"></ui:include>
@@ -157,7 +159,7 @@
 							icon="pi pi-times" />
 					</p:confirmDialog>
 				</div>
-			</h:form>
+
 		</ui:define>
 	</ui:composition>
 	</html>

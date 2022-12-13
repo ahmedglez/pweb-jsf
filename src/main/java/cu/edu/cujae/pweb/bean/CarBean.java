@@ -200,7 +200,49 @@ public int getSelectedBrand() {
 public void setSelectedBrand(int selectedBrand) {
     this.selectedBrand = selectedBrand;
 }
-  
 
 
+    public void setSelectedModel(Integer selectedModel) {
+        this.selectedModel = selectedModel;
+    }
+
+    public void setSelectedStatus(Integer selectedStatus) {
+        this.selectedStatus = selectedStatus;
+    }
+
+    public void setSelectedBrand(Integer selectedBrand) {
+        this.selectedBrand = selectedBrand;
+    }
+
+    public CarService getCarService() {
+        return carService;
+    }
+
+    public void setCarService(CarService carService) {
+        this.carService = carService;
+    }
+
+    public ModelService getModelService() {
+        return modelService;
+    }
+
+    public void setModelService(ModelService modelService) {
+        this.modelService = modelService;
+    }
+
+    public CarStatusService getStatusService() {
+        return statusService;
+    }
+
+    public void setStatusService(CarStatusService statusService) {
+        this.statusService = statusService;
+    }
+
+    public BrandService getBrandService() {
+        return brandService;
+    }
+
+    public void setBrandService(BrandService brandService) {
+        this.brandService = brandService;
+    }
 }
