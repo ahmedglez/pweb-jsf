@@ -30,9 +30,9 @@ public class ManageCountryBean {
 
     @PostConstruct
     public void init() {
-        //countries
+        /* //countries
         countries = service.getCountries();
-        selectedCountry = new CountryDto();
+        selectedCountry = new CountryDto(); */
     }
     
     public CountryDto getSelectedCountry() {
@@ -44,6 +44,7 @@ public class ManageCountryBean {
     }
 
     public List<CountryDto> getCountries() {
+        countries = service.getCountries();
         return countries;
     }
 

@@ -142,15 +142,14 @@ public class ManageDriverBean {
     this.selectedDriver = selectedDriver;
   }
 
-  public List<DriverDto> getAll() {
-    return driverService.getAll();
-  }
+
 
   public void setDrivers(List<DriverDto> drivers) {
     this.drivers = drivers;
   }
 
   public List<DriverDto> getDrivers() {
+    drivers = driverService.getAll();
     return drivers;
   }
 

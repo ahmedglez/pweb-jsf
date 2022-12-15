@@ -1,4 +1,4 @@
-package cu.edu.cujae.pwebjsf.data.utils;
+package cu.edu.cujae.pweb.utils;
 
 import java.io.Serializable;
 import java.util.Objects;

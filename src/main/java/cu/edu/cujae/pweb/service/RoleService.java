@@ -3,19 +3,18 @@ package cu.edu.cujae.pweb.service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import cu.edu.cujae.pweb.dto.UserDto;
-import cu.edu.cujae.pweb.utils.ApiRestMapper;
-import cu.edu.cujae.pweb.utils.CrudInterface;
-import cu.edu.cujae.pweb.utils.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import cu.edu.cujae.pweb.dto.RoleDto;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriTemplate;
+
+import cu.edu.cujae.pweb.bean.UserBean;
+import cu.edu.cujae.pweb.dto.RoleDto;
+import cu.edu.cujae.pweb.utils.ApiRestMapper;
+import cu.edu.cujae.pweb.utils.CrudInterface;
+import cu.edu.cujae.pweb.utils.RestService;
 
 @Service
 public class RoleService implements CrudInterface {
@@ -39,7 +38,7 @@ public class RoleService implements CrudInterface {
 		try {
 			MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 			ApiRestMapper<RoleDto> apiRestMapper = new ApiRestMapper<>();
-			String response = (String)restService.GET("/roles/all", params, String.class).getBody();
+			String response = (String)restService.GET("/roles/all", params, String.class, UserBean.token).getBody();
 			roles = apiRestMapper.mapList(response, RoleDto.class);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -56,7 +55,7 @@ public class RoleService implements CrudInterface {
 
 			UriTemplate template = new UriTemplate("/roles/{code}");
 			String uri = template.expand(code).toString();
-			String response = (String)restService.GET(uri, params, String.class).getBody();
+			String response = (String)restService.GET(uri, params, String.class, UserBean.token).getBody();
 			role = apiRestMapper.mapOne(response, RoleDto.class);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -67,7 +66,7 @@ public class RoleService implements CrudInterface {
 	@Override
 	public void create(Object dto) {
 		RoleDto user = (RoleDto) dto;
-		String response = (String) restService.POST("/roles/", user, String.class).getBody();
+		String response = (String) restService.POST("/roles/", user, String.class, UserBean.token).getBody();
 		System.out.println(response);
 
 	}
@@ -76,7 +75,7 @@ public class RoleService implements CrudInterface {
 	public void update(Object dto) {
 		RoleDto user = (RoleDto) dto;
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		String response = (String) restService.PUT("/roles/", params, user, String.class).getBody();
+		String response = (String) restService.PUT("/roles/", params, user, String.class, UserBean.token).getBody();
 		System.out.println(response);
 
 	}
@@ -86,7 +85,7 @@ public class RoleService implements CrudInterface {
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		UriTemplate template = new UriTemplate("/roles/{code}");
 		String uri = template.expand(code).toString();
-		String response = (String) restService.DELETE(uri, params, String.class).getBody();
+		String response = (String) restService.DELETE(uri, params, String.class, UserBean.token).getBody();
 		System.out.println(response);
 	}
 }

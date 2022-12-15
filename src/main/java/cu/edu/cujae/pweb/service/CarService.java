@@ -3,22 +3,18 @@ package cu.edu.cujae.pweb.service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-import cu.edu.cujae.pweb.dto.TouristDto;
-import cu.edu.cujae.pweb.utils.ApiRestMapper;
-import cu.edu.cujae.pweb.utils.CrudInterface;
-import cu.edu.cujae.pweb.utils.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
-
-import cu.edu.cujae.pweb.dto.CarDto;
-import cu.edu.cujae.pweb.dto.RoleDto;
-import cu.edu.cujae.pweb.dto.UserDto;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriTemplate;
+
+import cu.edu.cujae.pweb.bean.UserBean;
+import cu.edu.cujae.pweb.dto.CarDto;
+import cu.edu.cujae.pweb.utils.ApiRestMapper;
+import cu.edu.cujae.pweb.utils.CrudInterface;
+import cu.edu.cujae.pweb.utils.RestService;
 
 /* Esta anotiacioon le indica a spring que esta clase es un servicio y por tanto luego podra inyectarse en otro lugar usando
  * @Autowired. En estas implementaciones luego se pondraan las llamadas al proyecto backend
@@ -35,7 +31,7 @@ public class CarService implements CrudInterface {
         try {
             MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
             ApiRestMapper<CarDto> apiRestMapper = new ApiRestMapper<>();
-            String response = (String)restService.GET("/cars/all", params, String.class).getBody();
+            String response = (String)restService.GET("/cars/all", params, String.class,  UserBean.token).getBody();
             cars = apiRestMapper.mapList(response, CarDto.class);
 
         } catch (IOException e) {
@@ -54,7 +50,7 @@ public class CarService implements CrudInterface {
 
             UriTemplate template = new UriTemplate("/cars/{code}");
             String uri = template.expand(code).toString();
-            String response = (String)restService.GET(uri, params, String.class).getBody();
+            String response = (String)restService.GET(uri, params, String.class,  UserBean.token).getBody();
             car = apiRestMapper.mapOne(response, CarDto.class);
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,7 +61,7 @@ public class CarService implements CrudInterface {
     @Override
     public void create(Object dto) {
         CarDto car = (CarDto) dto;
-        String response = (String) restService.POST("/cars/", car, String.class).getBody();
+        String response = (String) restService.POST("/cars/", car, String.class,  UserBean.token).getBody();
         System.out.println(response);
     }
 
@@ -73,7 +69,7 @@ public class CarService implements CrudInterface {
     public void update(Object dto) {
         CarDto car = (CarDto) dto;
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        String response = (String) restService.PUT("/cars/", params, car, String.class).getBody();
+        String response = (String) restService.PUT("/cars/", params, car, String.class,  UserBean.token).getBody();
         System.out.println(response);
     }
 
@@ -82,7 +78,7 @@ public class CarService implements CrudInterface {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         UriTemplate template = new UriTemplate("/cars/{code}");
         String uri = template.expand(code).toString();
-        String response = (String) restService.DELETE(uri, params, String.class).getBody();
+        String response = (String) restService.DELETE(uri, params, String.class,  UserBean.token).getBody();
         System.out.println(response);
     }
     

@@ -1,20 +1,20 @@
 package cu.edu.cujae.pweb.service;
 
-import cu.edu.cujae.pweb.dto.DriverDto;
-import cu.edu.cujae.pweb.dto.DriversCategoriesDto;
-import cu.edu.cujae.pweb.utils.ApiRestMapper;
-import cu.edu.cujae.pweb.utils.CrudInterface;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cu.edu.cujae.pweb.utils.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriTemplate;
+
+import cu.edu.cujae.pweb.bean.UserBean;
+import cu.edu.cujae.pweb.dto.DriverDto;
+import cu.edu.cujae.pweb.utils.ApiRestMapper;
+import cu.edu.cujae.pweb.utils.CrudInterface;
+import cu.edu.cujae.pweb.utils.RestService;
 
 @Service
 public class DriverService implements CrudInterface {
@@ -28,7 +28,7 @@ public class DriverService implements CrudInterface {
     try {
       MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
       ApiRestMapper<DriverDto> apiRestMapper = new ApiRestMapper<>();
-      String response = (String)restService.GET("/drivers/all", params, String.class).getBody();
+      String response = (String)restService.GET("/drivers/all", params, String.class,  UserBean.token).getBody();
       drivers = apiRestMapper.mapList(response, DriverDto.class);
     } catch (IOException e) {
       e.printStackTrace();
@@ -46,7 +46,7 @@ public class DriverService implements CrudInterface {
 
       UriTemplate template = new UriTemplate("/drivers/{code}");
       String uri = template.expand(code).toString();
-      String response = (String)restService.GET(uri, params, String.class).getBody();
+      String response = (String)restService.GET(uri, params, String.class,  UserBean.token).getBody();
       driver = apiRestMapper.mapOne(response, DriverDto.class);
     } catch (Exception e) {
       e.printStackTrace();
@@ -57,7 +57,7 @@ public class DriverService implements CrudInterface {
   @Override
   public void create(Object dto) {
     DriverDto driver = (DriverDto) dto;
-    String response = (String) restService.POST("/drivers/", driver, String.class).getBody();
+    String response = (String) restService.POST("/drivers/", driver, String.class,  UserBean.token).getBody();
     System.out.println(response);
   }
 
@@ -65,7 +65,7 @@ public class DriverService implements CrudInterface {
   public void update(Object dto) {
     DriverDto driver = (DriverDto) dto;
     MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-    String response = (String) restService.PUT("/drivers/", params, driver, String.class).getBody();
+    String response = (String) restService.PUT("/drivers/", params, driver, String.class,  UserBean.token).getBody();
     System.out.println(response);
   }
 
@@ -74,7 +74,7 @@ public class DriverService implements CrudInterface {
     MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
     UriTemplate template = new UriTemplate("/drivers/{code}");
     String uri = template.expand(code).toString();
-    String response = (String) restService.DELETE(uri, params, String.class).getBody();
+    String response = (String) restService.DELETE(uri, params, String.class,  UserBean.token).getBody();
     System.out.println(response);
   }
 

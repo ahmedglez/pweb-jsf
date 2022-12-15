@@ -1,15 +1,16 @@
 package cu.edu.cujae.pweb.service;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriTemplate;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
+import cu.edu.cujae.pweb.bean.UserBean;
 import cu.edu.cujae.pweb.dto.PaymentsDto;
 import cu.edu.cujae.pweb.utils.ApiRestMapper;
 import cu.edu.cujae.pweb.utils.CrudInterface;
@@ -27,7 +28,7 @@ public class PaymentService implements CrudInterface {
         try {
             MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
             ApiRestMapper<PaymentsDto> apiRestMapper = new ApiRestMapper<>();
-            String response = (String)restService.GET("/contracts/payments/all", params, String.class).getBody();
+            String response = (String)restService.GET("/contracts/payments/all", params, String.class, UserBean.token).getBody();
             payments = apiRestMapper.mapList(response, PaymentsDto.class);
         } catch (IOException e) {
             e.printStackTrace();
@@ -45,7 +46,7 @@ public class PaymentService implements CrudInterface {
 
             UriTemplate template = new UriTemplate("/contracts/payments/{code}");
             String uri = template.expand(code).toString();
-            String response = (String)restService.GET(uri, params, String.class).getBody();
+            String response = (String)restService.GET(uri, params, String.class, UserBean.token).getBody();
             payment = apiRestMapper.mapOne(response, PaymentsDto.class);
         } catch (Exception e) {
             e.printStackTrace();
@@ -56,7 +57,7 @@ public class PaymentService implements CrudInterface {
     @Override
     public void create(Object dto) {
         PaymentsDto payment = (PaymentsDto) dto;
-        String response = (String) restService.POST("/contracts/payments/", payment, String.class).getBody();
+        String response = (String) restService.POST("/contracts/payments/", payment, String.class, UserBean.token).getBody();
         System.out.println(response);
     }
 
@@ -64,7 +65,7 @@ public class PaymentService implements CrudInterface {
     public void update(Object dto) {
         PaymentsDto payment = (PaymentsDto) dto;
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        String response = (String) restService.PUT("/contracts/payments/", params, payment, String.class).getBody();
+        String response = (String) restService.PUT("/contracts/payments/", params, payment, String.class, UserBean.token).getBody();
         System.out.println(response);
     }
 
@@ -73,7 +74,7 @@ public class PaymentService implements CrudInterface {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         UriTemplate template = new UriTemplate("/contracts/payments/{code}");
         String uri = template.expand(code).toString();
-        String response = (String) restService.DELETE(uri, params, String.class).getBody();
+        String response = (String) restService.DELETE(uri, params, String.class, UserBean.token).getBody();
         System.out.println(response);
     }
 }

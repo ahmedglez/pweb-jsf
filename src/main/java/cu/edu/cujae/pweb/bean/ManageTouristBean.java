@@ -34,8 +34,8 @@ public class ManageTouristBean {
 
   @PostConstruct
   public void onInit() {
-    tourists = service.getAll();
-    countries = countryService.getCountries();
+   /*  tourists = service.getAll();
+    countries = countryService.getCountries(); */
   }
 
   public void newTourist() {
@@ -118,6 +118,7 @@ public class ManageTouristBean {
   }
 
   public List<TouristDto> getTourists() {
+    tourists = service.getAll();
     return tourists;
   }
 

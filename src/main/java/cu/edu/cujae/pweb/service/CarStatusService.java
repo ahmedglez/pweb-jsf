@@ -10,8 +10,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriTemplate;
 
+import cu.edu.cujae.pweb.bean.UserBean;
 import cu.edu.cujae.pweb.dto.CarStatusDto;
-import cu.edu.cujae.pweb.dto.RoleDto;
 import cu.edu.cujae.pweb.utils.ApiRestMapper;
 import cu.edu.cujae.pweb.utils.CrudInterface;
 import cu.edu.cujae.pweb.utils.RestService;
@@ -27,7 +27,7 @@ public class CarStatusService implements CrudInterface{
         try {
             MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
             ApiRestMapper<CarStatusDto> apiRestMapper = new ApiRestMapper<>();
-            String response = (String)restService.GET("/cars/status/all", params, String.class).getBody();
+            String response = (String)restService.GET("/cars/status/all", params, String.class,  UserBean.token).getBody();
             statuses = apiRestMapper.mapList(response, CarStatusDto.class);
         } catch (IOException e) {
             e.printStackTrace();
@@ -44,7 +44,7 @@ public class CarStatusService implements CrudInterface{
 
             UriTemplate template = new UriTemplate("/cars/status/{code}");
             String uri = template.expand(code).toString();
-            String response = (String)restService.GET(uri, params, String.class).getBody();
+            String response = (String)restService.GET(uri, params, String.class,  UserBean.token).getBody();
             status = apiRestMapper.mapOne(response, CarStatusDto.class);
         } catch (Exception e) {
             e.printStackTrace();
@@ -55,7 +55,7 @@ public class CarStatusService implements CrudInterface{
     @Override
     public void create(Object dto) {
         CarStatusDto status = (CarStatusDto) dto;
-        String response = (String) restService.POST("/cars/status/", status, String.class).getBody();
+        String response = (String) restService.POST("/cars/status/", status, String.class, UserBean.token).getBody();
         System.out.println(response);
 
     }
@@ -64,7 +64,7 @@ public class CarStatusService implements CrudInterface{
     public void update(Object dto) {
         CarStatusDto status = (CarStatusDto) dto;
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        String response = (String) restService.PUT("/cars/status/", params, status, String.class).getBody();
+        String response = (String) restService.PUT("/cars/status/", params, status, String.class, UserBean.token).getBody();
         System.out.println(response);
     }
 
@@ -73,7 +73,7 @@ public class CarStatusService implements CrudInterface{
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         UriTemplate template = new UriTemplate("/cars/status/{code}");
         String uri = template.expand(code).toString();
-        String response = (String) restService.DELETE(uri, params, String.class).getBody();
+        String response = (String) restService.DELETE(uri, params, String.class,  UserBean.token).getBody();
         System.out.println(response);
     }
 }
