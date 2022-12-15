@@ -34,9 +34,9 @@ public class ManageDriverBean {
 
   @PostConstruct
   public void init() {
-    drivers = drivers == null ? getAllWithOutSinDriver() : drivers;
+   /*  drivers = drivers == null ? getAllWithOutSinDriver() : drivers;
     categories =
-      categories == null ? getAllWithOutSinCategory() : categories;
+      categories == null ? getAllWithOutSinCategory() : categories; */
   }
 
   //Se ejecuta al dar clic en el button Nuevo

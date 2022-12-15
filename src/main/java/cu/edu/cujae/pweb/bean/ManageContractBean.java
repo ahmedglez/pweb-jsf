@@ -199,6 +199,7 @@ public class ManageContractBean {
   }
 
   public List<CarDto> getCars() {
+    cars = carService.getAll();
     return cars;
   }
 
@@ -207,6 +208,7 @@ public class ManageContractBean {
   }
 
   public List<TouristDto> getTourists() {
+    tourists = touristServices.getAll();
     return tourists;
   }
 
@@ -215,6 +217,7 @@ public class ManageContractBean {
   }
 
   public List<DriverDto> getDrivers() {
+    drivers = driverService.getAll();
     return drivers;
   }
 
@@ -223,6 +226,7 @@ public class ManageContractBean {
   }
 
   public List<PaymentsDto> getPayments() {
+    payments = paymentService.getAll();
     return payments;
   }
 
