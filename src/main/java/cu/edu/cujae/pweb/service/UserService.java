@@ -33,7 +33,7 @@ public class UserService implements CrudInterface {
       MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
       ApiRestMapper<UserDto> apiRestMapper = new ApiRestMapper<>();
       String response = (String) restService
-        .GET("/users/all", params, String.class, UserBean.token)
+        .GET("/api/v1/users/all", params, String.class, UserBean.token)
         .getBody();
       users = apiRestMapper.mapList(response, UserDto.class);
       for (UserDto u : users) {
@@ -53,7 +53,7 @@ public class UserService implements CrudInterface {
       MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
       ApiRestMapper<UserDto> apiRestMapper = new ApiRestMapper<>();
 
-      UriTemplate template = new UriTemplate("/users/{code}");
+      UriTemplate template = new UriTemplate("/api/v1/users/{code}");
       String uri = template.expand(code).toString();
       String response = (String) restService
         .GET(uri, params, String.class, UserBean.token)
@@ -69,7 +69,7 @@ public class UserService implements CrudInterface {
   public void create(Object dto) {
     UserDto user = (UserDto) dto;
     String response = (String) restService
-      .POST("/users/", user, String.class, UserBean.token)
+      .POST("/api/v1/users/", user, String.class, UserBean.token)
       .getBody();
     System.out.println(response);
   }
@@ -79,7 +79,7 @@ public class UserService implements CrudInterface {
     UserDto user = (UserDto) dto;
     MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
     String response = (String) restService
-      .PUT("/users/", params, user, String.class, UserBean.token)
+      .PUT("/api/v1/users/", params, user, String.class, UserBean.token)
       .getBody();
     System.out.println(response);
   }
@@ -87,7 +87,7 @@ public class UserService implements CrudInterface {
   @Override
   public void delete(int code) {
     MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-    UriTemplate template = new UriTemplate("/users/{code}");
+    UriTemplate template = new UriTemplate("/api/v1/users/{code}");
     String uri = template.expand(code).toString();
     String response = (String) restService
       .DELETE(uri, params, String.class, UserBean.token)

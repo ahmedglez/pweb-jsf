@@ -6,7 +6,7 @@
             <i class="pi pi-bars"></i>
         </a>
         <h:link styleClass="logo" outcome="/pages/welcome/welcome.xhtml">
-            <p:graphicImage name="logocar.svg" library="images" style="width: 8vw; height: 8vh" />
+            <p:graphicImage name="logocar.svg" library="images" style="width: 10vw;height:10vh"/>
         </h:link>
 
         <h:form styleClass="topbar-form">
@@ -14,5 +14,25 @@
                 
             </ul>
         </h:form>
+        
+        <h:form id="j_idt12" style="margin-left:5px">
+        
+         <h:panelGroup styleClass="ui-inputgroup" >
+                 
+               <h:panelGroup id="icon" styleClass="ui-inputgroup-addon">
+                        <i class="pi pi-globe" style="font-size:22px"/>
+                </h:panelGroup>
+                   
+                <p:menubar> 
+	                <p:submenu label="language" style="height:10px">
+						<p:menuitem value="Espanol" action="#{languageBean.setLanguage('es')}"  ajax="false"></p:menuitem>
+						<p:menuitem value="Ingles" action="#{languageBean.setLanguage('en')}"    ajax="false"></p:menuitem>
+					</p:submenu>
+				</p:menubar>
+                    
+          </h:panelGroup>
+        	
+        </h:form>
+        
     </div>
 </ui:composition>

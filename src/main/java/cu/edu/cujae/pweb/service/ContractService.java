@@ -28,7 +28,7 @@ public class ContractService implements CrudInterface {
       MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
       ApiRestMapper<ContractDto> apiRestMapper = new ApiRestMapper<>();
       String response = (String) restService
-        .GET("/contracts/all", params, String.class, UserBean.token)
+        .GET("/api/v1/contracts/all", params, String.class, UserBean.token)
         .getBody();
       contracts = apiRestMapper.mapList(response, ContractDto.class);
     } catch (IOException e) {
@@ -45,7 +45,7 @@ public class ContractService implements CrudInterface {
       MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
       ApiRestMapper<ContractDto> apiRestMapper = new ApiRestMapper<>();
 
-      UriTemplate template = new UriTemplate("/contracts/{code}");
+      UriTemplate template = new UriTemplate("/api/v1/contracts/{code}");
       String uri = template.expand(code).toString();
       String response = (String) restService
         .GET(uri, params, String.class, UserBean.token)
@@ -61,7 +61,7 @@ public class ContractService implements CrudInterface {
   public void create(Object dto) {
     ContractDto contract = (ContractDto) dto;
     String response = (String) restService
-      .POST("/contracts/", contract, String.class,  UserBean.token)
+      .POST("/api/v1/contracts/", contract, String.class,  UserBean.token)
       .getBody();
     System.out.println(response);
   }
@@ -71,7 +71,7 @@ public class ContractService implements CrudInterface {
     ContractDto contract = (ContractDto) dto;
     MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
     String response = (String) restService
-      .PUT("/contracts/", params, contract, String.class,  UserBean.token)
+      .PUT("/api/v1/contracts/", params, contract, String.class,  UserBean.token)
       .getBody();
     System.out.println(response);
   }
@@ -79,7 +79,7 @@ public class ContractService implements CrudInterface {
   @Override
   public void delete(int code) {
     MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-    UriTemplate template = new UriTemplate("/contracts/{code}");
+    UriTemplate template = new UriTemplate("/api/v1/contracts/{code}");
     String uri = template.expand(code).toString();
     String response = (String) restService
       .DELETE(uri, params, String.class,  UserBean.token)

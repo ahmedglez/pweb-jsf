@@ -27,7 +27,7 @@ public class AuthService {
     AuthenticationResponse authenticationResponse = null;
     try {
       ApiRestMapper<AuthenticationResponse> apiRestMapper = new ApiRestMapper<>();
-      UriTemplate template = new UriTemplate("/login");
+      UriTemplate template = new UriTemplate("/api/v1/login");
       String uri = template.expand().toString();
       System.out.println("uri: " + uri);
       String response = (String) restService
@@ -51,7 +51,7 @@ public class AuthService {
     UserDto user = (UserDto) dto;
     try {
       ApiRestMapper<UserDto> apiRestMapper = new ApiRestMapper<>();
-      UriTemplate template = new UriTemplate("/logout");
+      UriTemplate template = new UriTemplate("/api/v1/logout");
       String uri = template.expand().toString();
       String response = (String) restService
         .POST(uri, user, String.class,  UserBean.token)
@@ -68,7 +68,7 @@ public class AuthService {
       MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
       ApiRestMapper<UserDto> apiRestMapper = new ApiRestMapper<>();
 
-      UriTemplate template = new UriTemplate("/sendmail/{email}");
+      UriTemplate template = new UriTemplate("/api/v1/sendmail/{email}");
       String uri = template.expand(email).toString();
       String response = (String) restService
         .GET(uri, params, String.class,  UserBean.token)

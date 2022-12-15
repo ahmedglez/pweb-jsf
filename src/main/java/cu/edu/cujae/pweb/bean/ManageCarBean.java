@@ -49,10 +49,6 @@ public class ManageCarBean {
 
   @PostConstruct
   public void init() {
-    /* cars = carService.getAll();
-    models = modelService.getAll();
-    statuses = statusService.getAll();
-    brands = brandService.getAll(); */
   }
 
   public void newCar() {
@@ -153,6 +149,7 @@ public class ManageCarBean {
   }
 
   public List<CarModelDto> getModels() {
+    models = modelService.getAll();
     return models;
   }
 
@@ -161,6 +158,7 @@ public class ManageCarBean {
   }
 
   public List<CarStatusDto> getStatuses() {
+    statuses = statusService.getAll();
     return statuses;
   }
 
@@ -185,6 +183,7 @@ public class ManageCarBean {
   }
 
   public List<BrandDto> getBrands() {
+    brands = brandService.getAll();
     return brands;
   }
 

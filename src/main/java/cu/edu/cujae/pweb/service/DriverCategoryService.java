@@ -28,7 +28,7 @@ public class DriverCategoryService implements CrudInterface {
         try {
             MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
             ApiRestMapper<DriversCategoriesDto> apiRestMapper = new ApiRestMapper<>();
-            String response = (String)restService.GET("/drivers/categories/all", params, String.class, UserBean.token).getBody();
+            String response = (String)restService.GET("/api/v1/drivers/categories/all", params, String.class, UserBean.token).getBody();
             categories = apiRestMapper.mapList(response, DriversCategoriesDto.class);
         } catch (IOException e) {
             e.printStackTrace();
@@ -44,7 +44,7 @@ public class DriverCategoryService implements CrudInterface {
             MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
             ApiRestMapper<DriversCategoriesDto> apiRestMapper = new ApiRestMapper<>();
 
-            UriTemplate template = new UriTemplate("/drivers/categories/{code}");
+            UriTemplate template = new UriTemplate("/api/v1/drivers/categories/{code}");
             String uri = template.expand(code).toString();
             String response = (String)restService.GET(uri, params, String.class, UserBean.token).getBody();
             category = apiRestMapper.mapOne(response, DriversCategoriesDto.class);
@@ -58,7 +58,7 @@ public class DriverCategoryService implements CrudInterface {
     @Override
     public void create(Object dto) {
         DriversCategoriesDto category = (DriversCategoriesDto) dto;
-        String response = (String) restService.POST("/drivers/categories/", category, String.class, UserBean.token).getBody();
+        String response = (String) restService.POST("/api/v1/drivers/categories/", category, String.class, UserBean.token).getBody();
         System.out.println(response);
     }
 
@@ -66,14 +66,14 @@ public class DriverCategoryService implements CrudInterface {
     public void update(Object dto) {
         DriversCategoriesDto category = (DriversCategoriesDto) dto;
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        String response = (String) restService.PUT("/drivers/categories/", params, category, String.class, UserBean.token).getBody();
+        String response = (String) restService.PUT("/api/v1/drivers/categories/", params, category, String.class, UserBean.token).getBody();
         System.out.println(response);
     }
 
     @Override
     public void delete(int code) {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        UriTemplate template = new UriTemplate("/drivers/categories/{code}");
+        UriTemplate template = new UriTemplate("/api/v1/drivers/categories/{code}");
         String uri = template.expand(code).toString();
         String response = (String) restService.DELETE(uri, params, String.class, UserBean.token).getBody();
         System.out.println(response);

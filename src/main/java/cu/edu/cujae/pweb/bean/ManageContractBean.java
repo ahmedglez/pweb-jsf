@@ -105,7 +105,7 @@ public class ManageContractBean {
       JsfUtils.addMessageFromBundle(
         null,
         FacesMessage.SEVERITY_INFO,
-        "message_tourist_deleted"
+        "message_contract_deleted"
       );
       PrimeFaces.current().ajax().update("form:dt-contract"); // Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
     } catch (Exception e) {
@@ -141,7 +141,7 @@ public class ManageContractBean {
       JsfUtils.addMessageFromBundle(
         null,
         FacesMessage.SEVERITY_INFO,
-        "message_tourist_added"
+        "message_contract_added"
       );
     } else {
       BillDto bill = selectedContract.getBill();
@@ -165,7 +165,7 @@ public class ManageContractBean {
       JsfUtils.addMessageFromBundle(
         null,
         FacesMessage.SEVERITY_INFO,
-        "message_tourist_edited"
+        "message_contract_edited"
       );
     }
 

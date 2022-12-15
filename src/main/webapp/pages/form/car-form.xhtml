@@ -1,10 +1,10 @@
 <ui:composition
-        xmlns="http://www.w3.org/1999/xhtml"
+xmlns="http://www.w3.org/1999/xhtml"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
-    <h:form id = "car-form">
+<h:form id = "car-form">
     <p:dialog
             header="Car"
             showEffect="fade"
@@ -12,7 +12,7 @@
             widgetVar="manageCarDialog"
             responsive="true">
         <p:outputPanel id="manage-car-content" class="ui-fluid">
-            <p:outputPanel rendered="#{not empty carBean.selectedCar}">
+            <p:outputPanel rendered="#{not empty manageCarBean.selectedCar}">
                 <p:panelGrid layout="grid" columns="2">
                     <h:panelGroup>
                         <div class="p-field">
@@ -20,8 +20,8 @@
                             <p:inputText
                                     id="plate"
                                     required="true"
-                                    value="#{carBean.selectedCar.carID}"
-                                    />
+                                    value="#{manageCarBean.selectedCar.carID}"
+                            />
                             <p:message for="@previous"></p:message>
                         </div>
                         <div class="p-field">
@@ -29,7 +29,7 @@
                             <p:inputText
                                     id="color"
                                     required="true"
-                                    value="#{carBean.selectedCar.color}" />
+                                    value="#{manageCarBean.selectedCar.color}" />
                             <p:message for="@previous"></p:message>
                         </div>
                         <div class="p-field">
@@ -37,7 +37,7 @@
                             <p:selectOneMenu
                                     id="multiple"
                                     required="true"
-                                    value="#{carBean.selectedModel}"
+                                    value="#{manageCarBean.selectedModel}"
                                     label="Seleccione"
                                     style="min-width: 15rem"
                                     multiple="true"
@@ -46,17 +46,17 @@
                                     panelStyle="width: 30rem"
                                     scrollHeight="250">
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
-                                <f:selectItems value = "#{carBean.models}" var = "model"
+                                <f:selectItems value = "#{manageCarBean.models}" var = "model"
                                                itemValue="#{model.code}" itemLabel="#{model.model}"/>
                             </p:selectOneMenu>
                             <p:message for="@previous"></p:message>
                         </div>
-                         <div class="p-field">
+                        <div class="p-field">
                             <p:outputLabel for="@next">Brands</p:outputLabel>
                             <p:selectOneMenu
                                     id="multiple2"
                                     required="true"
-                                    value="#{carBean.selectedBrand}"
+                                    value="#{manageCarBean.selectedBrand}"
                                     label="Seleccione"
                                     style="min-width: 15rem"
                                     multiple="true"
@@ -65,7 +65,7 @@
                                     panelStyle="width: 30rem"
                                     scrollHeight="250">
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
-                                <f:selectItems value = "#{carBean.brands}" var = "brand"
+                                <f:selectItems value = "#{manageCarBean.brands}" var = "brand"
                                                itemValue="#{brand.code}" itemLabel="#{brand.brand}"/>
                             </p:selectOneMenu>
                             <p:message for="@previous"></p:message>
@@ -75,7 +75,7 @@
                             <p:inputText
                                     id="mileage"
                                     required="true"
-                                    value="#{carBean.selectedCar.mileage}" />
+                                    value="#{manageCarBean.selectedCar.mileage}" />
                             <p:message for="@previous"></p:message>
                         </div>
                         <div class="p-field">
@@ -83,7 +83,7 @@
                             <p:selectOneMenu
                                     id="multiple3"
                                     required="true"
-                                    value="#{carBean.selectedStatus}"
+                                    value="#{manageCarBean.selectedStatus}"
                                     label="Seleccione"
                                     style="min-width: 15rem"
                                     multiple="true"
@@ -92,7 +92,7 @@
                                     panelStyle="width: 30rem"
                                     scrollHeight="250">
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
-                                <f:selectItems value = "#{carBean.statuses}" var = "status"
+                                <f:selectItems value = "#{manageCarBean.statuses}" var = "status"
                                                itemValue="#{status.code}" itemLabel="#{status.status}"/>
                             </p:selectOneMenu>
                             <p:message for="@previous"></p:message>
@@ -112,7 +112,7 @@
             <p:commandButton
                     value="Salvar"
                     icon="pi pi-check"
-                    actionListener="#{carBean.saveCar}"
+                    actionListener="#{manageCarBean.saveCar}"
                     update="manage-car-content"
                     process="manage-car-content @this" />
             <p:commandButton
@@ -122,5 +122,5 @@
                     class="ui-button-secondary" />
         </f:facet>
     </p:dialog>
-    </h:form>
+</h:form>
 </ui:composition>
