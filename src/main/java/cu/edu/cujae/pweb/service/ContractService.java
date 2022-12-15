@@ -61,7 +61,7 @@ public class ContractService implements CrudInterface {
   public void create(Object dto) {
     ContractDto contract = (ContractDto) dto;
     String response = (String) restService
-      .POST("/contracts/", contract, String.class,  UserBean.token)
+      .POST("/contracts/", contract, String.class, UserBean.token)
       .getBody();
     System.out.println(response);
   }
@@ -71,7 +71,7 @@ public class ContractService implements CrudInterface {
     ContractDto contract = (ContractDto) dto;
     MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
     String response = (String) restService
-      .PUT("/contracts/", params, contract, String.class,  UserBean.token)
+      .PUT("/contracts/", params, contract, String.class, UserBean.token)
       .getBody();
     System.out.println(response);
   }
@@ -82,7 +82,7 @@ public class ContractService implements CrudInterface {
     UriTemplate template = new UriTemplate("/contracts/{code}");
     String uri = template.expand(code).toString();
     String response = (String) restService
-      .DELETE(uri, params, String.class,  UserBean.token)
+      .DELETE(uri, params, String.class, UserBean.token)
       .getBody();
     System.out.println(response);
   }
