@@ -28,7 +28,7 @@ public class ModelService implements CrudInterface{
         try {
             MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
             ApiRestMapper<CarModelDto> apiRestMapper = new ApiRestMapper<>();
-            String response = (String)restService.GET("/cars/models/all", params, String.class,  UserBean.token).getBody();
+            String response = (String)restService.GET("/api/v1/cars/models/all", params, String.class,  UserBean.token).getBody();
             model = apiRestMapper.mapList(response, CarModelDto.class);
         } catch (IOException e) {
             e.printStackTrace();
@@ -43,7 +43,7 @@ public class ModelService implements CrudInterface{
             MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
             ApiRestMapper<CarModelDto> apiRestMapper = new ApiRestMapper<>();
 
-            UriTemplate template = new UriTemplate("/cars/models/{code}");
+            UriTemplate template = new UriTemplate("/api/v1/cars/models/{code}");
             String uri = template.expand(code).toString();
             String response = (String)restService.GET(uri, params, String.class,  UserBean.token).getBody();
             model = apiRestMapper.mapOne(response, CarModelDto.class);
@@ -56,7 +56,7 @@ public class ModelService implements CrudInterface{
     @Override
     public void create(Object dto) {
         CarModelDto model = (CarModelDto) dto;
-        String response = (String) restService.POST("/cars/models/", model, String.class, UserBean.token).getBody();
+        String response = (String) restService.POST("/api/v1/cars/models/", model, String.class, UserBean.token).getBody();
         System.out.println(response);
 
     }
@@ -65,7 +65,7 @@ public class ModelService implements CrudInterface{
     public void update(Object dto) {
         CarModelDto model = (CarModelDto) dto;
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        String response = (String) restService.PUT("/cars/models/", params, model, String.class, UserBean.token).getBody();
+        String response = (String) restService.PUT("/api/v1/cars/models/", params, model, String.class, UserBean.token).getBody();
         System.out.println(response);
 
     }
@@ -73,7 +73,7 @@ public class ModelService implements CrudInterface{
     @Override
     public void delete(int code) {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        UriTemplate template = new UriTemplate("/cars/models/{code}");
+        UriTemplate template = new UriTemplate("/api/v1/cars/models/{code}");
         String uri = template.expand(code).toString();
         String response = (String) restService.DELETE(uri, params, String.class, UserBean.token).getBody();
         System.out.println(response);

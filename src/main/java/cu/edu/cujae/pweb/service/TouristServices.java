@@ -29,7 +29,7 @@ public class TouristServices implements CrudInterface {
         try {
             MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
             ApiRestMapper<TouristDto> apiRestMapper = new ApiRestMapper<>();
-            String response = (String)restService.GET("/tourists/all", params, String.class, UserBean.token).getBody();
+            String response = (String)restService.GET("/api/v1/tourists/all", params, String.class, UserBean.token).getBody();
             tourists = apiRestMapper.mapList(response, TouristDto.class);
         } catch (IOException e) {
             e.printStackTrace();
@@ -45,7 +45,7 @@ public class TouristServices implements CrudInterface {
             MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
             ApiRestMapper<TouristDto> apiRestMapper = new ApiRestMapper<>();
 
-            UriTemplate template = new UriTemplate("/tourists/{code}");
+            UriTemplate template = new UriTemplate("/api/v1/tourists/{code}");
             String uri = template.expand(code).toString();
             String response = (String)restService.GET(uri, params, String.class, UserBean.token).getBody();
             tourist = apiRestMapper.mapOne(response, TouristDto.class);
@@ -58,7 +58,7 @@ public class TouristServices implements CrudInterface {
     @Override
     public void create(Object dto) {
         TouristDto tourist = (TouristDto) dto;
-        String response = (String) restService.POST("/tourists/", tourist, String.class, UserBean.token).getBody();
+        String response = (String) restService.POST("/api/v1/tourists/", tourist, String.class, UserBean.token).getBody();
         System.out.println(response);
     }
 
@@ -66,14 +66,14 @@ public class TouristServices implements CrudInterface {
     public void update(Object dto) {
         TouristDto tourist = (TouristDto) dto;
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        String response = (String) restService.PUT("/tourists/", params, tourist, String.class, UserBean.token).getBody();
+        String response = (String) restService.PUT("/api/v1/tourists/", params, tourist, String.class, UserBean.token).getBody();
         System.out.println(response);
     }
 
     @Override
     public void delete(int code) {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        UriTemplate template = new UriTemplate("/tourists/{code}");
+        UriTemplate template = new UriTemplate("/api/v1/tourists/{code}");
         String uri = template.expand(code).toString();
         String response = (String) restService.DELETE(uri, params, String.class, UserBean.token).getBody();
         System.out.println(response);

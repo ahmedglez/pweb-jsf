@@ -38,7 +38,7 @@ public class RoleService implements CrudInterface {
 		try {
 			MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 			ApiRestMapper<RoleDto> apiRestMapper = new ApiRestMapper<>();
-			String response = (String)restService.GET("/roles/all", params, String.class, UserBean.token).getBody();
+			String response = (String)restService.GET("/api/v1/roles/all", params, String.class, UserBean.token).getBody();
 			roles = apiRestMapper.mapList(response, RoleDto.class);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -53,7 +53,7 @@ public class RoleService implements CrudInterface {
 			MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 			ApiRestMapper<RoleDto> apiRestMapper = new ApiRestMapper<>();
 
-			UriTemplate template = new UriTemplate("/roles/{code}");
+			UriTemplate template = new UriTemplate("/api/v1/roles/{code}");
 			String uri = template.expand(code).toString();
 			String response = (String)restService.GET(uri, params, String.class, UserBean.token).getBody();
 			role = apiRestMapper.mapOne(response, RoleDto.class);
@@ -66,7 +66,7 @@ public class RoleService implements CrudInterface {
 	@Override
 	public void create(Object dto) {
 		RoleDto user = (RoleDto) dto;
-		String response = (String) restService.POST("/roles/", user, String.class, UserBean.token).getBody();
+		String response = (String) restService.POST("/api/v1/roles/", user, String.class, UserBean.token).getBody();
 		System.out.println(response);
 
 	}
@@ -75,7 +75,7 @@ public class RoleService implements CrudInterface {
 	public void update(Object dto) {
 		RoleDto user = (RoleDto) dto;
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		String response = (String) restService.PUT("/roles/", params, user, String.class, UserBean.token).getBody();
+		String response = (String) restService.PUT("/api/v1/roles/", params, user, String.class, UserBean.token).getBody();
 		System.out.println(response);
 
 	}
@@ -83,7 +83,7 @@ public class RoleService implements CrudInterface {
 	@Override
 	public void delete(int code) {
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		UriTemplate template = new UriTemplate("/roles/{code}");
+		UriTemplate template = new UriTemplate("/api/v1/roles/{code}");
 		String uri = template.expand(code).toString();
 		String response = (String) restService.DELETE(uri, params, String.class, UserBean.token).getBody();
 		System.out.println(response);
