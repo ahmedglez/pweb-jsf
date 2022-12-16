@@ -9,7 +9,7 @@
 	<ui:define name="layout">
 
 		<div class="card crud-demo">
-			<h:form id="form">
+			<h:form id="form1">
 				<p:toolbar>
 					<p:toolbarGroup>
 						<!--
@@ -25,11 +25,11 @@
 								icon="pi pi-plus"
 								actionListener="#{manageCarBean.newCar}"
 								action="#{manageCarBean.newCar()}"
-								update=":car-form:manage-car-content"
+								update=":form2:car-form:manage-car-content"
 								oncomplete="PF('manageCarDialog').show()"
 								styleClass="ui-button-success"
 								style="margin-right: 0.5rem">
-							<p:resetInput target=":car-form:manage-car-content" />
+							<p:resetInput target=":form2:car-form:manage-car-content" />
 						</p:commandButton>
 					</p:toolbarGroup>
 					<p:toolbarGroup align="right">
@@ -115,14 +115,14 @@
 						<p:commandButton
 								icon="pi pi-pencil"
 								action="#{manageCarBean.openForEdit(car)}"
-								update=":car-form:manage-car-content"
+								update=":form2:car-form:manage-car-content"
 								oncomplete="PF('manageCarDialog').show()"
 								styleClass="edit-button rounded-button ui-button-success"
 								process="@this">
 							<f:setPropertyActionListener
 									value="#{car}"
 									target="#{manageCarBean.selectedCar}" />
-							<p:resetInput target=":car-form:manage-car-content" />
+							<p:resetInput target=":form2:car-form:manage-car-content" />
 						</p:commandButton>
 						<p:commandButton
 								class="ui-button-warning rounded-button"
@@ -140,10 +140,12 @@
 					</p:column>
 				</p:dataTable>
 			</h:form>
-
+            <h:form id="form2">
 			<!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
 			<ui:include src="/pages/form/car-form.xhtml"></ui:include>
-
+			
+			<ui:include src="/pages/form/model-form.xhtml"></ui:include>
+			</h:form>
 			<!-- Este comoponente se utiliza mucho para el caso de los eliminar, que es donde casi siempre se necesita confirmation,
             su uso es bien sencillo, cada confirmDialog va atado a un p:confirm que es el que se definie dentro del button -->
 			<p:confirmDialog global="true" showEffect="fade" width="300">
@@ -159,7 +161,6 @@
 						icon="pi pi-times" />
 			</p:confirmDialog>
 		</div>
-
 	</ui:define>
 </ui:composition>
 </html>

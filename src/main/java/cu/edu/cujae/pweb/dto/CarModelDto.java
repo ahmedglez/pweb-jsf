@@ -7,6 +7,12 @@ public class CarModelDto {
 
     public CarModelDto(){}
 
+    public CarModelDto(int code, String model, BrandDto brand) {
+        this.code = code;
+        this.model = model;
+        this.brand = brand;
+    }
+
     public int getCode() {
         return code;
     }

@@ -26,6 +26,7 @@ public class ManageCarBean {
   private CarDto cardto;
   private CarDto selectedCar;
   private List<CarDto> cars;
+  private String newCarModel;
   private List<CarModelDto> models;
   private List<CarStatusDto> statuses;
   private List<BrandDto> brands;
@@ -56,6 +57,15 @@ public class ManageCarBean {
     this.selectedModel = 0;
     this.selectedStatus = 0;
     this.selectedBrand = 0;
+  }
+
+  public void newModel(){
+    this.newCarModel = "";
+    this.selectedBrand = 0;
+  }
+
+  public void saveModel(){
+    modelService.create(new CarModelDto(0,newCarModel,brandService.getByCode(selectedBrand)));
   }
 
   //Se ejecuta al dar clic en el button con el lapicito
@@ -241,5 +251,13 @@ public class ManageCarBean {
 
   public void setBrandService(BrandService brandService) {
     this.brandService = brandService;
+  }
+
+  public String getNewCarModel() {
+    return newCarModel;
+  }
+
+  public void setNewCarModel(String newCarModel) {
+    this.newCarModel = newCarModel;
   }
 }

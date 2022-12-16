@@ -13,6 +13,7 @@ xmlns="http://www.w3.org/1999/xhtml"
             responsive="true">
         <p:outputPanel id="manage-car-content" class="ui-fluid">
             <p:outputPanel rendered="#{not empty manageCarBean.selectedCar}">
+                <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
                 <p:panelGrid layout="grid" columns="2">
                     <h:panelGroup>
                         <div class="p-field">
@@ -22,7 +23,6 @@ xmlns="http://www.w3.org/1999/xhtml"
                                     required="true"
                                     value="#{manageCarBean.selectedCar.carID}"
                             />
-                            <p:message for="@previous"></p:message>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="@next">Color</p:outputLabel>
@@ -30,26 +30,36 @@ xmlns="http://www.w3.org/1999/xhtml"
                                     id="color"
                                     required="true"
                                     value="#{manageCarBean.selectedCar.color}" />
-                            <p:message for="@previous"></p:message>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="@next">Models</p:outputLabel>
-                            <p:selectOneMenu
-                                    id="multiple"
-                                    required="true"
-                                    value="#{manageCarBean.selectedModel}"
-                                    label="Seleccione"
-                                    style="min-width: 15rem"
-                                    multiple="true"
-                                    filter="true"
-                                    filterMatchMode="startsWith"
-                                    panelStyle="width: 30rem"
-                                    scrollHeight="250">
-                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
-                                <f:selectItems value = "#{manageCarBean.models}" var = "model"
-                                               itemValue="#{model.code}" itemLabel="#{model.model}"/>
-                            </p:selectOneMenu>
-                            <p:message for="@previous"></p:message>
+                            <div style="display: flex; flex-direction: row; ">
+                                <p:selectOneMenu
+                                        id="multiple"
+                                        required="true"
+                                        value="#{manageCarBean.selectedModel}"
+                                        label="Seleccione"
+                                        style="min-width: 15rem"
+                                        multiple="true"
+                                        filter="true"
+                                        filterMatchMode="startsWith"
+                                        panelStyle="width: 30rem"
+                                        scrollHeight="250">
+                                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value = "#{manageCarBean.models}" var = "model"
+                                                   itemValue="#{model.code}" itemLabel="#{model.model}"/>
+                                </p:selectOneMenu>
+                                <p:commandButton
+                                        icon="pi pi-plus"
+                                        action="#{manageCarBean.newModel()}"
+                                        onclick="PF('manageCarDialog').hide()"
+                                        oncomplete="PF('manageModelDialog').show()"
+                                        update=":form2:model-form:manage-model-content"
+                                        styleClass="ui-button-success"
+                                        style="margin-right: 0.5rem">
+                                    <p:resetInput target=":form2:model-form:manage-model-content" />
+                                </p:commandButton>
+                            </div>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="@next">Brands</p:outputLabel>
@@ -68,7 +78,6 @@ xmlns="http://www.w3.org/1999/xhtml"
                                 <f:selectItems value = "#{manageCarBean.brands}" var = "brand"
                                                itemValue="#{brand.code}" itemLabel="#{brand.brand}"/>
                             </p:selectOneMenu>
-                            <p:message for="@previous"></p:message>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="@next">Mileage</p:outputLabel>
@@ -76,7 +85,6 @@ xmlns="http://www.w3.org/1999/xhtml"
                                     id="mileage"
                                     required="true"
                                     value="#{manageCarBean.selectedCar.mileage}" />
-                            <p:message for="@previous"></p:message>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="@next">Status</p:outputLabel>
@@ -95,13 +103,18 @@ xmlns="http://www.w3.org/1999/xhtml"
                                 <f:selectItems value = "#{manageCarBean.statuses}" var = "status"
                                                itemValue="#{status.code}" itemLabel="#{status.status}"/>
                             </p:selectOneMenu>
-                            <p:message for="@previous"></p:message>
                         </div>
+                        <div class="p-field">
+                            <p:messages closable="true" severity="error">
+                                <p:autoUpdate/>
+                            </p:messages>
+                        </div>
+
 
                     </h:panelGroup>
                     <h:panelGroup>
                         <div>
-                            <p:graphicImage name="carpic.jpeg" library="images" width="350" height="450" />
+                            <p:graphicImage name="carpic.jpeg" library="images" width="320" height="450" />
                         </div>
                     </h:panelGroup>
                 </p:panelGrid>
@@ -123,4 +136,6 @@ xmlns="http://www.w3.org/1999/xhtml"
         </f:facet>
     </p:dialog>
 </h:form>
+
+
 </ui:composition>
