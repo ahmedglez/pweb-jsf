@@ -19,23 +19,23 @@
 					<p:staticMessage
 						severity="info"
 						summary="INFO"
-						detail="Introduce tu email para recuperar tu contraseña."
-						style="width: 100%" />
-					<p:spacer height="100"></p:spacer>
-
+						detail="Por favor revise en su correo en busca del código que le hemos enviado"></p:staticMessage>
+					<p:spacer height="50"></p:spacer>
 					<p:inputText
-						id="email"
-						value="#{recoverPasswordBean.email}"
-						label="Email"
+						id="recoveryCode"
+						label="Código de recuperación"
+						value="#{recoverPasswordBean.recoveryCode}"
 						required="true"
-						requiredMessage="Email es requerido"
-						style="width: 100%" />
-					<p:spacer height="250"></p:spacer>
-
+						requiredMessage="El código de recuperación es requerido"
+						placeholder="Código de recuperación"
+						style="width: 100%"></p:inputText>
+					<p:spacer height="50"></p:spacer>
 					<p:commandButton
-						value="Enviar"
-						action="#{recoverPasswordBean.sendRecoveryEmail}"
-						style="width: 100%" />
+						id="sendRecoveryCode"
+						value="Verificar código"
+						action="#{recoverPasswordBean.sendRecoveryCode}"
+						style="width: 100%"></p:commandButton>
+					<p:spacer height="50"></p:spacer>
 				</p:card>
 			</div>
 		</h:form>

@@ -1,5 +1,7 @@
 package cu.edu.cujae.pweb.bean;
 
+import cu.edu.cujae.pweb.dto.UserDto;
+import cu.edu.cujae.pweb.dto.UserForRecoverCode;
 import cu.edu.cujae.pweb.security.CurrentUserUtils;
 import cu.edu.cujae.pweb.service.AuthService;
 import javax.annotation.ManagedBean;
@@ -17,21 +19,58 @@ public class RecoverPasswordBean {
 
   private String email;
 
+  private String recoveryCode;
+
+  private String password;
+
+  private String confirmPassword;
+
+  private UserDto user;
+
   @Autowired
   private AuthService authService;
 
   @PostConstruct
   public void init() {}
 
-  public void sendRecoveryCode() {
+  public void sendRecoveryEmail() {
     try {
       authService.sendEmail(email);
       getFacesContext()
         .getExternalContext()
         .redirect(
           getRequest().getContextPath() +
-          "/pages/security/recover_password/recovery-code.xhtml"
+          "/pages/security/recover_password/recovery-code.jsf"
         );
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void sendRecoveryCode() {
+    try {
+      UserForRecoverCode userForRecoverCode = new UserForRecoverCode();
+      userForRecoverCode.setEmail(email);
+      userForRecoverCode.setRecoveryCode(recoveryCode);
+      user = authService.sendRecoveryCode(userForRecoverCode);
+      getFacesContext()
+        .getExternalContext()
+        .redirect(
+          getRequest().getContextPath() +
+          "/pages/security/recover_password/new-password.jsf"
+        );
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void changePassword() {
+    try {
+      user.setPassword(password);
+      authService.recoverPassword(user);
+      getFacesContext()
+        .getExternalContext()
+        .redirect(getRequest().getContextPath() + "/pages/security/login.jsf");
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -66,4 +105,39 @@ public class RecoverPasswordBean {
   public String getUserLogued() {
     return CurrentUserUtils.getUsername();
   }
+
+  public String getRecoveryCode() {
+    return recoveryCode;
+  }
+
+  public void setRecoveryCode(String recoveryCode) {
+    this.recoveryCode = recoveryCode;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public String getConfirmPassword() {
+    return confirmPassword;
+  }
+
+  public void setConfirmPassword(String confirmPassword) {
+    this.confirmPassword = confirmPassword;
+  }
+
+  public UserDto getUser() {
+    return user;
+  }
+
+  public void setUser(UserDto user) {
+    this.user = user;
+  }
+
+
+  
 }
