@@ -82,7 +82,7 @@ public class ContractService implements CrudInterface {
     UriTemplate template = new UriTemplate("/api/v1/contracts/{code}");
     String uri = template.expand(code).toString();
     String response = (String) restService
-      .DELETE(uri, params, String.class,  UserBean.token)
+      .DELETE(uri, params, String.class, UserBean.token)
       .getBody();
     System.out.println(response);
   }

@@ -27,3 +27,7 @@ WEB-INF/
 
 #ignore .properties
 *.properties
+
+#friendly url
+UrlRewriteConfigurationProvider.java
+

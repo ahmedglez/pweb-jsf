@@ -45,10 +45,14 @@
 								value="#{msgs.btn_login}"
 								action="#{userBean.login()}" />
 						</f:facet>
-						<!-- forgot password link -->
-						<p:commandLink
-							value="Olvidaste tu contraseña?"
-							action="#{userBean.forgotPassword(userBean.username)}" />
+						<h:link style="color:#90CAF9;" outcome="/pages/security/recover_password/send-mail.xhtml" value="¿Olvidaste la contraseña?">
+							<f:facet name="footer">
+								<p:commandButton
+									ajax="false"
+									icon="pi pi-sign-in"
+									 />
+							</f:facet>
+						</h:link>
 					</p:card>
 				</div>
 				<div class="p-col">
