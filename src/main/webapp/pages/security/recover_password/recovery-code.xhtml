@@ -1,0 +1,43 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<title>Check Recovery Code</title>
+		<h:outputStylesheet
+			name="primeflex.min.css"
+			library="css"></h:outputStylesheet>
+	</h:head>
+
+	<!-- send recovery email -->
+	<h:body>
+		<h:form>
+			<p:spacer height="50"></p:spacer>
+			<div class="p-grid p-ai-center vertical-container">
+				<p:card style="width: 60%; margin: 0 auto">
+					<p:staticMessage
+						severity="info"
+						summary="INFO"
+						detail="Introduce tu email para recuperar tu contraseña."
+						style="width: 100%" />
+					<p:spacer height="100"></p:spacer>
+
+					<p:inputText
+						id="email"
+						value="#{recoverPasswordBean.email}"
+						label="Email"
+						required="true"
+						requiredMessage="Email es requerido"
+						style="width: 100%" />
+					<p:spacer height="250"></p:spacer>
+
+					<p:commandButton
+						value="Enviar"
+						action="#{recoverPasswordBean.sendRecoveryEmail}"
+						style="width: 100%" />
+				</p:card>
+			</div>
+		</h:form>
+	</h:body>
+</html>

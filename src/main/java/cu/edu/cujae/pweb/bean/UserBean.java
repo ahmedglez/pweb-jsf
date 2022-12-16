@@ -61,15 +61,6 @@ public class UserBean implements Serializable {
     return null;
   }
 
-  /* public void forgotPassword(String username) {
-    UserDto user = users
-      .stream()
-      .filter(u -> u.getUsername().equals(username))
-      .findFirst()
-      .orElse(null);
-    authService.sendEmail(user.getEmail());
-  } */
-
   protected HttpServletRequest getRequest() {
     return (HttpServletRequest) getFacesContext()
       .getExternalContext()
