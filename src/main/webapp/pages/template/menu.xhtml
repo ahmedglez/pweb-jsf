@@ -17,7 +17,9 @@
 		<div class="layout-menu">
 			<div class="menu-category">Administración</div>
 			<div class="menu-items">
-				<h:link outcome="/pages/security/users/user-list.xhtml">
+				<h:link
+					rendered="#{userBean.admin}"
+					outcome="/pages/security/users/user-list.xhtml">
 					Gestionar Usuarios
 				</h:link>
 				<h:link outcome="/pages/list/driver-list.xhtml">
@@ -26,9 +28,7 @@
 				<h:link outcome="/pages/list/tourist-list.xhtml">
 					Gestionar Turistas
 				</h:link>
-				<h:link outcome="/pages/list/car-list.xhtml">
-					Gestionar Carros
-				</h:link>
+				<h:link outcome="/pages/list/car-list.xhtml"> Gestionar Carros </h:link>
 				<h:link outcome="/pages/list/contract-list.xhtml">
 					Gestionar Contractos
 				</h:link>
