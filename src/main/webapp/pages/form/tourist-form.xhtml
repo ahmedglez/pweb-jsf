@@ -16,6 +16,7 @@
             <p:outputPanel rendered="#{not empty manageTouristBean.selectedTourist}">
                 <p:panelGrid layout="grid" columns="2">
                     <h:panelGroup>
+                        <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
                         <div class="p-field">
                             <p:outputLabel for="@next">Pasaporte</p:outputLabel>
                             <p:inputText
@@ -103,6 +104,11 @@
                                        itemValue="#{country.id}" itemLabel="#{country.name}"/>
                     </p:selectOneMenu>
                 </div>
+                        <div class="p-field">
+                            <p:messages closable="true" severity="error">
+                                <p:autoUpdate/>
+                            </p:messages>
+                        </div>
             </h:panelGroup>
             <h:panelGroup>
                 <div>

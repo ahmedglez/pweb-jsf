@@ -1,0 +1,46 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+   <h:form id="brand-form">
+      <p:dialog
+              header="Brand"
+              showEffect="fade"
+              modal="true"
+              widgetVar="manageBrandDialog"
+              responsive="true">
+         <p:outputPanel id="manage-brand-content" class="ui-fluid">
+            <div class="p-field">
+               <p:outputLabel for="@next">#{msgs.brand_label}</p:outputLabel>
+               <p:inputText
+                       id="new-model"
+                       required="true"
+                       requiredMessage="#{msgs.brand_message_required}"
+                       value="#{manageBrandBean.selectedBrand.brand}"
+               />
+            </div>
+            <div class="p-field">
+               <p:messages closable="true" severity="error">
+                  <p:autoUpdate/>
+               </p:messages>
+            </div>
+         </p:outputPanel>
+
+         <f:facet name="footer">
+            <p:commandButton
+                    value="Salvar"
+                    icon="pi pi-check"
+                    actionListener="#{manageBrandBean.saveBrand}"
+                    update="manage-brand-content"
+                    process="manage-brand-content @this" />
+            <p:commandButton
+                    value="Cancelar"
+                    icon="pi pi-times"
+                    onclick="PF('manageBrandDialog').hide()"
+                    class="ui-button-secondary" />
+         </f:facet>
+      </p:dialog>
+   </h:form>
+</ui:composition>

@@ -13,27 +13,28 @@ xmlns="http://www.w3.org/1999/xhtml"
             responsive="true">
         <p:outputPanel id="manage-car-content" class="ui-fluid">
             <p:outputPanel rendered="#{not empty manageCarBean.selectedCar}">
-                <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
                 <p:panelGrid layout="grid" columns="2">
                     <h:panelGroup>
+                        <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
                         <div class="p-field">
-                            <p:outputLabel for="@next">Plate</p:outputLabel>
+                            <p:outputLabel for="@next">#{msgs.plate_label}</p:outputLabel>
                             <p:inputText
                                     id="plate"
                                     required="true"
+                                    requiredMessage="#{msgs.plate_message}"
                                     value="#{manageCarBean.selectedCar.carID}"
                             />
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="@next">Color</p:outputLabel>
+                            <p:outputLabel for="@next">#{msgs.color_label}</p:outputLabel>
                             <p:inputText
                                     id="color"
                                     required="true"
+                                    requiredMessage="#{msgs.color_message}"
                                     value="#{manageCarBean.selectedCar.color}" />
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="@next">Models</p:outputLabel>
-                            <div style="display: flex; flex-direction: row; ">
+                            <p:outputLabel for="@next">#{msgs.model_brand_label}</p:outputLabel>
                                 <p:selectOneMenu
                                         id="multiple"
                                         required="true"
@@ -42,52 +43,24 @@ xmlns="http://www.w3.org/1999/xhtml"
                                         style="min-width: 15rem"
                                         multiple="true"
                                         filter="true"
+                                        requiredMessage="#{msgs.model_message}"
                                         filterMatchMode="startsWith"
                                         panelStyle="width: 30rem"
                                         scrollHeight="250">
                                     <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
                                     <f:selectItems value = "#{manageCarBean.models}" var = "model"
-                                                   itemValue="#{model.code}" itemLabel="#{model.model}"/>
+                                                   itemValue="#{model.code}" itemLabel="#{model.brand.brand} #{model.model}"/>
                                 </p:selectOneMenu>
-                                <p:commandButton
-                                        icon="pi pi-plus"
-                                        action="#{manageCarBean.newModel()}"
-                                        onclick="PF('manageCarDialog').hide()"
-                                        oncomplete="PF('manageModelDialog').show()"
-                                        update=":form2:model-form:manage-model-content"
-                                        styleClass="ui-button-success"
-                                        style="margin-right: 0.5rem">
-                                    <p:resetInput target=":form2:model-form:manage-model-content" />
-                                </p:commandButton>
-                            </div>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="@next">Brands</p:outputLabel>
-                            <p:selectOneMenu
-                                    id="multiple2"
-                                    required="true"
-                                    value="#{manageCarBean.selectedBrand}"
-                                    label="Seleccione"
-                                    style="min-width: 15rem"
-                                    multiple="true"
-                                    filter="true"
-                                    filterMatchMode="startsWith"
-                                    panelStyle="width: 30rem"
-                                    scrollHeight="250">
-                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
-                                <f:selectItems value = "#{manageCarBean.brands}" var = "brand"
-                                               itemValue="#{brand.code}" itemLabel="#{brand.brand}"/>
-                            </p:selectOneMenu>
-                        </div>
-                        <div class="p-field">
-                            <p:outputLabel for="@next">Mileage</p:outputLabel>
+                            <p:outputLabel for="@next">#{msgs.mileage_label}</p:outputLabel>
                             <p:inputText
                                     id="mileage"
                                     required="true"
                                     value="#{manageCarBean.selectedCar.mileage}" />
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="@next">Status</p:outputLabel>
+                            <p:outputLabel for="@next">#{msgs.status_label}</p:outputLabel>
                             <p:selectOneMenu
                                     id="multiple3"
                                     required="true"
@@ -96,6 +69,7 @@ xmlns="http://www.w3.org/1999/xhtml"
                                     style="min-width: 15rem"
                                     multiple="true"
                                     filter="true"
+                                    requiredMessage="#{msgs.status_message}"
                                     filterMatchMode="startsWith"
                                     panelStyle="width: 30rem"
                                     scrollHeight="250">
@@ -109,8 +83,6 @@ xmlns="http://www.w3.org/1999/xhtml"
                                 <p:autoUpdate/>
                             </p:messages>
                         </div>
-
-
                     </h:panelGroup>
                     <h:panelGroup>
                         <div>
@@ -120,7 +92,6 @@ xmlns="http://www.w3.org/1999/xhtml"
                 </p:panelGrid>
             </p:outputPanel>
         </p:outputPanel>
-
         <f:facet name="footer">
             <p:commandButton
                     value="Salvar"
@@ -135,7 +106,7 @@ xmlns="http://www.w3.org/1999/xhtml"
                     class="ui-button-secondary" />
         </f:facet>
     </p:dialog>
+
+
 </h:form>
-
-
 </ui:composition>

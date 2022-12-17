@@ -149,8 +149,8 @@ public class ManageDriverBean {
   }
 
   public List<DriverDto> getDrivers() {
-    categories = driverCategoryService.getAll();
-    drivers = driverService.getAll();
+    categories = getAllWithOutSinCategory();
+    drivers = getAllWithOutSinDriver();
     return drivers;
   }
 

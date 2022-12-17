@@ -1,0 +1,153 @@
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/pages/template/layout.xhtml">
+    <ui:define name="title"> Listado de Modelos </ui:define>
+    <ui:define name="layout">
+
+        <div class="card">
+            <p:tabMenu activeIndex="#{param.i}">
+                <p:menuitem value="Carros" outcome="/pages/list/car-list.xhtml" icon="pi pi-fw pi-tag">
+                    <f:param name="i" value="0"/>
+                </p:menuitem>
+                <p:menuitem value="Modelos" outcome="/pages/list/model-list.xhtml" icon="pi pi-fw pi-tag">
+                    <f:param name="i" value="1"/>
+                </p:menuitem>
+                <p:menuitem value="Marcas" outcome="/pages/list/brand-list.xhtml" icon="pi pi-fw pi-tag">
+                    <f:param name="i" value="2"/>
+                </p:menuitem>
+            </p:tabMenu>
+        </div>
+
+        <div class="card crud-demo">
+            <h:form id="form1">
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <!--
+                            * La propiedad action y actionListener de los botones apunta a un method en el bean de jsf, ese method
+                              por lo general es de tipo void porque se está trabajando con AJAX.
+                            * La propiedad update permite refrescar componentes luego de ejecutarse el code definido en el action. Si son varios
+                              componente poner los Ids separados por coma.
+                            * La propiedad onComplete ejecuta un code en Javascript una vez finalizada el action del button. También es posible ejecutar
+                              code en Javascript desde el bean de Jsf
+                            -->
+                        <p:commandButton
+                                value="Nuevo"
+                                icon="pi pi-plus"
+                                actionListener="#{manageModelBean.newModel}"
+                                action="#{manageModelBean.newModel()}"
+                                update="model-form:manage-model-content"
+                                oncomplete="PF('manageModelDialog').show()"
+                                styleClass="ui-button-success"
+                                style="margin-right: 0.5rem">
+                            <p:resetInput target="model-form:manage-model-content" />
+                        </p:commandButton>
+                    </p:toolbarGroup>
+                    <p:toolbarGroup align="right">
+                        <!-- Este es un button que tiene como objetivo exportar el contenido de la tabla que apunta a propiedad target
+                                 del componente dataExporter. En este caso dt-users es el identificador del componente datatable -->
+                        <p:commandButton
+                                value="Export"
+                                icon="pi pi-upload"
+                                styleClass="ui-button-help"
+                                ajax="false">
+                            <p:dataExporter
+                                    type="pdf"
+                                    target="dt-car"
+                                    fileName="car" />
+                        </p:commandButton>
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+                <!-- Componente usado para mostrar tablas con datos y ejecutar operaciones
+                    * La propiedad value: apunta a una lista de objetos de tipo UserDto que está en el bean de jsf
+                    * La propiedad var: es una instancia de esta lista para poder extaer los objetos, es como iterador
+                      que luego permite poder decir user.<propiedad del objeto>.
+                    * La propiedad paginator: define si se quiere paginar o no y es posible definir la position del mismo usando
+                      la propiedad pagePosition.
+                    * La propiedad rows: define la cantidad de filas
+                    * El facet header define un encabezado y agrega un button para filtrar. Por defecto esto lo hace el solo, si quieren algo
+                      con mayor detalle ver el showcase.
+                 -->
+                <p:dataTable
+                        id="dt-model"
+                        widgetVar="dtModel"
+                        var="model"
+                        value="#{manageModelBean.models}"
+                        reflow="true"
+                        paginator="true"
+                        rows="10"
+                        paginatorPosition="bottom">
+                    <f:facet name="header">
+                        <div class="products-table-header">
+                            <span style="font-weight: bold">Modelos</span>
+                            <span class="filter-container ui-input-icon-left">
+									<i class="pi pi-search"></i>
+									<p:inputText
+                                            id="globalFilter"
+                                            onkeyup="PF('dtModel').filter()"
+                                            placeholder="Buscar" />
+								</span>
+                        </div>
+                    </f:facet>
+                    <p:column headerText="#{msgs.model_label}" sortBy="#{model.model}">
+                        <h:outputText value="#{model.model}" />
+                    </p:column>
+                    <p:column headerText="#{msgs.brand_label}" sortBy="#{model.brand.brand}">
+                        <h:outputText value="#{model.brand.brand}" />
+                    </p:column>
+                    <p:column exportable="false">
+                        <p:commandButton
+                                icon="pi pi-pencil"
+                                update="model-form:manage-model-content"
+                                oncomplete="PF('manageModelDialog').show()"
+                                styleClass="edit-button rounded-button ui-button-success"
+                                process="@this">
+                            <f:setPropertyActionListener
+                                    value="#{model}"
+                                    target="#{manageModelBean.selectedModel}" />
+                            <f:setPropertyActionListener
+                                    value="#{model.brand.code}"
+                                    target="#{manageModelBean.selectedBrand}" />
+                            <p:resetInput target="model-form:manage-model-content" />
+                        </p:commandButton>
+                        <p:commandButton
+                                class="ui-button-warning rounded-button"
+                                icon="pi pi-trash"
+                                process="@this"
+                                action="#{manageModelBean.deleteModel}">
+                            <f:setPropertyActionListener
+                                    value="#{model}"
+                                    target="#{manageModelBean.selectedModel}" />
+                            <p:confirm
+                                    header="Confirmar"
+                                    message="Está seguro de eliminar el modelo?"
+                                    icon="pi pi-exclamation-triangle" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+            <!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
+            <ui:include src="/pages/form/model-form.xhtml"></ui:include>
+
+            <!-- Este comoponente se utiliza mucho para el caso de los eliminar, que es donde casi siempre se necesita confirmation,
+            su uso es bien sencillo, cada confirmDialog va atado a un p:confirm que es el que se definie dentro del button -->
+            <p:confirmDialog global="true" showEffect="fade" width="300">
+                <p:commandButton
+                        value="Si"
+                        type="button"
+                        styleClass="ui-confirmdialog-yes"
+                        icon="pi pi-check" />
+                <p:commandButton
+                        value="No"
+                        type="button"
+                        styleClass="ui-confirmdialog-no ui-button-secondary"
+                        icon="pi pi-times" />
+            </p:confirmDialog>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>

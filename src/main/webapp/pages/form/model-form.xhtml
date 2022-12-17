@@ -13,32 +13,37 @@
               responsive="true">
          <p:outputPanel id="manage-model-content" class="ui-fluid">
             <div class="p-field">
-               <p:outputLabel for="@next">Model</p:outputLabel>
+               <p:outputLabel for="@next">#{msgs.model_label}</p:outputLabel>
                <p:inputText
                        id="new-model"
                        required="true"
-                       requiredMessage="Modelo requerido"
-                       value="#{manageCarBean.newCarModel}"
+                       requiredMessage="#{msgs.model_message_required}"
+                       value="#{manageModelBean.selectedModel.model}"
                />
-               <p:message for="@previous" />
             </div>
             <div class="p-field">
-               <p:outputLabel for="@next">Brands</p:outputLabel>
+               <p:outputLabel for="@next">#{msgs.brand_label}</p:outputLabel>
                <p:selectOneMenu
                        id="multiple2"
                        required="true"
-                       value="#{manageCarBean.selectedBrand}"
+                       value="#{manageModelBean.selectedBrand}"
                        label="Seleccione"
                        style="min-width: 15rem"
                        multiple="true"
                        filter="true"
+                       requiredMessage="#{msgs.brand_message}"
                        filterMatchMode="startsWith"
                        panelStyle="width: 30rem"
                        scrollHeight="250">
                   <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
-                  <f:selectItems value = "#{manageCarBean.brands}" var = "brand"
+                  <f:selectItems value = "#{manageModelBean.brands}" var = "brand"
                                  itemValue="#{brand.code}" itemLabel="#{brand.brand}"/>
                </p:selectOneMenu>
+            </div>
+            <div class="p-field">
+               <p:messages closable="true" severity="error">
+                  <p:autoUpdate/>
+               </p:messages>
             </div>
          </p:outputPanel>
 
@@ -46,23 +51,14 @@
             <p:commandButton
                     value="Salvar"
                     icon="pi pi-check"
-                    action="#{manageCarBean.saveModel()}"
-                    actionListener="#{manageCarBean.saveModel}"
-                    update=":form2:model-form:manage-model-content :form2:car-form:manage-car-content"
-                    process=":form2:model-form:manage-model-content @this" >
-               <p:resetInput target=":form2:car-form:manage-car-content"/>
-            </p:commandButton>
+                    actionListener="#{manageModelBean.saveModel}"
+                    update="manage-model-content"
+                    process="manage-model-content @this" />
             <p:commandButton
                     value="Cancelar"
                     icon="pi pi-times"
-                    actionListener="#{manageCarBean.newCar}"
-                    action="#{manageCarBean.newCar()}"
-                    update=":form2:car-form:manage-car-content"
-                    oncomplete="PF('manageCarDialog').show()"
                     onclick="PF('manageModelDialog').hide()"
-                    class="ui-button-secondary">
-               <p:resetInput target=":form2:car-form:manage-car-content"/>
-            </p:commandButton>
+                    class="ui-button-secondary" />
          </f:facet>
       </p:dialog>
    </h:form>

@@ -32,7 +32,7 @@ public class ManageCarBean {
   private List<BrandDto> brands;
   private Integer selectedModel;
   private Integer selectedStatus;
-  private Integer selectedBrand;
+  private Integer selectedBrand = 0;
 
   @Autowired
   private CarService carService;
@@ -48,10 +48,6 @@ public class ManageCarBean {
 
   public ManageCarBean() {}
 
-  @PostConstruct
-  public void init() {
-  }
-
   public void newCar() {
     this.selectedCar = new CarDto();
     this.selectedModel = 0;
@@ -60,8 +56,9 @@ public class ManageCarBean {
   }
 
   public void newModel(){
-    this.newCarModel = "";
+    this.newCarModel = null;
     this.selectedBrand = 0;
+    PrimeFaces.current().resetInputs("model-form:manage-model-content");
   }
 
   public void saveModel(){
@@ -107,21 +104,21 @@ public class ManageCarBean {
     }
 
     PrimeFaces.current().executeScript("PF('manageCarDialog').hide()");
-    PrimeFaces.current().ajax().update("form:dt-car");
+    PrimeFaces.current().ajax().update("form1:dt-car");
   }
 
   //Permite eliminar un carro
   public void deleteCar() {
     try {
-      this.cars.remove(this.selectedCar);
+     carService.delete(selectedCar.getCode());
       this.selectedCar = null;
 
       JsfUtils.addMessageFromBundle(
         null,
         FacesMessage.SEVERITY_INFO,
-        "message_car_removed"
+        "message_car_deleted"
       );
-      PrimeFaces.current().ajax().update("form:carForm"); // Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
+      PrimeFaces.current().ajax().update("form1:dt-car"); // Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
     } catch (Exception e) {
       JsfUtils.addMessageFromBundle(
         null,
@@ -202,7 +199,7 @@ public class ManageCarBean {
   }
 
   public int getSelectedBrand() {
-    return selectedBrand;
+    return this.selectedBrand;
   }
 
   public void setSelectedBrand(int selectedBrand) {
@@ -260,4 +257,5 @@ public class ManageCarBean {
   public void setNewCarModel(String newCarModel) {
     this.newCarModel = newCarModel;
   }
+
 }
