@@ -7,8 +7,8 @@
 	<ui:composition template="/pages/template/layout.xhtml">
 		<ui:define name="title"> Listado de Conductores </ui:define>
 		<ui:define name="layout">
-				<div class="card crud-demo">
-					<h:form id="form">
+			<div class="card crud-demo">
+				<h:form id="form">
 					<p:toolbar>
 						<p:toolbarGroup>
 							<!-- 
@@ -20,6 +20,7 @@
 					      code en Javascript desde el bean de Jsf
 					    -->
 							<p:commandButton
+								rendered="#{userBean.admin}"
 								value="Nuevo"
 								icon="pi pi-plus"
 								actionListener="#{manageDriverBean.newDriver}"
@@ -106,7 +107,7 @@
 							filterBy="#{driver.category.category}">
 							<h:outputText value="#{driver.category.category}" />
 						</p:column>
-						<p:column exportable="false">
+						<p:column exportable="false" rendered="#{userBean.admin}">
 							<p:commandButton
 								icon="pi pi-pencil"
 								update=":form1:manage-driver-content"
@@ -117,8 +118,8 @@
 									value="#{driver}"
 									target="#{manageDriverBean.selectedDriver}" />
 								<f:setPropertyActionListener
-										value="#{driver.category.code}"
-										target="#{manageDriverBean.selectedCategory}" />
+									value="#{driver.category.code}"
+									target="#{manageDriverBean.selectedCategory}" />
 								<p:resetInput target=":form1:manage-driver-content" />
 							</p:commandButton>
 							<p:commandButton
@@ -136,27 +137,26 @@
 							</p:commandButton>
 						</p:column>
 					</p:dataTable>
-					</h:form>
+				</h:form>
 
-					<!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
-					<ui:include src="/pages/form/driver-form.xhtml"></ui:include>
+				<!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
+				<ui:include src="/pages/form/driver-form.xhtml"></ui:include>
 
-					<!-- Este comoponente se utiliza mucho para el caso de los eliminar, que es donde casi siempre se necesita confirmation,
+				<!-- Este comoponente se utiliza mucho para el caso de los eliminar, que es donde casi siempre se necesita confirmation,
 				su uso es bien sencillo, cada confirmDialog va atado a un p:confirm que es el que se definie dentro del button -->
-					<p:confirmDialog global="true" showEffect="fade" width="300">
-						<p:commandButton
-							value="Si"
-							type="button"
-							styleClass="ui-confirmdialog-yes"
-							icon="pi pi-check" />
-						<p:commandButton
-							value="No"
-							type="button"
-							styleClass="ui-confirmdialog-no ui-button-secondary"
-							icon="pi pi-times" />
-					</p:confirmDialog>
-
-				</div>
+				<p:confirmDialog global="true" showEffect="fade" width="300">
+					<p:commandButton
+						value="Si"
+						type="button"
+						styleClass="ui-confirmdialog-yes"
+						icon="pi pi-check" />
+					<p:commandButton
+						value="No"
+						type="button"
+						styleClass="ui-confirmdialog-no ui-button-secondary"
+						icon="pi pi-times" />
+				</p:confirmDialog>
+			</div>
 		</ui:define>
 	</ui:composition>
 </html>

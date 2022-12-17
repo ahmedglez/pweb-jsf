@@ -7,8 +7,8 @@
 	<ui:composition template="/pages/template/layout.xhtml">
 		<ui:define name="title"> Listado de Turistas </ui:define>
 		<ui:define name="layout">
-				<div class="card crud-demo">
-					<h:form id="form">
+			<div class="card crud-demo">
+				<h:form id="form">
 					<p:toolbar>
 						<p:toolbarGroup>
 							<!--
@@ -20,6 +20,7 @@
                                   code en Javascript desde el bean de Jsf
                                 -->
 							<p:commandButton
+								rendered="#{userBean.admin}"
 								value="Nuevo"
 								icon="pi pi-plus"
 								actionListener="#{manageTouristBean.newTourist}"
@@ -118,7 +119,7 @@
 							filterBy="#{tourist.country}">
 							<h:outputText value="#{tourist.country}" />
 						</p:column>
-						<p:column exportable="false">
+						<p:column exportable="false" rendered="#{userBean.admin}">
 							<p:commandButton
 								icon="pi pi-pencil"
 								action="#{manageTouristBean.openForEdit(tourist)}"
@@ -146,25 +147,25 @@
 							</p:commandButton>
 						</p:column>
 					</p:dataTable>
-			</h:form>
-					<!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
-					<ui:include src="/pages/form/tourist-form.xhtml"></ui:include>
+				</h:form>
+				<!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
+				<ui:include src="/pages/form/tourist-form.xhtml"></ui:include>
 
-					<!-- Este comoponente se utiliza mucho para el caso de los eliminar, que es donde casi siempre se necesita confirmation,
+				<!-- Este comoponente se utiliza mucho para el caso de los eliminar, que es donde casi siempre se necesita confirmation,
                     su uso es bien sencillo, cada confirmDialog va atado a un p:confirm que es el que se definie dentro del button -->
-					<p:confirmDialog global="true" showEffect="fade" width="300">
-						<p:commandButton
-							value="Si"
-							type="button"
-							styleClass="ui-confirmdialog-yes"
-							icon="pi pi-check" />
-						<p:commandButton
-							value="No"
-							type="button"
-							styleClass="ui-confirmdialog-no ui-button-secondary"
-							icon="pi pi-times" />
-					</p:confirmDialog>
-				</div>
+				<p:confirmDialog global="true" showEffect="fade" width="300">
+					<p:commandButton
+						value="Si"
+						type="button"
+						styleClass="ui-confirmdialog-yes"
+						icon="pi pi-check" />
+					<p:commandButton
+						value="No"
+						type="button"
+						styleClass="ui-confirmdialog-no ui-button-secondary"
+						icon="pi pi-times" />
+				</p:confirmDialog>
+			</div>
 		</ui:define>
 	</ui:composition>
 </html>
