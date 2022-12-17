@@ -1,17 +1,17 @@
 <html
-        xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:h="http://xmlns.jcp.org/jsf/html"
-        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-        xmlns:f="http://xmlns.jcp.org/jsf/core"
-        xmlns:p="http://primefaces.org/ui">
-<ui:composition template="/pages/template/layout.xhtml">
-    <ui:define name="title"> Listado de Contratos </ui:define>
-    <ui:define name="layout">
-            <div class="card crud-demo">
-                <h:form id="form">
-                <p:toolbar>
-                    <p:toolbarGroup>
-                        <!--
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:composition template="/pages/template/layout.xhtml">
+		<ui:define name="title"> Listado de Contratos </ui:define>
+		<ui:define name="layout">
+			<div class="card crud-demo">
+				<h:form id="form">
+					<p:toolbar>
+						<p:toolbarGroup>
+							<!--
                             * La propiedad action y actionListener de los botones apunta a un method en el bean de jsf, ese method
                               por lo general es de tipo void porque se está trabajando con AJAX.
                             * La propiedad update permite refrescar componentes luego de ejecutarse el code definido en el action. Si son varios
@@ -19,34 +19,35 @@
                             * La propiedad onComplete ejecuta un code en Javascript una vez finalizada el action del button. También es posible ejecutar
                               code en Javascript desde el bean de Jsf
                             -->
-                        <p:commandButton
-                                value="Nuevo"
-                                icon="pi pi-plus"
-                                action="#{manageContractBean.newContract()}"
-                                update=":contract-form:manage-contract-content"
-                                oncomplete="PF('manageContractDialog').show()"
-                                styleClass="ui-button-success"
-                                style="margin-right: 0.5rem">
-                            <p:resetInput target=":contract-form:manage-contract-content" />
-                        </p:commandButton>
-                    </p:toolbarGroup>
-                    <p:toolbarGroup align="right">
-                        <!-- Este es un button que tiene como objetivo exportar el contenido de la tabla que apunta a propiedad target
+							<p:commandButton
+								rendered="#{userBean.admin}"
+								value="Nuevo"
+								icon="pi pi-plus"
+								action="#{manageContractBean.newContract()}"
+								update=":contract-form:manage-contract-content"
+								oncomplete="PF('manageContractDialog').show()"
+								styleClass="ui-button-success"
+								style="margin-right: 0.5rem">
+								<p:resetInput target=":contract-form:manage-contract-content" />
+							</p:commandButton>
+						</p:toolbarGroup>
+						<p:toolbarGroup align="right">
+							<!-- Este es un button que tiene como objetivo exportar el contenido de la tabla que apunta a propiedad target
                                  del componente dataExporter. En este caso dt-users es el identificador del componente datatable -->
-                        <p:commandButton
-                                value="Export"
-                                icon="pi pi-upload"
-                                styleClass="ui-button-help"
-                                ajax="false">
-                            <p:dataExporter
-                                    type="pdf"
-                                    target="dt-contract"
-                                    fileName="contracts" />
-                        </p:commandButton>
-                    </p:toolbarGroup>
-                </p:toolbar>
+							<p:commandButton
+								value="Export"
+								icon="pi pi-upload"
+								styleClass="ui-button-help"
+								ajax="false">
+								<p:dataExporter
+									type="pdf"
+									target="dt-contract"
+									fileName="contracts" />
+							</p:commandButton>
+						</p:toolbarGroup>
+					</p:toolbar>
 
-                <!-- Componente usado para mostrar tablas con datos y ejecutar operaciones
+					<!-- Componente usado para mostrar tablas con datos y ejecutar operaciones
                     * La propiedad value: apunta a una lista de objetos de tipo UserDto que está en el bean de jsf
                     * La propiedad var: es una instancia de esta lista para poder extaer los objetos, es como iterador
                       que luego permite poder decir user.<propiedad del objeto>.
@@ -56,136 +57,138 @@
                     * El facet header define un encabezado y agrega un button para filtrar. Por defecto esto lo hace el solo, si quieren algo
                       con mayor detalle ver el showcase.
                  -->
-                <p:dataTable
-                        id="dt-contract"
-                        widgetVar="dtContract"
-                        var="contract"
-                        value="#{manageContractBean.contracts}"
-                        reflow="true"
-                        paginator="true"
-                        rows="10"
-                        paginatorPosition="bottom">
-                    <f:facet name="header">
-                        <div class="products-table-header">
-                            <span style="font-weight: bold">Contratos</span>
-                            <span class="filter-container ui-input-icon-left">
+					<p:dataTable
+						id="dt-contract"
+						widgetVar="dtContract"
+						var="contract"
+						value="#{manageContractBean.contracts}"
+						reflow="true"
+						paginator="true"
+						rows="10"
+						paginatorPosition="bottom">
+						<f:facet name="header">
+							<div class="products-table-header">
+								<span style="font-weight: bold">Contratos</span>
+								<span class="filter-container ui-input-icon-left">
 									<i class="pi pi-search"></i>
 									<p:inputText
-                                            id="globalFilter"
-                                            onkeyup="PF('dtContract').filter()"
-                                            placeholder="Buscar" />
+										id="globalFilter"
+										onkeyup="PF('dtContract').filter()"
+										placeholder="Buscar" />
 								</span>
-                        </div>
-                    </f:facet>
+							</div>
+						</f:facet>
 
-                    <p:column
-                            headerText="Turista"
-                            sortBy="#{contract.tourist.name}"
-                            filterBy="#{contract.tourist.name}">
-                        <h:outputText value="#{contract.tourist.name} #{contract.tourist.lastName}" />
-                    </p:column>
-                    <p:column
-                            headerText="Carro"
-                            sortBy="#{contract.car.carID}"
-                            filterBy="#{contract.car.carID}">
-                        <h:outputText value="#{contract.car.carID}" />
-                    </p:column>
-                    <p:column
-                            headerText="Conductor"
-                            sortBy="#{contract.driver.name}"
-                            filterBy="#{contract.driver.name}">
-                        <h:outputText value="#{contract.driver.name} #{contract.driver.lastName}" />
-                    </p:column>
-                    <p:column
-                            headerText="Tarifa Normal"
-                            sortBy="#{contract.bill.amount}"
-                            filterBy="#{contract.bill.amount}">
-                        <h:outputText value="#{contract.bill.amount}" />
-                    </p:column>
-                    <p:column
-                            headerText="Tarifa Especila"
-                            sortBy="#{contract.bill.specialAmount}"
-                            filterBy="#{contract.bill.specialAmount}">
-                        <h:outputText value="#{contract.bill.specialAmount}" />
-                    </p:column>
-                    <p:column
-                            headerText="Tipo de pago"
-                            sortBy="#{contract.payment.payment}"
-                            filterBy="#{contract.payment.payment}">
-                        <h:outputText value="#{contract.payment.payment}" />
-                    </p:column>
-                    <p:column
-                            headerText="Fecha inicio"
-                            sortBy="#{contract.startingDate}"
-                            filterBy="#{contract.startingDate}">
-                        <h:outputText value="#{contract.startingDate}" />
-                    </p:column>
-                    <p:column
-                            headerText="Fecha fin"
-                            sortBy="#{contract.finalDate}"
-                            filterBy="#{contract.finalDate}">
-                        <h:outputText value="#{contract.finalDate}" />
-                    </p:column>
-                    <p:column
-                            headerText="Extension"
-                            sortBy="#{contract.extension}"
-                            filterBy="#{contract.extension}">
-                        <h:outputText value="#{contract.extension}" />
-                    </p:column>
-                    <p:column
-                            headerText="Total a pagar"
-                            sortBy="#{contract.totalAmount}"
-                            filterBy="#{contract.totalAmount}">
-                        <h:outputText value="#{contract.totalAmount}" />
-                    </p:column>
-                    <p:column exportable="false">
-                        <p:commandButton
-                                icon="pi pi-pencil"
-                                action="#{manageContractBean.openForEdit(contract)}"
-                                update=":contract-form:manage-contract-content"
-                                oncomplete="PF('manageContractDialog').show()"
-                                styleClass="edit-button rounded-button ui-button-success"
-                                process="@this">
-                            <f:setPropertyActionListener
-                                    value="#{contract}"
-                                    target="#{manageContractBean.selectedContract}" />
-                            <p:resetInput target=":contract-form:manage-contract-content" />
-                        </p:commandButton>
-                        <p:commandButton
-                                class="ui-button-warning rounded-button"
-                                icon="pi pi-trash"
-                                process="@this"
-                                action="#{manageContractBean.deleteContract()}">
-                            <f:setPropertyActionListener
-                                    value="#{contract}"
-                                    target="#{manageContractBean.selectedContract}" />
-                            <p:confirm
-                                    header="Confirmar"
-                                    message="Está seguro de eliminar el contrato?"
-                                    icon="pi pi-exclamation-triangle" />
-                        </p:commandButton>
-                    </p:column>
-                </p:dataTable>
-        </h:form>
+						<p:column
+							headerText="Turista"
+							sortBy="#{contract.tourist.name}"
+							filterBy="#{contract.tourist.name}">
+							<h:outputText
+								value="#{contract.tourist.name} #{contract.tourist.lastName}" />
+						</p:column>
+						<p:column
+							headerText="Carro"
+							sortBy="#{contract.car.carID}"
+							filterBy="#{contract.car.carID}">
+							<h:outputText value="#{contract.car.carID}" />
+						</p:column>
+						<p:column
+							headerText="Conductor"
+							sortBy="#{contract.driver.name}"
+							filterBy="#{contract.driver.name}">
+							<h:outputText
+								value="#{contract.driver.name} #{contract.driver.lastName}" />
+						</p:column>
+						<p:column
+							headerText="Tarifa Normal"
+							sortBy="#{contract.bill.amount}"
+							filterBy="#{contract.bill.amount}">
+							<h:outputText value="#{contract.bill.amount}" />
+						</p:column>
+						<p:column
+							headerText="Tarifa Especila"
+							sortBy="#{contract.bill.specialAmount}"
+							filterBy="#{contract.bill.specialAmount}">
+							<h:outputText value="#{contract.bill.specialAmount}" />
+						</p:column>
+						<p:column
+							headerText="Tipo de pago"
+							sortBy="#{contract.payment.payment}"
+							filterBy="#{contract.payment.payment}">
+							<h:outputText value="#{contract.payment.payment}" />
+						</p:column>
+						<p:column
+							headerText="Fecha inicio"
+							sortBy="#{contract.startingDate}"
+							filterBy="#{contract.startingDate}">
+							<h:outputText value="#{contract.startingDate}" />
+						</p:column>
+						<p:column
+							headerText="Fecha fin"
+							sortBy="#{contract.finalDate}"
+							filterBy="#{contract.finalDate}">
+							<h:outputText value="#{contract.finalDate}" />
+						</p:column>
+						<p:column
+							headerText="Extension"
+							sortBy="#{contract.extension}"
+							filterBy="#{contract.extension}">
+							<h:outputText value="#{contract.extension}" />
+						</p:column>
+						<p:column
+							headerText="Total a pagar"
+							sortBy="#{contract.totalAmount}"
+							filterBy="#{contract.totalAmount}">
+							<h:outputText value="#{contract.totalAmount}" />
+						</p:column>
+						<p:column exportable="false" rendered="#{userBean.admin}">
+							<p:commandButton
+								icon="pi pi-pencil"
+								action="#{manageContractBean.openForEdit(contract)}"
+								update=":contract-form:manage-contract-content"
+								oncomplete="PF('manageContractDialog').show()"
+								styleClass="edit-button rounded-button ui-button-success"
+								process="@this">
+								<f:setPropertyActionListener
+									value="#{contract}"
+									target="#{manageContractBean.selectedContract}" />
+								<p:resetInput target=":contract-form:manage-contract-content" />
+							</p:commandButton>
+							<p:commandButton
+								class="ui-button-warning rounded-button"
+								icon="pi pi-trash"
+								process="@this"
+								action="#{manageContractBean.deleteContract()}">
+								<f:setPropertyActionListener
+									value="#{contract}"
+									target="#{manageContractBean.selectedContract}" />
+								<p:confirm
+									header="Confirmar"
+									message="Está seguro de eliminar el contrato?"
+									icon="pi pi-exclamation-triangle" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</h:form>
 
-                <!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
-                <ui:include src="/pages/form/contract-form.xhtml"></ui:include>
+				<!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
+				<ui:include src="/pages/form/contract-form.xhtml"></ui:include>
 
-                <!-- Este comoponente se utiliza mucho para el caso de los eliminar, que es donde casi siempre se necesita confirmation,
+				<!-- Este comoponente se utiliza mucho para el caso de los eliminar, que es donde casi siempre se necesita confirmation,
                 su uso es bien sencillo, cada confirmDialog va atado a un p:confirm que es el que se definie dentro del button -->
-                <p:confirmDialog global="true" showEffect="fade" width="300">
-                    <p:commandButton
-                            value="Si"
-                            type="button"
-                            styleClass="ui-confirmdialog-yes"
-                            icon="pi pi-check" />
-                    <p:commandButton
-                            value="No"
-                            type="button"
-                            styleClass="ui-confirmdialog-no ui-button-secondary"
-                            icon="pi pi-times" />
-                </p:confirmDialog>
-            </div>
-    </ui:define>
-</ui:composition>
+				<p:confirmDialog global="true" showEffect="fade" width="300">
+					<p:commandButton
+						value="Si"
+						type="button"
+						styleClass="ui-confirmdialog-yes"
+						icon="pi pi-check" />
+					<p:commandButton
+						value="No"
+						type="button"
+						styleClass="ui-confirmdialog-no ui-button-secondary"
+						icon="pi pi-times" />
+				</p:confirmDialog>
+			</div>
+		</ui:define>
+	</ui:composition>
 </html>

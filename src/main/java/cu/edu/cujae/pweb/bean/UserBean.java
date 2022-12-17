@@ -1,11 +1,14 @@
 package cu.edu.cujae.pweb.bean;
 
+import com.fasterxml.jackson.core.JsonParser;
 import cu.edu.cujae.pweb.dto.AuthenticationRequest;
 import cu.edu.cujae.pweb.dto.AuthenticationResponse;
 import cu.edu.cujae.pweb.security.CurrentUserUtils;
 import cu.edu.cujae.pweb.service.AuthService;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -25,14 +28,24 @@ public class UserBean implements Serializable {
   private String username;
   private String password;
   public static String token;
+  public ArrayList<String> roles;
+  private boolean admin;
 
   @Autowired
   private AuthService authService;
 
-  public UserBean() {}
+  @PostConstruct
+  public void init() {
+    username = "";
+    password = "";
+    token = "";
+    roles = new ArrayList<String>();
+    admin = false;
+  }
 
   public AuthenticationResponse login() throws IOException {
     try {
+      roles = new ArrayList<String>();
       AuthenticationRequest authenticationRequest = new AuthenticationRequest(
         username,
         password
@@ -41,6 +54,18 @@ public class UserBean implements Serializable {
         authenticationRequest
       );
       token = authenticationResponse.getToken();
+      java.util.Base64.Decoder decoder = java.util.Base64.getUrlDecoder();
+      String[] parts = token.split("\\."); // split out the "parts" (header, payload and signature)
+
+      String headerJson = new String(decoder.decode(parts[0]));
+      String payloadJson = new String(decoder.decode(parts[1]));
+      String roles_String = payloadJson.substring(
+        payloadJson.indexOf("roles") + 8,
+        payloadJson.indexOf("]") - 1
+      );
+      boolean a = roles_String.contains("Administrator");
+      admin = a;
+
       boolean isToken = authenticationResponse.getJwttoken() != null;
       if (isToken) {
         getFacesContext()
@@ -128,4 +153,26 @@ public class UserBean implements Serializable {
   public void setPassword(String password) {
     this.password = password;
   }
+
+  public ArrayList<String> getRoles() {
+    return roles;
+  }
+
+  public void setRoles(ArrayList<String> roles) {
+    this.roles = roles;
+  }
+
+  public boolean getAdmin() {
+    return admin;
+  }
+
+  public void setAdmin(boolean admin) {
+    this.admin = admin;
+  }
+
+  
+
+  
+
+ 
 }
