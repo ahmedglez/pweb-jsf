@@ -13,6 +13,11 @@ public class AuthenticationResponse implements Serializable {
     this.refreshToken = refreshToken;
   }
 
+  public AuthenticationResponse() {
+    this.jwttoken = "";
+    this.refreshToken = "";
+  }
+
   public static long getSerialversionuid() {
     return serialVersionUID;
   }

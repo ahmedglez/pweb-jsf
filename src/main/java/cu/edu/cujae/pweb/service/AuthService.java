@@ -35,7 +35,6 @@ public class AuthService {
         .getBody();
       authenticationResponse =
         apiRestMapper.mapOne(response, AuthenticationResponse.class);
-      System.out.println("token: " + authenticationResponse.getToken());
       UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
         authenticationRequest.getUsername(),
         authenticationRequest.getPassword()
@@ -113,6 +112,4 @@ public class AuthService {
     }
     return response;
   }
-
-
 }
