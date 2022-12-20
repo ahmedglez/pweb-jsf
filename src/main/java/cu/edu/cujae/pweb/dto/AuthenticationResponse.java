@@ -4,32 +4,29 @@ import java.io.Serializable;
 
 public class AuthenticationResponse implements Serializable {
 
-  private String jwttoken;
-  private String token;
+  private static final long serialVersionUID = -8091879091924046844L;
+  private final String jwttoken;
+  private final String refreshToken;
 
-  public AuthenticationResponse() {}
-
-  public AuthenticationResponse(String jwttoken, String token) {
+  public AuthenticationResponse(String jwttoken, String refreshToken) {
     this.jwttoken = jwttoken;
-    this.token = token;
+    this.refreshToken = refreshToken;
+  }
+
+  public AuthenticationResponse() {
+    this.jwttoken = "";
+    this.refreshToken = "";
+  }
+
+  public static long getSerialversionuid() {
+    return serialVersionUID;
   }
 
   public String getJwttoken() {
     return jwttoken;
   }
 
-  public void setJwttoken(String jwttoken) {
-    this.jwttoken = jwttoken;
+  public String getRefreshToken() {
+    return refreshToken;
   }
-
-  public String getToken() {
-    return token;
-  }
-
-  public void setToken(String token) {
-    this.token = token;
-  }
-
-
-
 }

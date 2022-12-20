@@ -32,6 +32,7 @@ public class UserBean implements Serializable {
   public static String token;
   public ArrayList<String> roles;
   private boolean admin;
+  public static String refreshToken;
 
   @Autowired
   private AuthService authService;
@@ -55,7 +56,8 @@ public class UserBean implements Serializable {
       AuthenticationResponse authenticationResponse = authService.login(
         authenticationRequest
       );
-      token = authenticationResponse.getToken();
+      token = authenticationResponse.getJwttoken();
+      refreshToken = authenticationResponse.getRefreshToken();
       java.util.Base64.Decoder decoder = java.util.Base64.getUrlDecoder();
       String[] parts = token.split("\\."); // split out the "parts" (header, payload and signature)
 
@@ -186,10 +188,4 @@ public class UserBean implements Serializable {
   public void setAdmin(boolean admin) {
     this.admin = admin;
   }
-
-  
-
-  
-
- 
 }
