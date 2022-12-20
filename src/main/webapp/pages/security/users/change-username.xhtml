@@ -4,22 +4,22 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
-    <h:form id="payment-form">
+    <h:form id="username-form">
         <p:dialog
-                header="#{msgs.new_payment}"
+                header="#{msgs.new_username}"
                 showEffect="fade"
                 modal="true"
-                widgetVar="managePaymentDialog"
+                widgetVar="manageUsernameDialog"
                 responsive="true">
-            <p:outputPanel id="manage-payment-content" class="ui-fluid">
+            <p:outputPanel id="manage-username-content" class="ui-fluid">
                 <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
                 <div class="p-field">
-                    <p:outputLabel for="@next">#{msgs.payment_label}</p:outputLabel>
+                    <p:outputLabel for="@next">#{msgs.label_username}</p:outputLabel>
                     <p:inputText
-                            id="payment"
+                            id="username"
                             required="true"
-                            requiredMessage="#{msgs.payment_required}"
-                            value="#{managePaymentBean.selectedPayment.payment}"
+                            requiredMessage="Nombre de usuario requerido"
+                            value="#{userBean.userLogged.username}"
                     />
                 </div>
                 <div class="p-field">
@@ -33,13 +33,13 @@
                 <p:commandButton
                         value="Salvar"
                         icon="pi pi-check"
-                        actionListener="#{managePaymentBean.savePayment}"
-                        update="manage-payment-content"
-                        process="manage-payment-content @this" />
+                        actionListener="#{userBean.updateUsername}"
+                        update="manage-username-content"
+                        process="manage-username-content @this" />
                 <p:commandButton
                         value="Cancelar"
                         icon="pi pi-times"
-                        onclick="PF('managePaymentDialog').hide()"
+                        onclick="PF('manageUsernameDialog').hide()"
                         class="ui-button-secondary" />
             </f:facet>
         </p:dialog>

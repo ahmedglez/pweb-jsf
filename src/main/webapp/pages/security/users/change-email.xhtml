@@ -4,23 +4,27 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
-    <h:form id="payment-form">
+    <h:form id="email-form">
         <p:dialog
-                header="#{msgs.new_payment}"
+                header="#{msgs.new_email}"
                 showEffect="fade"
                 modal="true"
-                widgetVar="managePaymentDialog"
+                widgetVar="manageEmailDialog"
                 responsive="true">
-            <p:outputPanel id="manage-payment-content" class="ui-fluid">
+            <p:outputPanel id="manage-email-content" class="ui-fluid">
                 <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
                 <div class="p-field">
-                    <p:outputLabel for="@next">#{msgs.payment_label}</p:outputLabel>
+                    <p:outputLabel for="@next">#{msgs.email}</p:outputLabel>
                     <p:inputText
-                            id="payment"
+                            id="email"
                             required="true"
-                            requiredMessage="#{msgs.payment_required}"
-                            value="#{managePaymentBean.selectedPayment.payment}"
-                    />
+                            value="#{userBean.userLogged.email}"
+                            validatorMessage="Email no valido"
+                            requiredMessage="Email requerido"
+                    >
+                        <f:validateRegex
+                                pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                    </p:inputText>
                 </div>
                 <div class="p-field">
                     <p:messages severity="error">
@@ -33,13 +37,13 @@
                 <p:commandButton
                         value="Salvar"
                         icon="pi pi-check"
-                        actionListener="#{managePaymentBean.savePayment}"
-                        update="manage-payment-content"
-                        process="manage-payment-content @this" />
+                        actionListener="#{userBean.updateEmail}"
+                        update="manage-email-content"
+                        process="manage-email-content @this" />
                 <p:commandButton
                         value="Cancelar"
                         icon="pi pi-times"
-                        onclick="PF('managePaymentDialog').hide()"
+                        onclick="PF('manageEmailDialog').hide()"
                         class="ui-button-secondary" />
             </f:facet>
         </p:dialog>

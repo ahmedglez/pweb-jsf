@@ -15,17 +15,39 @@
             </ul>
         </h:form>
         
-        <h:form id="j_idt12" style="margin-left:5px">
+        <h:form id="topBar" style="margin-left:5px">
 
-                <p:menubar> 
+                <p:menubar>
+                    <p:submenu label="Theme" >
+                        <p:menuitem value="Saga" action="#{guestPreferences.setTheme('saga')}" ajax="false"  icon="pi pi-sun"></p:menuitem>
+                        <p:menuitem value="Arya" action="#{guestPreferences.setTheme('arya')}" ajax="false" icon="pi pi-moon"></p:menuitem>
+                    </p:submenu>
 	                <p:submenu label="language" icon="pi pi-globe">
 						<p:menuitem value="Español" action="#{languageBean.setLanguage('es')}" ajax="false" icon="pi pi-globe"></p:menuitem>
 						<p:menuitem value="Ingles" action="#{languageBean.setLanguage('en')}" ajax="false" icon="pi pi-globe"></p:menuitem>
 					</p:submenu>
                     <p:submenu label="Manage account" icon="pi pi-fw pi-user">
-                        <p:menuitem value="Change username" icon="pi pi-fw pi-user"/>
-                        <p:menuitem value="Change email" icon="pi pi-fw pi-envelope"/>
-                        <p:menuitem value="Change password" icon="pi pi-fw pi-lock"/>
+                        <p:menuitem
+                                value="Change username"
+                                icon="pi pi-fw pi-user"
+                                update="username-form:manage-username-content"
+                                oncomplete="PF('manageUsernameDialog').show()">
+                            <p:resetInput target="username-form:manage-username-content" />
+                        </p:menuitem>
+                        <p:menuitem
+                                value="Change email"
+                                icon="pi pi-fw pi-envelope"
+                                update="email-form:manage-email-content"
+                                oncomplete="PF('manageEmailDialog').show()">
+                            <p:resetInput target="email-form:manage-email-content" />
+                        </p:menuitem>
+                        <p:menuitem
+                                value="Change password"
+                                icon="pi pi-fw pi-lock"
+                                update="password-form:manage-password-content"
+                                oncomplete="PF('managePasswordDialog').show()">
+                            <p:resetInput target="password-form:manage-password-content" />
+                        </p:menuitem>
                         <p:menuitem value="Logout" icon="pi pi-fw pi-sign-out" action="#{userBean.logout()}">
                             <p:confirm
                                 header="Confirmar"

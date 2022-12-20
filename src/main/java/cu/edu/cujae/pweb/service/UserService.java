@@ -94,4 +94,23 @@ public class UserService implements CrudInterface {
       .getBody();
     System.out.println(response);
   }
+
+  public UserDto getByUsername(String username){
+    UserDto user = null;
+
+    try {
+      MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+      ApiRestMapper<UserDto> apiRestMapper = new ApiRestMapper<>();
+
+      UriTemplate template = new UriTemplate("/api/v1/users/username/{username}");
+      String uri = template.expand(username).toString();
+      String response = (String) restService
+              .GET(uri, params, String.class, UserBean.token)
+              .getBody();
+      user = apiRestMapper.mapOne(response, UserDto.class);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return user;
+  }
 }

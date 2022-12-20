@@ -1,23 +1,23 @@
 package cu.edu.cujae.pweb.bean;
 
-import com.fasterxml.jackson.core.JsonParser;
 import cu.edu.cujae.pweb.dto.AuthenticationRequest;
 import cu.edu.cujae.pweb.dto.AuthenticationResponse;
-import cu.edu.cujae.pweb.security.CurrentUserUtils;
+import cu.edu.cujae.pweb.dto.UserDto;
 import cu.edu.cujae.pweb.service.AuthService;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import cu.edu.cujae.pweb.service.UserService;
+import cu.edu.cujae.pweb.utils.JsfUtils;
+import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,15 +33,20 @@ public class UserBean implements Serializable {
   public ArrayList<String> roles;
   private boolean admin;
   public static String refreshToken;
+  private UserDto userLogged;
 
   @Autowired
   private AuthService authService;
+
+  @Autowired
+  private UserService userService;
 
   @PostConstruct
   public void init() {
     username = "";
     password = "";
     token = "";
+    refreshToken = "";
     roles = new ArrayList<String>();
     admin = false;
   }
@@ -77,6 +82,7 @@ public class UserBean implements Serializable {
           .redirect(
             getRequest().getContextPath() + "/pages/welcome/welcome.jsf"
           );
+        userLogged = userService.getByUsername(username);
         return authenticationResponse;
       } else {
         getFacesContext()
@@ -106,6 +112,8 @@ public class UserBean implements Serializable {
 
   public String logout(){
     try{
+        token = "";
+        refreshToken = "";
       FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
       getFacesContext()
               .getExternalContext()
@@ -119,28 +127,46 @@ public class UserBean implements Serializable {
     return "logout";
   }
 
-  public String getUserLogued() {
-    return CurrentUserUtils.getUsername();
-  }
+ public void updateUsername() throws IOException {
+      username = userLogged.getUsername();
+   userService.update(userLogged);
+   token = "";
+   refreshToken = "";
+   JsfUtils.addMessageFromBundle(
+           null,
+           FacesMessage.SEVERITY_INFO,
+           "message_user_edited"
+   );
+     PrimeFaces.current().executeScript("PF('manageUsernameDialog').hide()");
+     login();
+ }
 
-  private String dispatchToUrl(String url) {
-    FacesContext facesContext = FacesContext.getCurrentInstance();
-    HttpServletRequest request = (HttpServletRequest) facesContext
-      .getExternalContext()
-      .getRequest();
-    HttpServletResponse response = (HttpServletResponse) facesContext
-      .getExternalContext()
-      .getResponse();
-    RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-    try {
-      dispatcher.forward(request, response);
-      facesContext.responseComplete();
-    } catch (Exception e) {
-      e.printStackTrace();
+    public void updateEmail(){
+        userService.update(userLogged);
+        JsfUtils.addMessageFromBundle(
+                null,
+                FacesMessage.SEVERITY_INFO,
+                "message_user_edited"
+        );
+        PrimeFaces.current().executeScript("PF('manageEmailDialog').hide()");
     }
-    return null;
-  }
+    public void updatePassword() throws IOException {
+        password = userLogged.getPassword();
+        userService.update(userLogged);
+        token = "";
+        refreshToken = "";
+        JsfUtils.addMessageFromBundle(
+                null,
+                FacesMessage.SEVERITY_INFO,
+                "message_user_edited"
+        );
+        PrimeFaces.current().executeScript("PF('managePasswordDialog').hide()");
+        login();
+    }
 
+  public UserDto getUserLogged() {
+    return userLogged;
+  }
   public String getUsername() {
     return username;
   }
@@ -188,4 +214,10 @@ public class UserBean implements Serializable {
   public void setAdmin(boolean admin) {
     this.admin = admin;
   }
+
+  public void setUserLogged(UserDto userLogged) {
+    this.userLogged = userLogged;
+  }
+
+
 }

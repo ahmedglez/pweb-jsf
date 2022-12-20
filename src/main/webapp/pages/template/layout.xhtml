@@ -4,6 +4,8 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
 
+<f:view locale="#{languageBean.locale}"/>
+
     <h:head>
         <f:facet name="first">
             <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -55,6 +57,12 @@
 				<p:autoUpdate />
 			</p:growl>
 		</h:form>
+
+		<ui:include src="/pages/security/users/change-email.xhtml"></ui:include>
+
+		<ui:include src="/pages/security/users/change-password.xhtml"></ui:include>
+
+		<ui:include src="/pages/security/users/change-username.xhtml"></ui:include>
 
 		<h:outputStylesheet name="layout.css" library="css" />
 		<h:outputScript name="layout.js" library="script" />

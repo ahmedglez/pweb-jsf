@@ -102,7 +102,10 @@
 							filterBy="#{driver.name}">
 							<h:outputText value="#{driver.name}" />
 						</p:column>
-						<p:column headerText="#{msgs.last_name_label}" sortBy="#{driver.lastName}">
+						<p:column headerText="#{msgs.last_name_label}"
+								  sortBy="#{driver.lastName}"
+								  filterBy="#{driver.lastName}"
+						>
 							<h:outputText value="#{driver.lastName}" />
 						</p:column>
 						<p:column
