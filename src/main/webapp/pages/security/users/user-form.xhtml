@@ -3,13 +3,14 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-
+<h:form id="user-form">
 	<p:dialog header="Usuario" showEffect="fade" modal="true"
 		widgetVar="manageUserDialog" responsive="true">
 		<p:outputPanel id="manage-user-content" class="ui-fluid">
 			<p:outputPanel rendered="#{not empty manageUserBean.selectedUser}">
 				<p:panelGrid layout="grid" columns="2">
 					<h:panelGroup>
+						<p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
 						<div class="p-field">
 							<p:outputLabel for="@next">Usuario</p:outputLabel>
 							<p:inputText
@@ -40,61 +41,68 @@
 									id="email"
 									required="true"
 								    value="#{manageUserBean.selectedUser.email}"
-								    validatorMessage="Email mal formado"
+								    validatorMessage="Email no valido"
 									requiredMessage="Email requerido"
 							>
 								<f:validateRegex
 									pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 							</p:inputText>
 						</div>
-					</h:panelGroup>
-					<h:panelGroup>
-					    <div class="p-field">
+						<div class="p-field">
 							<p:outputLabel for="@next">Roles</p:outputLabel>
 							<p:selectCheckboxMenu
 									id="multiple"
 									required="true"
-								    value="#{manageUserBean.selectedRoles}" label="Seleccione un rol"
-								    style="min-width: 15rem" multiple="true" filter="true"
+									value="#{manageUserBean.selectedRoles}" label="Seleccione un rol"
+									style="min-width: 15rem" multiple="true" filter="true"
 									requiredMessage="Selecione un rol"
-								    filterMatchMode="startsWith" panelStyle="width: 30rem"
-								    scrollHeight="250">
+									filterMatchMode="startsWith" panelStyle="width: 30rem"
+									scrollHeight="250">
 								<f:selectItems value="#{manageUserBean.roles}" var="role"
-									itemLabel="#{role.role}" itemValue="#{role.code}" />
+											   itemLabel="#{role.role}" itemValue="#{role.code}" />
 							</p:selectCheckboxMenu>
 						</div>
 						<div class="p-field">
 							<p:outputLabel for="@next" >Contraseña</p:outputLabel>
-							<p:password id="password1" required="true"
+							<p:password id="password1"
+										required="true"
 										requiredMessage="Contraseña requerida"
 										validatorMessage="Las contraseñas deben coincidir"
-								value="#{manageUserBean.selectedUser.password}"
-								match="password2">
+										value="#{manageUserBean.selectedUser.password}"
+										match="password2">
 							</p:password>
 						</div>
 						<div class="p-field">
 							<p:outputLabel for="@next" >Repetir contraseña</p:outputLabel>
-							<p:password id="password2" required="true"
+							<p:password id="password2"
+										required="true"
 										requiredMessage="Contraseña requerida"
 										validatorMessage="Las contraseñas deben coincidir"
-								value="#{manageUserBean.selectedUser.password}">
+										value="#{manageUserBean.selectedUser.password}">
 							</p:password>
+						</div>
+						<div class="p-field">
+							<p:messages severity="error">
+								<p:autoUpdate/>
+							</p:messages>
+						</div>
+					</h:panelGroup>
+					<h:panelGroup>
+						<div>
+							<p:graphicImage name="photo_tourist.jpg" library="images" width="350" height="450" />
 						</div>
 					</h:panelGroup>
 				</p:panelGrid>
 
 			</p:outputPanel>
 		</p:outputPanel>
-
 		<f:facet name="footer">
 			<p:commandButton value="Salvar" icon="pi pi-check"
 				actionListener="#{manageUserBean.saveUser}"
 				update="manage-user-content" process="manage-user-content @this" />
 			<p:commandButton value="Cancelar" icon="pi pi-times"
-				onclick="PF('manageUserDialog').hide()" class="ui-button-secondary"
-			action="#{manageUserBean.onCancel()}" actionListener="#{manageUserBean.onCancel}" process="@this"/>
+				onclick="PF('manageUserDialog').hide()" class="ui-button-secondary" process="@this"/>
 		</f:facet>
-		<p:ajax event="close" listener="#{manageUserBean.onCancel}" process="@this"
-				update="manage-user-content" />
 	</p:dialog>
+</h:form>
 </ui:composition>

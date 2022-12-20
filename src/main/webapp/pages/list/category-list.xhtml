@@ -1,0 +1,144 @@
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/pages/template/layout.xhtml">
+   <ui:define name="title">#{msgs.list_categories}</ui:define>
+   <ui:define name="layout">
+
+      <div class="card crud-demo">
+
+         <p:tabMenu activeIndex="#{param.i}" style="padding-bottom: 2rem">
+            <p:menuitem value="#{msgs.driver_label}" outcome="/pages/list/driver-list.xhtml" icon="pi pi-fw pi-tag">
+               <f:param name="i" value="0"/>
+            </p:menuitem>
+            <p:menuitem value="#{msgs.categories_label}" outcome="/pages/list/category-list.xhtml" icon="pi pi-fw pi-tag">
+               <f:param name="i" value="1"/>
+            </p:menuitem>
+         </p:tabMenu>
+
+         <h:form id="form1">
+            <p:toolbar>
+               <p:toolbarGroup>
+                  <!--
+                      * La propiedad action y actionListener de los botones apunta a un method en el bean de jsf, ese method
+                        por lo general es de tipo void porque se está trabajando con AJAX.
+                      * La propiedad update permite refrescar componentes luego de ejecutarse el code definido en el action. Si son varios
+                        componente poner los Ids separados por coma.
+                      * La propiedad onComplete ejecuta un code en Javascript una vez finalizada el action del button. También es posible ejecutar
+                        code en Javascript desde el bean de Jsf
+                      -->
+                  <p:commandButton
+                          rendered="#{userBean.admin}"
+                          value="Nuevo"
+                          icon="pi pi-plus"
+                          actionListener="#{manageCategoryBean.newCategory}"
+                          action="#{manageCategoryBean.newCategory()}"
+                          update="category-form:manage-category-content"
+                          oncomplete="PF('manageCategoryDialog').show()"
+                          styleClass="ui-button-success"
+                          style="margin-right: 0.5rem">
+                     <p:resetInput target="category-form:manage-category-content" />
+                  </p:commandButton>
+               </p:toolbarGroup>
+               <p:toolbarGroup align="right">
+                  <!-- Este es un button que tiene como objetivo exportar el contenido de la tabla que apunta a propiedad target
+                           del componente dataExporter. En este caso dt-users es el identificador del componente datatable -->
+                  <p:commandButton
+                          value="Export"
+                          icon="pi pi-upload"
+                          styleClass="ui-button-help"
+                          ajax="false">
+                     <p:dataExporter
+                             type="pdf"
+                             target="dt-category"
+                             fileName="category" />
+                  </p:commandButton>
+               </p:toolbarGroup>
+            </p:toolbar>
+
+            <!-- Componente usado para mostrar tablas con datos y ejecutar operaciones
+                * La propiedad value: apunta a una lista de objetos de tipo UserDto que está en el bean de jsf
+                * La propiedad var: es una instancia de esta lista para poder extaer los objetos, es como iterador
+                  que luego permite poder decir user.<propiedad del objeto>.
+                * La propiedad paginator: define si se quiere paginar o no y es posible definir la position del mismo usando
+                  la propiedad pagePosition.
+                * La propiedad rows: define la cantidad de filas
+                * El facet header define un encabezado y agrega un button para filtrar. Por defecto esto lo hace el solo, si quieren algo
+                  con mayor detalle ver el showcase.
+             -->
+            <p:dataTable
+                    id="dt-category"
+                    widgetVar="dtCategory"
+                    var="category"
+                    value="#{manageCategoryBean.categories}"
+                    reflow="true"
+                    paginator="true"
+                    rows="10"
+                    paginatorPosition="bottom">
+               <f:facet name="header">
+                  <div class="products-table-header">
+                     <span style="font-weight: bold">#{msgs.categories_label}</span>
+                     <span class="filter-container ui-input-icon-left">
+									<i class="pi pi-search"></i>
+									<p:inputText
+                                            id="globalFilter"
+                                            onkeyup="PF('dtCategory').filter()"
+                                            placeholder="Buscar" />
+								</span>
+                  </div>
+               </f:facet>
+               <p:column headerText="#{msgs.category_label}" sortBy="#{category.category}">
+                  <h:outputText value="#{category.category}" />
+               </p:column>
+               <p:column exportable="false" rendered="#{userBean.admin}">
+                  <p:commandButton
+                          icon="pi pi-pencil"
+                          update="category-form:manage-category-content"
+                          oncomplete="PF('manageCategoryDialog').show()"
+                          styleClass="edit-button rounded-button ui-button-success"
+                          process="@this">
+                     <f:setPropertyActionListener
+                             value="#{category}"
+                             target="#{manageCategoryBean.selectedCategory}" />
+                     <p:resetInput target="category-form:manage-category-content" />
+                  </p:commandButton>
+                  <p:commandButton
+                          class="ui-button-warning rounded-button"
+                          icon="pi pi-trash"
+                          process="@this"
+                          action="#{manageCategoryBean.deleteCategory}">
+                     <f:setPropertyActionListener
+                             value="#{category}"
+                             target="#{manageCategoryBean.selectedCategory}" />
+                     <p:confirm
+                             header="Confirmar"
+                             message="Está seguro de eliminar la marca?"
+                             icon="pi pi-exclamation-triangle" />
+                  </p:commandButton>
+               </p:column>
+            </p:dataTable>
+         </h:form>
+         <!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
+         <ui:include src="/pages/form/category-form.xhtml"></ui:include>
+
+         <!-- Este comoponente se utiliza mucho para el caso de los eliminar, que es donde casi siempre se necesita confirmation,
+         su uso es bien sencillo, cada confirmDialog va atado a un p:confirm que es el que se definie dentro del button -->
+         <p:confirmDialog global="true" showEffect="fade" width="300">
+            <p:commandButton
+                    value="Si"
+                    type="button"
+                    styleClass="ui-confirmdialog-yes"
+                    icon="pi pi-check" />
+            <p:commandButton
+                    value="No"
+                    type="button"
+                    styleClass="ui-confirmdialog-no ui-button-secondary"
+                    icon="pi pi-times" />
+         </p:confirmDialog>
+      </div>
+   </ui:define>
+</ui:composition>
+</html>

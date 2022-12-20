@@ -16,6 +16,8 @@ import javax.faces.view.ViewScoped;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -96,8 +98,23 @@ public class UserBean implements Serializable {
     return FacesContext.getCurrentInstance();
   }
 
-  public String logout() {
-    return dispatchToUrl("/logout");
+//  public String logout() {
+//    return dispatchToUrl("/pages/security/login.xhtml");
+//  }
+
+  public String logout(){
+    try{
+      FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+      getFacesContext()
+              .getExternalContext()
+              .redirect(
+                      getRequest().getContextPath() +
+                              "/pages/security/login.jsf"
+              );
+    }catch (Exception e){
+      e.printStackTrace();
+    }
+    return "logout";
   }
 
   public String getUserLogued() {

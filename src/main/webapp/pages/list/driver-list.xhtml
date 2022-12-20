@@ -5,9 +5,19 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	<ui:composition template="/pages/template/layout.xhtml">
-		<ui:define name="title"> Listado de Conductores </ui:define>
+		<ui:define name="title">#{msgs.list_drivers}</ui:define>
 		<ui:define name="layout">
 			<div class="card crud-demo">
+
+				<p:tabMenu activeIndex="#{param.i}" style="padding-bottom: 2rem">
+					<p:menuitem value="#{msgs.driver_label}" outcome="/pages/list/driver-list.xhtml" icon="pi pi-fw pi-tag">
+						<f:param name="i" value="0"/>
+					</p:menuitem>
+					<p:menuitem value="#{msgs.categories_label}" outcome="/pages/list/category-list.xhtml" icon="pi pi-fw pi-tag">
+						<f:param name="i" value="1"/>
+					</p:menuitem>
+				</p:tabMenu>
+
 				<h:form id="form">
 					<p:toolbar>
 						<p:toolbarGroup>
@@ -69,7 +79,7 @@
 						paginatorPosition="bottom">
 						<f:facet name="header">
 							<div class="products-table-header">
-								<span style="font-weight: bold">Conductores</span>
+								<span style="font-weight: bold">#{msgs.driver_label}</span>
 								<span class="filter-container ui-input-icon-left">
 									<i class="pi pi-search"></i>
 									<p:inputText
@@ -81,28 +91,28 @@
 						</f:facet>
 
 						<p:column
-							headerText="CI"
+							headerText="#{msgs.ci_label}"
 							sortBy="#{driver.ci}"
 							filterBy="#{driver.ci}">
 							<h:outputText value="#{driver.ci}" />
 						</p:column>
 						<p:column
-							headerText="Nombre"
+							headerText="#{msgs.name_label}"
 							sortBy="#{driver.name}"
 							filterBy="#{driver.name}">
 							<h:outputText value="#{driver.name}" />
 						</p:column>
-						<p:column headerText="Apellidos" sortBy="#{driver.lastName}">
+						<p:column headerText="#{msgs.last_name_label}" sortBy="#{driver.lastName}">
 							<h:outputText value="#{driver.lastName}" />
 						</p:column>
 						<p:column
-							headerText="Dirección"
+							headerText="#{msgs.address_label}"
 							sortBy="#{driver.address}"
 							filterBy="#{driver.address}">
 							<h:outputText value="#{driver.address}" />
 						</p:column>
 						<p:column
-							headerText="Categoria"
+							headerText="#{msgs.category_label}"
 							sortBy="#{driver.category.category}"
 							filterBy="#{driver.category.category}">
 							<h:outputText value="#{driver.category.category}" />

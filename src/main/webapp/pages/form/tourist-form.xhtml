@@ -10,8 +10,8 @@
             showEffect="fade"
             modal="true"
             widgetVar="manageTouristDialog"
-            width="800"
-            height="520">
+            responsive="true"
+            >
         <p:outputPanel id="manage-tourist-content" class="ui-fluid">
             <p:outputPanel rendered="#{not empty manageTouristBean.selectedTourist}">
                 <p:panelGrid layout="grid" columns="2">
@@ -105,7 +105,7 @@
                     </p:selectOneMenu>
                 </div>
                         <div class="p-field">
-                            <p:messages closable="true" severity="error">
+                            <p:messages severity="error">
                                 <p:autoUpdate/>
                             </p:messages>
                         </div>

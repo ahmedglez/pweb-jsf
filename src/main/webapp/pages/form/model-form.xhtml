@@ -6,12 +6,13 @@
         xmlns:p="http://primefaces.org/ui">
    <h:form id="model-form">
       <p:dialog
-              header="Model"
+              header="#{msgs.new_model}"
               showEffect="fade"
               modal="true"
               widgetVar="manageModelDialog"
               responsive="true">
          <p:outputPanel id="manage-model-content" class="ui-fluid">
+            <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
             <div class="p-field">
                <p:outputLabel for="@next">#{msgs.model_label}</p:outputLabel>
                <p:inputText
@@ -41,7 +42,7 @@
                </p:selectOneMenu>
             </div>
             <div class="p-field">
-               <p:messages closable="true" severity="error">
+               <p:messages severity="error">
                   <p:autoUpdate/>
                </p:messages>
             </div>

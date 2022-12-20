@@ -6,7 +6,7 @@ xmlns="http://www.w3.org/1999/xhtml"
         xmlns:p="http://primefaces.org/ui">
 <h:form id = "car-form">
     <p:dialog
-            header="Car"
+            header="#{msgs.new_car}"
             showEffect="fade"
             modal="true"
             widgetVar="manageCarDialog"
@@ -79,7 +79,7 @@ xmlns="http://www.w3.org/1999/xhtml"
                             </p:selectOneMenu>
                         </div>
                         <div class="p-field">
-                            <p:messages closable="true" severity="error">
+                            <p:messages severity="error">
                                 <p:autoUpdate/>
                             </p:messages>
                         </div>

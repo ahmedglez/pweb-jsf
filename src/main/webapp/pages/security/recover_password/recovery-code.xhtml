@@ -34,7 +34,9 @@
 						id="sendRecoveryCode"
 						value="Verificar código"
 						action="#{recoverPasswordBean.sendRecoveryCode}"
-						style="width: 100%"></p:commandButton>
+						style="width: 100%">
+						<p:resetInput target="recoveryCode"/>
+					</p:commandButton>
 					<p:spacer height="50"></p:spacer>
 				</p:card>
 			</div>

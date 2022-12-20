@@ -152,6 +152,7 @@ public class ManageUserBean {
   }
 
   public List<RoleDto> getRoles() {
+    roles = roleService.getAll();
     return roles;
   }
 

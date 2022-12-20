@@ -5,19 +5,19 @@
         xmlns:f="http://xmlns.jcp.org/jsf/core"
         xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/pages/template/layout.xhtml">
-    <ui:define name="title">#{msgs.list_models}</ui:define>
+    <ui:define name="title">#{msgs.list_payment}</ui:define>
     <ui:define name="layout">
 
         <div class="card crud-demo">
 
             <p:tabMenu activeIndex="#{param.i}" style="padding-bottom: 2rem">
-                <p:menuitem value="#{msgs.car_label}" outcome="/pages/list/car-list.xhtml" icon="pi pi-fw pi-tag">
+                <p:menuitem value="#{msgs.contracts_label}" outcome="/pages/list/contract-list.xhtml" icon="pi pi-fw pi-tag">
                     <f:param name="i" value="0"/>
                 </p:menuitem>
-                <p:menuitem value="#{msgs.models_label}" outcome="/pages/list/model-list.xhtml" icon="pi pi-fw pi-tag">
+                <p:menuitem value="#{msgs.bills_label}" outcome="/pages/list/bill-list.xhtml" icon="pi pi-fw pi-tag">
                     <f:param name="i" value="1"/>
                 </p:menuitem>
-                <p:menuitem value="#{msgs.brands_label}" outcome="/pages/list/brand-list.xhtml" icon="pi pi-fw pi-tag">
+                <p:menuitem value="#{msgs.payments_label}" outcome="/pages/list/payment-list.xhtml" icon="pi pi-fw pi-tag">
                     <f:param name="i" value="2"/>
                 </p:menuitem>
             </p:tabMenu>
@@ -37,13 +37,13 @@
                                 rendered="#{userBean.admin}"
                                 value="Nuevo"
                                 icon="pi pi-plus"
-                                actionListener="#{manageModelBean.newModel}"
-                                action="#{manageModelBean.newModel()}"
-                                update="model-form:manage-model-content"
-                                oncomplete="PF('manageModelDialog').show()"
+                                actionListener="#{managePaymentBean.newPayment}"
+                                action="#{managePaymentBean.newPayment()}"
+                                update="payment-form:manage-payment-content"
+                                oncomplete="PF('managePaymentDialog').show()"
                                 styleClass="ui-button-success"
                                 style="margin-right: 0.5rem">
-                            <p:resetInput target="model-form:manage-model-content" />
+                            <p:resetInput target="payment-form:manage-payment-content" />
                         </p:commandButton>
                     </p:toolbarGroup>
                     <p:toolbarGroup align="right">
@@ -56,8 +56,8 @@
                                 ajax="false">
                             <p:dataExporter
                                     type="pdf"
-                                    target="dt-car"
-                                    fileName="car" />
+                                    target="dt-payment"
+                                    fileName="payment" />
                         </p:commandButton>
                     </p:toolbarGroup>
                 </p:toolbar>
@@ -73,65 +73,59 @@
                       con mayor detalle ver el showcase.
                  -->
                 <p:dataTable
-                        id="dt-model"
-                        widgetVar="dtModel"
-                        var="model"
-                        value="#{manageModelBean.models}"
+                        id="dt-payment"
+                        widgetVar="dtPayment"
+                        var="payment"
+                        value="#{managePaymentBean.payments}"
                         reflow="true"
                         paginator="true"
                         rows="10"
                         paginatorPosition="bottom">
                     <f:facet name="header">
                         <div class="products-table-header">
-                            <span style="font-weight: bold">#{msgs.models_label}</span>
+                            <span style="font-weight: bold">#{msgs.payments_label}</span>
                             <span class="filter-container ui-input-icon-left">
 									<i class="pi pi-search"></i>
 									<p:inputText
                                             id="globalFilter"
-                                            onkeyup="PF('dtModel').filter()"
+                                            onkeyup="PF('dtPayment').filter()"
                                             placeholder="Buscar" />
 								</span>
                         </div>
                     </f:facet>
-                    <p:column headerText="#{msgs.model_label}" sortBy="#{model.model}">
-                        <h:outputText value="#{model.model}" />
-                    </p:column>
-                    <p:column headerText="#{msgs.brand_label}" sortBy="#{model.brand.brand}">
-                        <h:outputText value="#{model.brand.brand}" />
+                    <p:column headerText="#{msgs.payment_label}" sortBy="#{payment.payment}">
+                        <h:outputText value="#{payment.payment}" />
                     </p:column>
                     <p:column exportable="false" rendered="#{userBean.admin}">
                         <p:commandButton
                                 icon="pi pi-pencil"
-                                update="model-form:manage-model-content"
-                                oncomplete="PF('manageModelDialog').show()"
+                                update="payment-form:manage-payment-content"
+                                oncomplete="PF('managePaymentDialog').show()"
                                 styleClass="edit-button rounded-button ui-button-success"
                                 process="@this">
                             <f:setPropertyActionListener
-                                    value="#{model}"
-                                    target="#{manageModelBean.selectedModel}" />
-                            <f:setPropertyActionListener
-                                    value="#{model.brand.code}"
-                                    target="#{manageModelBean.selectedBrand}" />
-                            <p:resetInput target="model-form:manage-model-content" />
+                                    value="#{payment}"
+                                    target="#{managePaymentBean.selectedPayment}" />
+                            <p:resetInput target="payment-form:manage-payment-content" />
                         </p:commandButton>
                         <p:commandButton
                                 class="ui-button-warning rounded-button"
                                 icon="pi pi-trash"
                                 process="@this"
-                                action="#{manageModelBean.deleteModel}">
+                                action="#{managePaymentBean.deletePayment}">
                             <f:setPropertyActionListener
-                                    value="#{model}"
-                                    target="#{manageModelBean.selectedModel}" />
+                                    value="#{payment}"
+                                    target="#{managePaymentBean.selectedPayment}" />
                             <p:confirm
                                     header="Confirmar"
-                                    message="Está seguro de eliminar el modelo?"
+                                    message="Está seguro de eliminar la marca?"
                                     icon="pi pi-exclamation-triangle" />
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>
             </h:form>
             <!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
-            <ui:include src="/pages/form/model-form.xhtml"></ui:include>
+            <ui:include src="/pages/form/payment-form.xhtml"></ui:include>
 
             <!-- Este comoponente se utiliza mucho para el caso de los eliminar, que es donde casi siempre se necesita confirmation,
             su uso es bien sencillo, cada confirmDialog va atado a un p:confirm que es el que se definie dentro del button -->

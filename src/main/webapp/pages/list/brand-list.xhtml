@@ -5,24 +5,23 @@
         xmlns:f="http://xmlns.jcp.org/jsf/core"
         xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/pages/template/layout.xhtml">
-    <ui:define name="title"> Listado de Marcas </ui:define>
+    <ui:define name="title">#{msgs.list_brands}</ui:define>
     <ui:define name="layout">
 
-        <div class="card">
-            <p:tabMenu activeIndex="#{param.i}">
-                <p:menuitem value="Carros" outcome="/pages/list/car-list.xhtml" icon="pi pi-fw pi-tag">
+        <div class="card crud-demo">
+
+            <p:tabMenu activeIndex="#{param.i}" style="padding-bottom: 2rem">
+                <p:menuitem value="#{msgs.car_label}" outcome="/pages/list/car-list.xhtml" icon="pi pi-fw pi-tag">
                     <f:param name="i" value="0"/>
                 </p:menuitem>
-                <p:menuitem value="Modelos" outcome="/pages/list/model-list.xhtml" icon="pi pi-fw pi-tag">
+                <p:menuitem value="#{msgs.models_label}" outcome="/pages/list/model-list.xhtml" icon="pi pi-fw pi-tag">
                     <f:param name="i" value="1"/>
                 </p:menuitem>
-                <p:menuitem value="Marcas" outcome="/pages/list/brand-list.xhtml" icon="pi pi-fw pi-tag">
+                <p:menuitem value="#{msgs.brands_label}" outcome="/pages/list/brand-list.xhtml" icon="pi pi-fw pi-tag">
                     <f:param name="i" value="2"/>
                 </p:menuitem>
             </p:tabMenu>
-        </div>
 
-        <div class="card crud-demo">
             <h:form id="form1">
                 <p:toolbar>
                     <p:toolbarGroup>
@@ -35,6 +34,7 @@
                               code en Javascript desde el bean de Jsf
                             -->
                         <p:commandButton
+                                rendered="#{userBean.admin}"
                                 value="Nuevo"
                                 icon="pi pi-plus"
                                 actionListener="#{manageBrandBean.newBrand}"
@@ -83,12 +83,12 @@
                         paginatorPosition="bottom">
                     <f:facet name="header">
                         <div class="products-table-header">
-                            <span style="font-weight: bold">Marcas</span>
+                            <span style="font-weight: bold">#{msgs.brands_label}</span>
                             <span class="filter-container ui-input-icon-left">
 									<i class="pi pi-search"></i>
 									<p:inputText
                                             id="globalFilter"
-                                            onkeyup="PF('dtModel').filter()"
+                                            onkeyup="PF('dtBrand').filter()"
                                             placeholder="Buscar" />
 								</span>
                         </div>
@@ -96,7 +96,7 @@
                     <p:column headerText="#{msgs.brand_label}" sortBy="#{brand.brand}">
                         <h:outputText value="#{brand.brand}" />
                     </p:column>
-                    <p:column exportable="false">
+                    <p:column exportable="false" rendered="#{userBean.admin}">
                         <p:commandButton
                                 icon="pi pi-pencil"
                                 update="brand-form:manage-brand-content"

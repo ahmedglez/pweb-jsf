@@ -15,7 +15,7 @@
 		<h:form>
 			<p:spacer height="50"></p:spacer>
 			<div class="p-grid p-ai-center vertical-container">
-				<p:card style="width: 40%; margin: 0 auto">
+				<p:card id="send-email" style="width: 40%; margin: 0 auto">
 					<p:staticMessage
 						severity="info"
 						summary="INFO"
@@ -36,7 +36,10 @@
 					<p:commandButton
 						value="Enviar"
 						action="#{recoverPasswordBean.sendRecoveryEmail}"
-						style="width: 100%" />						
+						update="send-email"
+						style="width: 100%" >
+						<p:resetInput target="send-email"/>
+					</p:commandButton>
 				</p:card>
 			</div>
 		</h:form>

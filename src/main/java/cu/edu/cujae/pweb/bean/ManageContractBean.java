@@ -24,14 +24,12 @@ public class ManageContractBean {
   private ContractDto contractDto;
   private ContractDto selectedContract;
   private List<ContractDto> contracts;
-  private double normalBill;
-  private double especialBill;
   private Date startingDate;
   private Date finalDate;
   private int selectedTourist;
   private int selectedCar;
   private int selectedDriver;
-  private int billCode;
+  private int selectedBill;
   private int selectedPayment;
 
   @Autowired
@@ -55,6 +53,7 @@ public class ManageContractBean {
   private List<CarDto> cars;
   private List<TouristDto> tourists;
   private List<DriverDto> drivers;
+  private List<BillDto> bills;
   private List<PaymentsDto> payments;
 
   @PostConstruct
@@ -73,9 +72,7 @@ public class ManageContractBean {
     this.selectedTourist = 0;
     this.startingDate = null;
     this.finalDate = null;
-    this.normalBill = 0;
-    this.especialBill = 0;
-    this.billCode = 0;
+    this.selectedBill = 0;
     this.selectedPayment = 0;
   }
 
@@ -89,9 +86,7 @@ public class ManageContractBean {
       new SimpleDateFormat("yyyy-MM-dd").parse(contact.getStartingDate());
     this.finalDate =
       new SimpleDateFormat("yyyy-MM-dd").parse(contact.getFinalDate());
-    this.normalBill = contact.getBill().getAmount();
-    this.especialBill = contact.getBill().getSpecialAmount();
-    this.billCode = contact.getBill().getCode();
+    this.selectedBill = contact.getBill().getCode();
     this.selectedPayment = contact.getPayment().getCode();
   }
 
@@ -119,13 +114,9 @@ public class ManageContractBean {
 
   public void saveContract() {
     if (this.selectedContract.getCode() == 0) {
-      BillDto bill = new BillDto(normalBill, especialBill);
       selectedContract.setStartingDate(startingDate.toString());
       selectedContract.setFinalDate(finalDate.toString());
-      billService.create(bill);
-      selectedContract.setBill(
-        billService.getAll().get(billService.getAll().size() - 1)
-      );
+      selectedContract.setBill(billService.getByCode(selectedBill));
       selectedContract.setTotalAmount(
         selectedContract.calculateTotalAmount(
           DateController.getLocalDate(startingDate),
@@ -144,10 +135,7 @@ public class ManageContractBean {
         "message_contract_added"
       );
     } else {
-      BillDto bill = selectedContract.getBill();
-      bill.setCode(billCode);
-      bill.setAmount(normalBill);
-      bill.setSpecialAmount(especialBill);
+      selectedContract.setBill(billService.getByCode(selectedBill));
       selectedContract.setStartingDate(startingDate.toString());
       selectedContract.setFinalDate(finalDate.toString());
       selectedContract.setTotalAmount(
@@ -230,24 +218,17 @@ public class ManageContractBean {
     return payments;
   }
 
+  public List<BillDto> getBills() {
+    bills = billService.getAll();
+    return bills;
+  }
+
+  public void setBills(List<BillDto> bills) {
+    this.bills = bills;
+  }
+
   public void setPayments(List<PaymentsDto> payments) {
     this.payments = payments;
-  }
-
-  public double getNormalBill() {
-    return normalBill;
-  }
-
-  public void setNormalBill(double normalBill) {
-    this.normalBill = normalBill;
-  }
-
-  public double getEspecialBill() {
-    return especialBill;
-  }
-
-  public void setEspecialBill(double especialBill) {
-    this.especialBill = especialBill;
   }
 
   public ContractService getContractService() {
@@ -338,12 +319,12 @@ public class ManageContractBean {
     this.driverService = driverService;
   }
 
-  public int getBillCode() {
-    return billCode;
+  public int getSelectedBill() {
+    return selectedBill;
   }
 
-  public void setBillCode(int billCode) {
-    this.billCode = billCode;
+  public void setSelectedBill(int selectedBill) {
+    this.selectedBill = selectedBill;
   }
 
   public int getSelectedPayment() {
@@ -353,4 +334,6 @@ public class ManageContractBean {
   public void setSelectedPayment(int selectedPayment) {
     this.selectedPayment = selectedPayment;
   }
+
+
 }

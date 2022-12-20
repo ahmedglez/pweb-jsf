@@ -5,9 +5,22 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 	<ui:composition template="/pages/template/layout.xhtml">
-		<ui:define name="title"> Listado de Contratos </ui:define>
+		<ui:define name="title">#{msgs.list_contracts}</ui:define>
 		<ui:define name="layout">
 			<div class="card crud-demo">
+
+				<p:tabMenu activeIndex="#{param.i}" style="padding-bottom: 2rem">
+					<p:menuitem value="#{msgs.contracts_label}" outcome="/pages/list/contract-list.xhtml" icon="pi pi-fw pi-tag">
+						<f:param name="i" value="0"/>
+					</p:menuitem>
+					<p:menuitem value="#{msgs.bills_label}" outcome="/pages/list/bill-list.xhtml" icon="pi pi-fw pi-tag">
+						<f:param name="i" value="1"/>
+					</p:menuitem>
+					<p:menuitem value="#{msgs.payments_label}" outcome="/pages/list/payment-list.xhtml" icon="pi pi-fw pi-tag">
+						<f:param name="i" value="2"/>
+					</p:menuitem>
+				</p:tabMenu>
+
 				<h:form id="form">
 					<p:toolbar>
 						<p:toolbarGroup>
@@ -68,7 +81,7 @@
 						paginatorPosition="bottom">
 						<f:facet name="header">
 							<div class="products-table-header">
-								<span style="font-weight: bold">Contratos</span>
+								<span style="font-weight: bold">#{msgs.contracts_label}</span>
 								<span class="filter-container ui-input-icon-left">
 									<i class="pi pi-search"></i>
 									<p:inputText
@@ -80,63 +93,63 @@
 						</f:facet>
 
 						<p:column
-							headerText="Turista"
+							headerText="#{msgs.tourist_label}"
 							sortBy="#{contract.tourist.name}"
 							filterBy="#{contract.tourist.name}">
 							<h:outputText
 								value="#{contract.tourist.name} #{contract.tourist.lastName}" />
 						</p:column>
 						<p:column
-							headerText="Carro"
+							headerText="#{msgs.car}"
 							sortBy="#{contract.car.carID}"
 							filterBy="#{contract.car.carID}">
 							<h:outputText value="#{contract.car.carID}" />
 						</p:column>
 						<p:column
-							headerText="Conductor"
+							headerText="#{msgs.driver}"
 							sortBy="#{contract.driver.name}"
 							filterBy="#{contract.driver.name}">
 							<h:outputText
 								value="#{contract.driver.name} #{contract.driver.lastName}" />
 						</p:column>
 						<p:column
-							headerText="Tarifa Normal"
+							headerText="#{msgs.normal_bill_label}"
 							sortBy="#{contract.bill.amount}"
 							filterBy="#{contract.bill.amount}">
 							<h:outputText value="#{contract.bill.amount}" />
 						</p:column>
 						<p:column
-							headerText="Tarifa Especila"
+							headerText="#{msgs.special_bill_label}"
 							sortBy="#{contract.bill.specialAmount}"
 							filterBy="#{contract.bill.specialAmount}">
 							<h:outputText value="#{contract.bill.specialAmount}" />
 						</p:column>
 						<p:column
-							headerText="Tipo de pago"
+							headerText="#{msgs.payment_label}"
 							sortBy="#{contract.payment.payment}"
 							filterBy="#{contract.payment.payment}">
 							<h:outputText value="#{contract.payment.payment}" />
 						</p:column>
 						<p:column
-							headerText="Fecha inicio"
+							headerText="#{msgs.starting_date}"
 							sortBy="#{contract.startingDate}"
 							filterBy="#{contract.startingDate}">
 							<h:outputText value="#{contract.startingDate}" />
 						</p:column>
 						<p:column
-							headerText="Fecha fin"
+							headerText="#{msgs.final_date}"
 							sortBy="#{contract.finalDate}"
 							filterBy="#{contract.finalDate}">
 							<h:outputText value="#{contract.finalDate}" />
 						</p:column>
 						<p:column
-							headerText="Extension"
+							headerText="#{msgs.extension}"
 							sortBy="#{contract.extension}"
 							filterBy="#{contract.extension}">
 							<h:outputText value="#{contract.extension}" />
 						</p:column>
 						<p:column
-							headerText="Total a pagar"
+							headerText="#{msgs.total_amount}"
 							sortBy="#{contract.totalAmount}"
 							filterBy="#{contract.totalAmount}">
 							<h:outputText value="#{contract.totalAmount}" />

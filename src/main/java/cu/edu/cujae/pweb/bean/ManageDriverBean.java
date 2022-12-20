@@ -34,15 +34,12 @@ public class ManageDriverBean {
 
   @PostConstruct
   public void init() {
-   /*  drivers = drivers == null ? getAllWithOutSinDriver() : drivers;
-    categories =
-      categories == null ? getAllWithOutSinCategory() : categories; */
   }
 
   //Se ejecuta al dar clic en el button Nuevo
   public void newDriver() {
     this.selectedDriver = new DriverDto();
-    this.selectedCategory = -1;
+    this.selectedCategory = 0;
   }
 
   //Permite eliminar un chofer
@@ -92,7 +89,7 @@ public class ManageDriverBean {
   private List<DriverDto> getAllWithOutSinDriver(){
     List<DriverDto> allWhitOutSinDriver = new ArrayList<>();
     for(DriverDto d: driverService.getAll()){
-      if(d.getCode()!=0){
+      if(d.getCode()!=16){
         allWhitOutSinDriver.add(d);
       }
     }

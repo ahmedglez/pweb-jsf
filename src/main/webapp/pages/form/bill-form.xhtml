@@ -4,23 +4,22 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
-   <h:form id="brand-form">
+   <h:form id="bill-form">
       <p:dialog
-              header="#{msgs.new_brand}"
+              header="#{msgs.new_bill}"
               showEffect="fade"
               modal="true"
-              widgetVar="manageBrandDialog"
+              widgetVar="manageBillDialog"
               responsive="true">
-         <p:outputPanel id="manage-brand-content" class="ui-fluid">
+         <p:outputPanel id="manage-bill-content" class="ui-fluid">
             <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
             <div class="p-field">
-               <p:outputLabel for="@next">#{msgs.brand_label}</p:outputLabel>
-               <p:inputText
-                       id="new-brand"
-                       required="true"
-                       requiredMessage="#{msgs.brand_message_required}"
-                       value="#{manageBrandBean.selectedBrand.brand}"
-               />
+               <p:outputLabel for="@next">#{msgs.normal_bill_label}</p:outputLabel>
+               <p:inputNumber id="tarifa" value="#{manageBillBean.selectedBill.amount}"  required="true"  minValue="100" maxValue="2000"/>
+            </div>
+            <div class="p-field">
+               <p:outputLabel for="@next">#{msgs.special_bill_label}</p:outputLabel>
+               <p:inputNumber id="tarifa1" value="#{manageBillBean.selectedBill.specialAmount}"  required="true"  minValue="200" maxValue="4000"/>
             </div>
             <div class="p-field">
                <p:messages severity="error">
@@ -33,13 +32,13 @@
             <p:commandButton
                     value="Salvar"
                     icon="pi pi-check"
-                    actionListener="#{manageBrandBean.saveBrand}"
-                    update="manage-brand-content"
-                    process="manage-brand-content @this" />
+                    actionListener="#{manageBillBean.saveBill}"
+                    update="manage-bill-content"
+                    process="manage-bill-content @this" />
             <p:commandButton
                     value="Cancelar"
                     icon="pi pi-times"
-                    onclick="PF('manageBrandDialog').hide()"
+                    onclick="PF('manageBillDialog').hide()"
                     class="ui-button-secondary" />
          </f:facet>
       </p:dialog>

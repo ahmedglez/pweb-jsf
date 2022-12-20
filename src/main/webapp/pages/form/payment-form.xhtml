@@ -1,0 +1,47 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:form id="payment-form">
+        <p:dialog
+                header="#{msgs.new_payment}"
+                showEffect="fade"
+                modal="true"
+                widgetVar="managePaymentDialog"
+                responsive="true">
+            <p:outputPanel id="manage-payment-content" class="ui-fluid">
+                <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
+                <div class="p-field">
+                    <p:outputLabel for="@next">#{msgs.payment_label}</p:outputLabel>
+                    <p:inputText
+                            id="new-payment"
+                            required="true"
+                            requiredMessage="#{msgs.payment_required}"
+                            value="#{managePaymentBean.selectedPayment.payment}"
+                    />
+                </div>
+                <div class="p-field">
+                    <p:messages severity="error">
+                        <p:autoUpdate/>
+                    </p:messages>
+                </div>
+            </p:outputPanel>
+
+            <f:facet name="footer">
+                <p:commandButton
+                        value="Salvar"
+                        icon="pi pi-check"
+                        actionListener="#{managePaymentBean.savePayment}"
+                        update="manage-payment-content"
+                        process="manage-payment-content @this" />
+                <p:commandButton
+                        value="Cancelar"
+                        icon="pi pi-times"
+                        onclick="PF('managePaymentDialog').hide()"
+                        class="ui-button-secondary" />
+            </f:facet>
+        </p:dialog>
+    </h:form>
+</ui:composition>

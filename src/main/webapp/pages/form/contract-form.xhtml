@@ -6,18 +6,19 @@
         xmlns:p="http://primefaces.org/ui">
     <h:form id="contract-form">
     <p:dialog
-            header="Nuevo Contrato"
+            header="#{msgs.new_contract}"
             showEffect="fade"
             modal="true"
             widgetVar="manageContractDialog"
-            width="800"
-            height="520">
+            responsive="true"
+    >
         <p:outputPanel id="manage-contract-content" class="ui-fluid">
             <p:outputPanel rendered="#{not empty manageContractBean.contracts}">
                 <p:panelGrid layout="grid" columns="2">
                     <h:panelGroup>
+                        <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
                         <div class="p-field">
-                            <p:outputLabel for="@next">Turista</p:outputLabel>
+                            <p:outputLabel for="@next">#{msgs.tourist_label}</p:outputLabel>
                             <p:selectOneMenu
                                     id="turista"
                                     required="true"
@@ -30,13 +31,13 @@
                                     filterMatchMode="startsWith"
                                     panelStyle="width: 30rem"
                                     scrollHeight="250">
-                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="Selecione un turista" itemValue="" noSelectionOption="true"/>
                                 <f:selectItems value = "#{manageContractBean.tourists}" var = "tourist"
                                                itemValue="#{tourist.code}" itemLabel="#{tourist.name} #{tourist.lastName}"/>
                             </p:selectOneMenu>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="@next">Carro</p:outputLabel>
+                            <p:outputLabel for="@next">#{msgs.car}</p:outputLabel>
                             <p:selectOneMenu
                                     id="carro"
                                     required="true"
@@ -49,14 +50,14 @@
                                     filterMatchMode="startsWith"
                                     panelStyle="width: 30rem"
                                     scrollHeight="250">
-                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="Selecione un carro" itemValue="" noSelectionOption="true"/>
                                 <f:selectItems value = "#{manageContractBean.cars}" var = "car"
                                                itemValue="#{car.code}" itemLabel="#{car.carID}"/>
                             </p:selectOneMenu>
 
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="@next">Conductores</p:outputLabel>
+                            <p:outputLabel for="@next">#{msgs.driver}</p:outputLabel>
                             <p:selectOneMenu
                                     id="driver"
                                     required="true"
@@ -69,13 +70,13 @@
                                     filterMatchMode="startsWith"
                                     panelStyle="width: 30rem"
                                     scrollHeight="250">
-                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="Selecione un conductor" itemValue="-1" noSelectionOption="true"/>
                                 <f:selectItems value = "#{manageContractBean.drivers}" var = "driver"
                                                itemValue="#{driver.code}" itemLabel="#{driver.name} #{driver.lastName}"/>
                             </p:selectOneMenu>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="@next">Tipo de pago</p:outputLabel>
+                            <p:outputLabel for="@next">#{msgs.payment_label}</p:outputLabel>
                             <p:selectOneMenu
                                     id="payment"
                                     required="true"
@@ -84,33 +85,44 @@
                                     style="min-width: 15rem"
                                     multiple="true"
                                     filter="true"
-                                    requiredMessage="Seleccione un conductor"
+                                    requiredMessage="Seleccione una forma de pago"
                                     filterMatchMode="startsWith"
                                     panelStyle="width: 30rem"
                                     scrollHeight="250">
-                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="Selecione una forma de pago" itemValue="" noSelectionOption="true"/>
                                 <f:selectItems value = "#{manageContractBean.payments}" var = "payment"
                                                itemValue="#{payment.code}" itemLabel="#{payment.payment}"/>
                             </p:selectOneMenu>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="@next">Tarifa normal</p:outputLabel>
-                            <p:inputNumber id="tarifa" value="#{manageContractBean.normalBill}"  required="true" requiredMessage="Se requeire normal bill"  minValue="200" maxValue="2000"/>
+                            <p:outputLabel for="@next">#{msgs.bill_label}</p:outputLabel>
+                            <p:selectOneMenu
+                                    id="bill"
+                                    required="true"
+                                    value="#{manageContractBean.selectedBill}"
+                                    label="Seleccione un conductor"
+                                    style="min-width: 15rem"
+                                    multiple="true"
+                                    filter="true"
+                                    requiredMessage="Seleccione una factura"
+                                    filterMatchMode="startsWith"
+                                    panelStyle="width: 30rem"
+                                    scrollHeight="250">
+                                <f:selectItem itemLabel="Seleccione una factura" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value = "#{manageContractBean.bills}" var = "bill"
+                                               itemValue="#{bill.code}" itemLabel="N-#{bill.amount} S-#{bill.specialAmount}"/>
+                            </p:selectOneMenu>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="@next">Tarifa especial</p:outputLabel>
-                            <p:inputNumber id="tarifa1" value="#{manageContractBean.especialBill}"  required="true" requiredMessage="Se requeire especial bill" minValue="400" maxValue="40000"/>
-                        </div>
-                        <div class="p-field">
-                            <p:outputLabel for="@next" value="Fecha inicio"/>
+                            <p:outputLabel for="@next" value="#{msgs.starting_date}"/>
                             <p:datePicker id="fecha1" value="#{manageContractBean.startingDate}"  required="true" requiredMessage="Seleccione una fecha de inicio"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="@next" value="Fecha fin"/>
+                            <p:outputLabel for="@next" value="#{msgs.final_date}"/>
                             <p:datePicker id="fecha2" value="#{manageContractBean.finalDate}" required="true" requiredMessage="Seleccione una fecha de fin"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="@next" value="Extension"/>
+                            <p:outputLabel for="@next" value="#{msgs.extension}"/>
                             <p:spinner id="horizontalAfter"
                                        value="#{manageContractBean.selectedContract.extension}"
                                        buttons="horizontal-after"
@@ -118,6 +130,11 @@
                                        downButtonStyleClass="ui-button-danger"
                                        min = "0"
                             />
+                        </div>
+                        <div class="p-field">
+                            <p:messages severity="error">
+                                <p:autoUpdate/>
+                            </p:messages>
                         </div>
                     </h:panelGroup>
                     <h:panelGroup>

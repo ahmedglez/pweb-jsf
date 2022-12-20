@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">
 	<h:form id = "form1">
 	<p:dialog
-		header="Conductor"
+		header="#{msgs.new_driver}"
 		showEffect="fade"
 		modal="true"
 		widgetVar="manageDriverDialog"
@@ -15,48 +15,45 @@
 			<p:outputPanel rendered="#{not empty manageDriverBean.selectedDriver}">
 				<p:panelGrid layout="grid" columns="2">
 					<h:panelGroup>
+						<p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
 						<div class="p-field">
-							<p:outputLabel for="@next">Carnet de Identidad</p:outputLabel>
+							<p:outputLabel for="@next">#{msgs.ci_label}</p:outputLabel>
 							<p:inputText
 								id="ci"
 								required="true"
+								requiredMessage="#{msgs.ci_message}"
 								value="#{manageDriverBean.selectedDriver.ci}"
 								maxlength="11" />
 							<p:keyFilter mask="num" />
-
-							<p:message for="@previous"></p:message>
 						</div>
 						<div class="p-field">
-							<p:outputLabel for="@next">Nombre</p:outputLabel>
+							<p:outputLabel for="@next">#{msgs.name_label}</p:outputLabel>
 							<p:inputText
 								id="firstName"
 								required="true"
-								requiredMessage="Se require el nombre"
+								requiredMessage="#{msgs.name_message}"
 								value="#{manageDriverBean.selectedDriver.name}" />
-							<p:message for="@previous"></p:message>
 						</div>
 						<div class="p-field">
-							<p:outputLabel for="@next">Apellidos</p:outputLabel>
+							<p:outputLabel for="@next">#{msgs.last_name_label}</p:outputLabel>
 							<p:inputText
 								id="lastName"
 								required="true"
+								requiredMessage="#{msgs.last_name_message}"
 								value="#{manageDriverBean.selectedDriver.lastName}">
 							</p:inputText>
-							<p:message for="@previous"></p:message>
 						</div>
 						<div class="p-field">
-							<p:outputLabel for="@next">Dirección</p:outputLabel>
+							<p:outputLabel for="@next">#{msgs.address_label}</p:outputLabel>
 							<p:inputText
 								id="address"
 								required="true"
+								requiredMessage="#{msgs.address_message}"
 								value="#{manageDriverBean.selectedDriver.address}">
 							</p:inputText>
-							<p:message for="@previous"></p:message>
 						</div>
-					</h:panelGroup>
-					<h:panelGroup>
-					<p:outputLabel for="@next">Categoría</p:outputLabel>
-						<div class="p-field" style="display: flex; flex-direction: row; ">
+						<div class="p-field">
+							<p:outputLabel for="@next">#{msgs.category_label}</p:outputLabel>
 							<p:selectOneMenu
 									id="multiple2"
 									required="true"
@@ -65,14 +62,25 @@
 									style="min-width: 15rem"
 									multiple="true"
 									filter="true"
-									requiredMessage="Seleccione un pais"
+									requiredMessage="#{msgs.category_message}"
 									filterMatchMode="startsWith"
 									panelStyle="width: 30rem"
 									scrollHeight="250">
-								<f:selectItem itemLabel="Selecione una categoria" itemValue="-1" noSelectionOption="true"/>
+								<f:selectItem itemLabel="Selecione una categoria" itemValue="" noSelectionOption="true"/>
 								<f:selectItems value="#{manageDriverBean.categories}" var="category"
-												itemLabel="#{category.category}" itemValue="#{category.code}"/>
+											   itemLabel="#{category.category}" itemValue="#{category.code}"/>
 							</p:selectOneMenu>
+						</div>
+
+						<div class="p-field">
+							<p:messages severity="error">
+								<p:autoUpdate/>
+							</p:messages>
+						</div>
+					</h:panelGroup>
+					<h:panelGroup>
+						<div>
+							<p:graphicImage name="photo_tourist.jpg" library="images" width="350" height="450" />
 						</div>
 					</h:panelGroup>
 				</p:panelGrid>

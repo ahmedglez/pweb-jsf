@@ -4,22 +4,22 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
-   <h:form id="brand-form">
+   <h:form id="category-form">
       <p:dialog
-              header="#{msgs.new_brand}"
+              header="#{msgs.new_category}"
               showEffect="fade"
               modal="true"
-              widgetVar="manageBrandDialog"
+              widgetVar="manageCategoryDialog"
               responsive="true">
-         <p:outputPanel id="manage-brand-content" class="ui-fluid">
+         <p:outputPanel id="manage-category-content" class="ui-fluid">
             <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
             <div class="p-field">
-               <p:outputLabel for="@next">#{msgs.brand_label}</p:outputLabel>
+               <p:outputLabel for="@next">#{msgs.category_label}</p:outputLabel>
                <p:inputText
-                       id="new-brand"
+                       id="new-category"
                        required="true"
-                       requiredMessage="#{msgs.brand_message_required}"
-                       value="#{manageBrandBean.selectedBrand.brand}"
+                       requiredMessage="#{msgs.category_message}"
+                       value="#{manageCategoryBean.selectedCategory.category}"
                />
             </div>
             <div class="p-field">
@@ -33,13 +33,13 @@
             <p:commandButton
                     value="Salvar"
                     icon="pi pi-check"
-                    actionListener="#{manageBrandBean.saveBrand}"
-                    update="manage-brand-content"
-                    process="manage-brand-content @this" />
+                    actionListener="#{manageCategoryBean.saveCategory}"
+                    update="manage-category-content"
+                    process="manage-category-content @this" />
             <p:commandButton
                     value="Cancelar"
                     icon="pi pi-times"
-                    onclick="PF('manageBrandDialog').hide()"
+                    onclick="PF('manageCategoryDialog').hide()"
                     class="ui-button-secondary" />
          </f:facet>
       </p:dialog>
