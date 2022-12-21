@@ -4,8 +4,9 @@ import cu.edu.cujae.pweb.dto.UserDto;
 import cu.edu.cujae.pweb.dto.UserForRecoverCode;
 import cu.edu.cujae.pweb.security.CurrentUserUtils;
 import cu.edu.cujae.pweb.service.AuthService;
-import javax.annotation.ManagedBean;
+
 import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
