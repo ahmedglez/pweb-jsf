@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -95,22 +96,51 @@ public class UserService implements CrudInterface {
     System.out.println(response);
   }
 
-  public UserDto getByUsername(String username){
+  public UserDto getByUsername(String username) {
     UserDto user = null;
 
     try {
       MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
       ApiRestMapper<UserDto> apiRestMapper = new ApiRestMapper<>();
 
-      UriTemplate template = new UriTemplate("/api/v1/users/username/{username}");
+      UriTemplate template = new UriTemplate(
+        "/api/v1/users/username/{username}"
+      );
       String uri = template.expand(username).toString();
       String response = (String) restService
-              .GET(uri, params, String.class, UserBean.token)
-              .getBody();
+        .GET(uri, params, String.class, UserBean.token)
+        .getBody();
       user = apiRestMapper.mapOne(response, UserDto.class);
     } catch (Exception e) {
       e.printStackTrace();
     }
     return user;
+  }
+
+  public UserDto getPersonalInfo() {
+    UserDto user = null;
+    try {
+      MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+      ApiRestMapper<UserDto> apiRestMapper = new ApiRestMapper<>();
+
+      String response = (String) restService
+        .GET("/api/v1/profile/me", params, String.class, UserBean.token)
+        .getBody();
+      user = apiRestMapper.mapOne(response, UserDto.class);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return user;
+  }
+
+  public void updatePersonalInfo(UserDto user, String field) {
+    MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+    HttpHeaders headers = new HttpHeaders();
+    headers.add("field", field);
+    headers.add("Authorization", "Bearer " + UserBean.token);
+    String response = (String) restService
+      .PUT("/api/v1/profile/", params, user, String.class)
+      .getBody();
+    System.out.println(response);
   }
 }

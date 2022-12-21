@@ -35,10 +35,11 @@
 
 					<p:commandButton
 						value="Enviar"
+						icon="pi pi-check"
 						action="#{recoverPasswordBean.sendRecoveryEmail}"
 						update="send-email"
-						style="width: 100%" >
-						<p:resetInput target="send-email"/>
+						style="width: 100%">
+						<p:resetInput target="send-email" />
 					</p:commandButton>
 				</p:card>
 			</div>
