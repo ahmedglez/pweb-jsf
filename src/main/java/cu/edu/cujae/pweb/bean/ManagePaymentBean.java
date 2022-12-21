@@ -27,6 +27,8 @@ public class ManagePaymentBean {
         this.selectedPayment = new PaymentsDto();
     }
 
+    public void loadData(){payments = paymentService.getAll();}
+
     public void savePayment() {
         if (this.selectedPayment.getCode() == 0) {
             paymentService.create(selectedPayment);
@@ -79,7 +81,6 @@ public class ManagePaymentBean {
     }
 
     public List<PaymentsDto> getPayments() {
-        payments = paymentService.getAll();
         return payments;
     }
 

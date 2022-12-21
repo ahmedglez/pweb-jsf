@@ -27,6 +27,10 @@ public class ManageBrandBean {
         this.selectedBrand = new BrandDto();
     }
 
+    public void loadData(){
+        this.brands = brandService.getAll();
+    }
+
     public void saveBrand() {
         if (this.selectedBrand.getCode() == 0) {
             brandService.create(selectedBrand);
@@ -79,7 +83,6 @@ public class ManageBrandBean {
     }
 
     public List<BrandDto> getBrands() {
-        this.brands = brandService.getAll();
         return brands;
     }
 

@@ -42,6 +42,11 @@ public class ManageDriverBean {
     this.selectedCategory = 0;
   }
 
+  public void loadData(){
+    categories = getAllWithOutSinCategory();
+    drivers = getAllWithOutSinDriver();
+  }
+
   //Permite eliminar un chofer
   public void deleteDriver() {
     try {
@@ -146,8 +151,6 @@ public class ManageDriverBean {
   }
 
   public List<DriverDto> getDrivers() {
-    categories = getAllWithOutSinCategory();
-    drivers = getAllWithOutSinDriver();
     return drivers;
   }
 

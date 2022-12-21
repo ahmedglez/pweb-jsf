@@ -27,6 +27,10 @@ public class ManageBillBean {
         this.selectedBill = new BillDto();
     }
 
+    public void loadData(){
+        bills = billService.getAll();
+    }
+
     public void saveBill() {
         if (this.selectedBill.getCode() == 0) {
             billService.create(selectedBill);
@@ -79,7 +83,6 @@ public class ManageBillBean {
     }
 
     public List<BillDto> getBills() {
-        bills = billService.getAll();
         return bills;
     }
 

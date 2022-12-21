@@ -32,10 +32,9 @@ public class ManageTouristBean {
   @Autowired
   private TouristServices service;
 
-  @PostConstruct
-  public void onInit() {
-   /*  tourists = service.getAll();
-    countries = countryService.getCountries(); */
+  public void loadData() {
+    tourists = service.getAll();
+    countries = countryService.getCountries();
   }
 
   public void newTourist() {
@@ -118,7 +117,6 @@ public class ManageTouristBean {
   }
 
   public List<TouristDto> getTourists() {
-    tourists = service.getAll();
     return tourists;
   }
 

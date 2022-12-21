@@ -19,17 +19,18 @@
 			<div class="menu-items">
 				<h:link
 					rendered="#{userBean.admin}"
-					outcome="/pages/security/users/user-list.xhtml">
+					outcome="/pages/security/users/user-list.xhtml"
+					onclick="#{manageUserBean.loadData()}">
 					Gestionar Usuarios
 				</h:link>
-				<h:link outcome="/pages/list/driver-list.xhtml">
+				<h:link outcome="/pages/list/driver-list.xhtml" onclick="#{manageDriverBean.loadData()}">
 					Gestionar Conductores
 				</h:link>
-				<h:link outcome="/pages/list/tourist-list.xhtml">
+				<h:link outcome="/pages/list/tourist-list.xhtml" onclick="#{manageTouristBean.loadData()}">
 					Gestionar Turistas
 				</h:link>
-				<h:link outcome="/pages/list/car-list.xhtml"> Gestionar Carros </h:link>
-				<h:link outcome="/pages/list/contract-list.xhtml">
+				<h:link outcome="/pages/list/car-list.xhtml" onclick="#{manageCarBean.loadData()}"> Gestionar Carros </h:link>
+				<h:link outcome="/pages/list/contract-list.xhtml" onclick="#{manageContractBean.loadData()}">
 					Gestionar Contractos
 				</h:link>
 			</div>

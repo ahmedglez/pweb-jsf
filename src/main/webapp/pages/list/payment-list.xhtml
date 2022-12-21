@@ -11,13 +11,13 @@
         <div class="card crud-demo">
 
             <p:tabMenu activeIndex="#{param.i}" style="padding-bottom: 2rem">
-                <p:menuitem value="#{msgs.contracts_label}" outcome="/pages/list/contract-list.xhtml" icon="pi pi-fw pi-tag">
+                <p:menuitem value="#{msgs.contracts_label}" outcome="/pages/list/contract-list.xhtml" icon="pi pi-fw pi-tag" onclick="#{manageContractBean.loadData()}">
                     <f:param name="i" value="0"/>
                 </p:menuitem>
-                <p:menuitem value="#{msgs.bills_label}" outcome="/pages/list/bill-list.xhtml" icon="pi pi-fw pi-tag">
+                <p:menuitem value="#{msgs.bills_label}" outcome="/pages/list/bill-list.xhtml" icon="pi pi-fw pi-tag" onclick="#{manageBillBean.loadData()}">
                     <f:param name="i" value="1"/>
                 </p:menuitem>
-                <p:menuitem value="#{msgs.payments_label}" outcome="/pages/list/payment-list.xhtml" icon="pi pi-fw pi-tag">
+                <p:menuitem value="#{msgs.payments_label}" outcome="/pages/list/payment-list.xhtml" icon="pi pi-fw pi-tag" onclick="#{managePaymentBean.loadData()}">
                     <f:param name="i" value="2"/>
                 </p:menuitem>
             </p:tabMenu>

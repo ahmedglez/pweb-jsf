@@ -28,12 +28,6 @@ public class ManageCountryBean {
         this.countries = countries;
     }
 
-    @PostConstruct
-    public void init() {
-        /* //countries
-        countries = service.getCountries();
-        selectedCountry = new CountryDto(); */
-    }
     
     public CountryDto getSelectedCountry() {
         return selectedCountry;

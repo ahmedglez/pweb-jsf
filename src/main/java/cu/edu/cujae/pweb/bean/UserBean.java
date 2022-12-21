@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import cu.edu.cujae.pweb.service.UserService;
 import cu.edu.cujae.pweb.utils.JsfUtils;
+import cu.edu.cujae.pweb.utils.PasswordEncoderUtils;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -34,6 +35,8 @@ public class UserBean implements Serializable {
   private boolean admin;
   public static String refreshToken;
   private UserDto userLogged;
+
+  private PasswordEncoderUtils passwordEncoderUtils = new PasswordEncoderUtils();
 
   @Autowired
   private AuthService authService;
@@ -127,19 +130,19 @@ public class UserBean implements Serializable {
     return "logout";
   }
 
- public void updateUsername() throws IOException {
+    public void updateUsername() throws IOException {
       username = userLogged.getUsername();
-   userService.update(userLogged);
-   token = "";
-   refreshToken = "";
-   JsfUtils.addMessageFromBundle(
+      userService.update(userLogged);
+      token = "";
+      refreshToken = "";
+      JsfUtils.addMessageFromBundle(
            null,
            FacesMessage.SEVERITY_INFO,
            "message_user_edited"
-   );
-     PrimeFaces.current().executeScript("PF('manageUsernameDialog').hide()");
-     login();
- }
+      );
+      PrimeFaces.current().executeScript("PF('manageUsernameDialog').hide()");
+      login();
+    }
 
     public void updateEmail(){
         userService.update(userLogged);
@@ -151,7 +154,7 @@ public class UserBean implements Serializable {
         PrimeFaces.current().executeScript("PF('manageEmailDialog').hide()");
     }
     public void updatePassword() throws IOException {
-        password = userLogged.getPassword();
+        password = passwordEncoderUtils.encode(userLogged.getPassword());
         userService.update(userLogged);
         token = "";
         refreshToken = "";

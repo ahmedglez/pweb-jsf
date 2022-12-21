@@ -29,6 +29,10 @@ public class ManageCategoryBean {
         this.selectedCategory.setCode(-1);
     }
 
+    public void loadData(){
+        categories = getAllWithOutSinCategory();
+    }
+
     public void saveCategory() {
         if (this.selectedCategory.getCode() == 0) {
             driverCategoryService.create(selectedCategory);
@@ -91,7 +95,6 @@ public class ManageCategoryBean {
     }
 
     public List<DriversCategoriesDto> getCategories() {
-        categories = getAllWithOutSinCategory();
         return categories;
     }
 

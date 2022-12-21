@@ -34,6 +34,12 @@ public class ManageModelBean {
         selectedBrand = 0;
         selectedModel = new CarModelDto();
     }
+
+    public void loadData(){
+        this.brands = brandService.getAll();
+        this.models = modelService.getAll();
+    }
+
     public void saveModel() {
         if (this.selectedModel.getCode() == 0) {
             this.selectedModel.setBrand(brandService.getByCode(selectedBrand));
@@ -88,7 +94,6 @@ public class ManageModelBean {
     }
 
     public List<CarModelDto> getModels() {
-        this.models = modelService.getAll();
         return models;
     }
 
@@ -97,7 +102,6 @@ public class ManageModelBean {
     }
 
     public List<BrandDto> getBrands() {
-        this.brands = brandService.getAll();
         return brands;
     }
 

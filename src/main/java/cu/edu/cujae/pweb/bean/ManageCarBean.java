@@ -61,6 +61,12 @@ public class ManageCarBean {
     PrimeFaces.current().resetInputs("model-form:manage-model-content");
   }
 
+  public void loadData(){
+    cars = carService.getAll();
+    models = modelService.getAll();
+    brands = brandService.getAll();
+  }
+
   public void saveModel(){
     modelService.create(new CarModelDto(0,newCarModel,brandService.getByCode(selectedBrand)));
   }
@@ -147,7 +153,6 @@ public class ManageCarBean {
   }
 
   public List<CarDto> getCars() {
-    cars = carService.getAll();
     return cars;
   }
 
@@ -156,7 +161,6 @@ public class ManageCarBean {
   }
 
   public List<CarModelDto> getModels() {
-    models = modelService.getAll();
     return models;
   }
 
@@ -165,7 +169,6 @@ public class ManageCarBean {
   }
 
   public List<CarStatusDto> getStatuses() {
-    statuses = statusService.getAll();
     return statuses;
   }
 
