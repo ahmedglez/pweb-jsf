@@ -23,12 +23,20 @@ public class ManageBillBean {
     @Autowired
     private BillService billService;
 
+    @Autowired
+    private UserBean userBean;
+
     public void newBill(){
         this.selectedBill = new BillDto();
     }
 
     public void loadData(){
-        bills = billService.getAll();
+        try{
+            bills = billService.getAll();
+        }catch (Exception e){
+            PrimeFaces.current().executeScript("PF('manageLoggedDialog').show()");
+        }
+
     }
 
     public void saveBill() {

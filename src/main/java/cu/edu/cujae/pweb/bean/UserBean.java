@@ -85,7 +85,7 @@ public class UserBean implements Serializable {
           .redirect(
             getRequest().getContextPath() + "/pages/welcome/welcome.jsf"
           );
-        userLogged = userService.getByUsername(username);
+        userLogged = userService.getPersonalInfo();
         return authenticationResponse;
       } else {
         getFacesContext()
@@ -131,8 +131,12 @@ public class UserBean implements Serializable {
   }
 
     public void updateUsername() throws IOException {
+      System.out.println("Update username");
+      System.out.println("username: " + username);
       username = userLogged.getUsername();
-      userService.update(userLogged);
+      UserDto user = userService.getPersonalInfo();
+      user.setUsername(username);
+      userService.updatePersonalInfo(user, "username");
       token = "";
       refreshToken = "";
       JsfUtils.addMessageFromBundle(
@@ -145,7 +149,10 @@ public class UserBean implements Serializable {
     }
 
     public void updateEmail(){
-        userService.update(userLogged);
+      String email = userLogged.getEmail();
+      UserDto user = userService.getPersonalInfo();
+      user.setEmail(email);
+      userService.updatePersonalInfo(user, "email");
         JsfUtils.addMessageFromBundle(
                 null,
                 FacesMessage.SEVERITY_INFO,
@@ -154,8 +161,10 @@ public class UserBean implements Serializable {
         PrimeFaces.current().executeScript("PF('manageEmailDialog').hide()");
     }
     public void updatePassword() throws IOException {
-        password = passwordEncoderUtils.encode(userLogged.getPassword());
-        userService.update(userLogged);
+      password = userLogged.getPassword();
+      UserDto user = userService.getPersonalInfo();
+      user.setPassword(password);
+      userService.updatePersonalInfo(user, "password");
         token = "";
         refreshToken = "";
         JsfUtils.addMessageFromBundle(

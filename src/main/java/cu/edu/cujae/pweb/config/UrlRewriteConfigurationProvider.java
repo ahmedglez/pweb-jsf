@@ -17,7 +17,7 @@
         public Configuration getConfiguration(ServletContext context) {
             return ConfigurationBuilder.begin()
                     
-                     .addRule(Join.path("/security-users").to("/pages/security/users/user-list.jsf"))
+                    .addRule(Join.path("/security-users").to("/pages/security/users/user-list.jsf"))
                     .addRule(Join.path("/security-tourist").to("/pages/list/tourist-list.jsf"))
                     .addRule(Join.path("/security-driver").to("/pages/list/driver-list.jsf"))
                     .addRule(Join.path("/security-car").to("/pages/list/car-list.jsf"))

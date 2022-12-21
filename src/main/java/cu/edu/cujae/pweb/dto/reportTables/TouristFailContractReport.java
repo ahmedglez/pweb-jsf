@@ -1,9 +1,6 @@
 package cu.edu.cujae.pweb.dto.reportTables;
 
-
-import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class TouristFailContractReport {
 
@@ -51,7 +48,4 @@ public class TouristFailContractReport {
         this.deliveryDate = deliveryDate;
     }
 
-    public static ArrayList<TouristFailContractReport> getTouristFailContractReport() throws SQLException {
-        return new ArrayList<>();
-    }
 }

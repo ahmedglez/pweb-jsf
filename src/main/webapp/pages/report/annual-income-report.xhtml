@@ -1,0 +1,70 @@
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/pages/template/layout.xhtml">
+   <ui:define name="title">#{msgs.annual_income}</ui:define>
+   <ui:define name="layout">
+      <div class="card crud-demo">
+         <h:form id="form">
+            <p:toolbar>
+               <p:toolbarGroup>
+                  <p:outputLabel value="#{msgs.date_report} #{manageCountryBean.actualDate}"/>
+               </p:toolbarGroup>
+               <p:toolbarGroup align="right">
+                  <!-- Este es un button que tiene como objetivo exportar el contenido de la tabla que apunta a propiedad target
+                       del componente dataExporter. En este caso dt-users es el identificador del componente datatable -->
+                  <p:commandButton
+                          value="#{msgs.btn_export}"
+                          icon="pi pi-upload"
+                          styleClass="ui-button-help"
+                          ajax="false">
+                     <p:dataExporter
+                             type="pdf"
+                             target="dt-annual-income-report"
+                             fileName="annualIncome" />
+                  </p:commandButton>
+               </p:toolbarGroup>
+            </p:toolbar>
+
+            <p:dataTable
+                    id="dt-annual-income-report"
+                    widgetVar="dtAnnualIncomeReport"
+                    var="income"
+                    value="#{manageContractBean.incomeAnnualReports}"
+                    reflow="true"
+                    rows="13">
+               <f:facet name="header">
+                  <div class="products-table-header">
+                     <span style="font-weight: bold">#{msgs.annual_income}</span>
+                     <span class="filter-container ui-input-icon-left">
+									<i class="pi pi-search"></i>
+									<p:inputText
+                                            id="globalFilter"
+                                            onkeyup="PF('dtAnnualIncomeReport').filter()"
+                                            placeholder="#{msgs.btn_search}" />
+								</span>
+                  </div>
+               </f:facet>
+               <p:column
+                       headerText="#{msgs.mounts}"
+                       sortBy="#{income.month}"
+                       filterBy="#{income.month}">
+                  <h:outputText
+                          value="#{income.month}" />
+               </p:column>
+               <p:column
+                       headerText="#{msgs.income}"
+                       sortBy="#{income.incomeMonthly}"
+                       filterBy="#{income.incomeMonthly}">
+                  <h:outputText
+                          value="#{income.incomeMonthly}" />
+               </p:column>
+            </p:dataTable>
+         </h:form>
+      </div>
+   </ui:define>
+</ui:composition>
+</html>

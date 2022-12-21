@@ -1,16 +1,15 @@
 package cu.edu.cujae.pweb.bean;
 
-import cu.edu.cujae.pweb.dto.BrandDto;
-import cu.edu.cujae.pweb.dto.CarDto;
-import cu.edu.cujae.pweb.dto.CarModelDto;
-import cu.edu.cujae.pweb.dto.CarStatusDto;
-import cu.edu.cujae.pweb.service.BrandService;
-import cu.edu.cujae.pweb.service.CarService;
-import cu.edu.cujae.pweb.service.CarStatusService;
-import cu.edu.cujae.pweb.service.ModelService;
+import cu.edu.cujae.pweb.dto.*;
+import cu.edu.cujae.pweb.dto.reportTables.CarStatusReport;
+import cu.edu.cujae.pweb.service.*;
+import cu.edu.cujae.pweb.utils.DateController;
 import cu.edu.cujae.pweb.utils.JsfUtils;
+
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
@@ -30,6 +29,7 @@ public class ManageCarBean {
   private List<CarModelDto> models;
   private List<CarStatusDto> statuses;
   private List<BrandDto> brands;
+  private List<CarStatusReport> carStatusReports;
   private Integer selectedModel;
   private Integer selectedStatus;
   private Integer selectedBrand = 0;
@@ -45,6 +45,12 @@ public class ManageCarBean {
 
   @Autowired
   private BrandService brandService;
+
+  @Autowired
+  private ContractService contractService;
+
+  @Autowired
+  private UserBean userBean;
 
   public ManageCarBean() {}
 
@@ -62,9 +68,24 @@ public class ManageCarBean {
   }
 
   public void loadData(){
-    cars = carService.getAll();
-    models = modelService.getAll();
-    brands = brandService.getAll();
+    try{
+      cars = carService.getAll();
+      models = modelService.getAll();
+      brands = brandService.getAll();
+      statuses = statusService.getAll();
+    }catch (Exception e){
+      PrimeFaces.current().executeScript("PF('manageLoggedDialog').show()");
+    }
+
+  }
+
+  public void loadReports(){
+    try{
+      carStatusReports = carStatusReport();
+    }catch (Exception e){
+      userBean.logout();
+    }
+
   }
 
   public void saveModel(){
@@ -132,6 +153,33 @@ public class ManageCarBean {
         "message_error"
       );
     }
+  }
+
+  public List<CarStatusReport> carStatusReport() throws ParseException {
+    List<ContractDto> contracts = contractService.getAll();
+    List<CarDto> cars = carService.getAll();
+    List<CarStatusReport> report = new ArrayList<>();
+    for(CarDto c : cars){
+      String plate = c.getCarID();
+      String brand = c.getModel().getBrand().getBrand();
+      String endOfContract = "Disponible";
+      List<LocalDate> finDeContrato = new ArrayList<>();
+      if(c.getStatus().getStatus().equals("Rentado")){
+        for(int i=0; i<contracts.size();i++){
+          if (contracts.get(i).getCar().getCarID().equals(c.getCarID())){
+            finDeContrato.add(DateController.getLocalDateByString(contracts.get(i).getFinalDate()));
+          }
+        }
+           endOfContract = DateController.getMostRecent(finDeContrato).toString();
+      }else{
+        if(c.getStatus().getStatus().equals("Taller")){
+          endOfContract = "Taller";
+        }
+      }
+
+      report.add(new CarStatusReport(plate,brand,c.getStatus().getStatus(),endOfContract));
+    }
+    return report;
   }
 
   //SETTERS AND GETTERS
@@ -261,4 +309,11 @@ public class ManageCarBean {
     this.newCarModel = newCarModel;
   }
 
+  public List<CarStatusReport> getCarStatusReports() {
+    return carStatusReports;
+  }
+
+  public void setCarStatusReports(List<CarStatusReport> carStatusReports) {
+    this.carStatusReports = carStatusReports;
+  }
 }

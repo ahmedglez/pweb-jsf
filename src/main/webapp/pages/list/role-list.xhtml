@@ -5,16 +5,16 @@
         xmlns:f="http://xmlns.jcp.org/jsf/core"
         xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/pages/template/layout.xhtml">
-   <ui:define name="title">#{msgs.list_categories}</ui:define>
+   <ui:define name="title">#{msgs.list_roles}</ui:define>
    <ui:define name="layout">
 
       <div class="card crud-demo">
 
          <p:tabMenu activeIndex="#{param.i}" style="padding-bottom: 2rem">
-            <p:menuitem value="#{msgs.driver_label}" outcome="/pages/list/driver-list.xhtml" icon="pi pi-fw pi-tag" onclick="#{manageDriverBean.loadData()}">
+            <p:menuitem value="#{msgs.users_label}" outcome="/pages/security/users/user-list" icon="pi pi-fw pi-tag" onclick="#{mangeUserBean.loadData()}">
                <f:param name="i" value="0"/>
             </p:menuitem>
-            <p:menuitem value="#{msgs.categories_label}" outcome="/pages/list/category-list.xhtml" icon="pi pi-fw pi-tag" onclick="#{manageCategoryBean.loadData()}">
+            <p:menuitem value="#{msgs.roles}" outcome="/pages/list/role-list.xhtml" icon="pi pi-fw pi-tag" onclick="#{manageRoleBean.loadData()}">
                <f:param name="i" value="1"/>
             </p:menuitem>
          </p:tabMenu>
@@ -32,15 +32,15 @@
                       -->
                   <p:commandButton
                           rendered="#{userBean.admin}"
-                          value="#{msgs.btn_new}"
+                          value="Nuevo"
                           icon="pi pi-plus"
-                          actionListener="#{manageCategoryBean.newCategory}"
-                          action="#{manageCategoryBean.newCategory()}"
-                          update="category-form:manage-category-content"
-                          oncomplete="PF('manageCategoryDialog').show()"
+                          actionListener="#{manageRoleBean.openNew}"
+                          action="#{manageRoleBean.openNew()}"
+                          update="role-form:manage-role-content"
+                          oncomplete="PF('manageRoleDialog').show()"
                           styleClass="ui-button-success"
                           style="margin-right: 0.5rem">
-                     <p:resetInput target="category-form:manage-category-content" />
+                     <p:resetInput target="role-form:manage-role-content" />
                   </p:commandButton>
                </p:toolbarGroup>
                <p:toolbarGroup align="right">
@@ -53,8 +53,8 @@
                           ajax="false">
                      <p:dataExporter
                              type="pdf"
-                             target="dt-category"
-                             fileName="category" />
+                             target="dt-roles"
+                             fileName="role" />
                   </p:commandButton>
                </p:toolbarGroup>
             </p:toolbar>
@@ -70,59 +70,62 @@
                   con mayor detalle ver el showcase.
              -->
             <p:dataTable
-                    id="dt-category"
-                    widgetVar="dtCategory"
-                    var="category"
-                    value="#{manageCategoryBean.categories}"
+                    id="dt-roles"
+                    widgetVar="dtRoles"
+                    var="role"
+                    value="#{manageRoleBean.roles}"
                     reflow="true"
                     paginator="true"
                     rows="10"
                     paginatorPosition="bottom">
                <f:facet name="header">
                   <div class="products-table-header">
-                     <span style="font-weight: bold">#{msgs.categories_label}</span>
+                     <span style="font-weight: bold">#{msgs.roles}</span>
                      <span class="filter-container ui-input-icon-left">
 									<i class="pi pi-search"></i>
 									<p:inputText
                                             id="globalFilter"
-                                            onkeyup="PF('dtCategory').filter()"
+                                            onkeyup="PF('dtRoles').filter()"
                                             placeholder="#{msgs.btn_search}" />
 								</span>
                   </div>
                </f:facet>
-               <p:column headerText="#{msgs.category_label}" sortBy="#{category.category}">
-                  <h:outputText value="#{category.category}" />
+               <p:column headerText="#{msgs.role}" sortBy="#{role.role}" filterBy="#{role.role}">
+                  <h:outputText value="#{role.role}" />
+               </p:column>
+               <p:column headerText="#{msgs.description}" sortBy="#{role.description}" filterBy="#{role.description}">
+                  <h:outputText value="#{role.description}" />
                </p:column>
                <p:column exportable="false" rendered="#{userBean.admin}">
                   <p:commandButton
                           icon="pi pi-pencil"
-                          update="category-form:manage-category-content"
-                          oncomplete="PF('manageCategoryDialog').show()"
+                          update="role-form:manage-role-content"
+                          oncomplete="PF('manageRoleDialog').show()"
                           styleClass="edit-button rounded-button ui-button-success"
                           process="@this">
                      <f:setPropertyActionListener
-                             value="#{category}"
-                             target="#{manageCategoryBean.selectedCategory}" />
-                     <p:resetInput target="category-form:manage-category-content" />
+                             value="#{role}"
+                             target="#{manageRoleBean.selectedRole}" />
+                     <p:resetInput target="role-form:manage-role-content" />
                   </p:commandButton>
                   <p:commandButton
                           class="ui-button-warning rounded-button"
                           icon="pi pi-trash"
                           process="@this"
-                          action="#{manageCategoryBean.deleteCategory}">
+                          action="#{manageRoleBean.deleteRole}">
                      <f:setPropertyActionListener
-                             value="#{category}"
-                             target="#{manageCategoryBean.selectedCategory}" />
+                             value="#{role}"
+                             target="#{manageRoleBean.selectedRole}" />
                      <p:confirm
                              header="#{msgs.confirm_label}"
-                             message="#{msgs.category_confirm}"
+                             message="#{msgs.role_confirm}"
                              icon="pi pi-exclamation-triangle" />
                   </p:commandButton>
                </p:column>
             </p:dataTable>
          </h:form>
          <!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
-         <ui:include src="/pages/form/category-form.xhtml"></ui:include>
+         <ui:include src="/pages/form/payment-form.xhtml"></ui:include>
 
          <!-- Este comoponente se utiliza mucho para el caso de los eliminar, que es donde casi siempre se necesita confirmation,
          su uso es bien sencillo, cada confirmDialog va atado a un p:confirm que es el que se definie dentro del button -->

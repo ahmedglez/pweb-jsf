@@ -4,22 +4,29 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
-    <h:form id="payment-form">
+    <h:form id="role-form">
         <p:dialog
-                header="#{msgs.new_payment}"
+                header="#{msgs.new_role}"
                 showEffect="fade"
                 modal="true"
-                widgetVar="managePaymentDialog"
+                widgetVar="manageRoleDialog"
                 responsive="true">
-            <p:outputPanel id="manage-payment-content" class="ui-fluid">
+            <p:outputPanel id="manage-role-content" class="ui-fluid">
                 <p:ajaxStatus onerror="setTimeout(function() { $('.ui-messages').slideUp(); }, 4000)" />
                 <div class="p-field">
-                    <p:outputLabel for="@next">#{msgs.payment_label}</p:outputLabel>
+                    <p:outputLabel for="@next">#{msgs.role}</p:outputLabel>
                     <p:inputText
-                            id="payment"
+                            id="new-role"
                             required="true"
-                            requiredMessage="#{msgs.payment_required}"
-                            value="#{managePaymentBean.selectedPayment.payment}"
+                            requiredMessage="#{msgs.role_message}"
+                            value="#{manageRoleBean.selectedRole.role}"
+                    />
+                </div>
+                <div class="p-field">
+                    <p:outputLabel for="@next">#{msgs.description}</p:outputLabel>
+                    <p:inputText
+                            id="new-description"
+                            value="#{manageRoleBean.selectedRole.description}"
                     />
                 </div>
                 <div class="p-field">
@@ -33,13 +40,13 @@
                 <p:commandButton
                         value="#{msgs.btn_save}"
                         icon="pi pi-check"
-                        actionListener="#{managePaymentBean.savePayment}"
-                        update="manage-payment-content"
-                        process="manage-payment-content @this" />
+                        actionListener="#{manageRoleBean.saveRole}"
+                        update="manage-role-content"
+                        process="manage-role-content @this" />
                 <p:commandButton
                         value="#{msgs.btn_cancel}"
                         icon="pi pi-times"
-                        onclick="PF('managePaymentDialog').hide()"
+                        onclick="PF('manageRoleDialog').hide()"
                         class="ui-button-secondary" />
             </f:facet>
         </p:dialog>

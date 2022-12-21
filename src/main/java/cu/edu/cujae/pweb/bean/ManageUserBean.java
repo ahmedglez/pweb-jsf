@@ -40,11 +40,19 @@ public class ManageUserBean {
   @Autowired
   private RoleService roleService;
 
+  @Autowired
+  private UserBean userBean;
+
   //Esta anotacioon permite que se ejecute code luego de haberse ejecuta el constructor de la clase.
 
   public void loadData() {
+    try{
       users = userService.getAll();
       roles = roleService.getAll();
+    }catch (Exception e){
+      PrimeFaces.current().executeScript("PF('manageLoggedDialog').show()");
+    }
+
   }
 
   //Se ejecuta al dar clic en el button Nuevo
@@ -96,10 +104,6 @@ public class ManageUserBean {
     PrimeFaces.current().ajax().update("form:dt-users"); // Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
   }
 
-  public void onCancel(){
-    PrimeFaces.current().ajax().update("form:dt-users");
-    this.selectedUser = null;
-  }
 
   //Permite eliminar un usuario
   public void deleteUser() {

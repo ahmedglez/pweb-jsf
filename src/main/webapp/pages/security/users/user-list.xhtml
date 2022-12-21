@@ -5,10 +5,20 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	<ui:composition template="/pages/template/layout.xhtml">
-		<ui:define name="title"> Listado de usuarios </ui:define>
+		<ui:define name="title">#{msgs.list_users}</ui:define>
 		<ui:define name="layout">
 
 				<div class="card crud-demo">
+
+					<p:tabMenu activeIndex="#{param.i}" style="padding-bottom: 2rem">
+						<p:menuitem value="#{msgs.users_label}" outcome="/pages/security/users/user-list" icon="pi pi-fw pi-tag" onclick="#{mangeUserBean.loadData()}">
+							<f:param name="i" value="0"/>
+						</p:menuitem>
+						<p:menuitem value="#{msgs.roles}" outcome="/pages/list/role-list.xhtml" icon="pi pi-fw pi-tag" onclick="#{manageRoleBean.loadData()}">
+							<f:param name="i" value="1"/>
+						</p:menuitem>
+					</p:tabMenu>
+
 					<h:form id="form">
 					<p:toolbar>
 						<p:toolbarGroup>
@@ -22,7 +32,7 @@
 					    -->
 							<p:commandButton
 								rendered="#{userBean.admin}"
-								value="Nuevo"
+								value="#{msgs.btn_new}"
 								icon="pi pi-plus"
 								actionListener="#{manageUserBean.openNew}"
 								update="user-form:manage-user-content"
@@ -36,7 +46,7 @@
 							<!-- Este es un button que tiene como objetivo exportar el contenido de la tabla que apunta a propiedad target
 					         del componente dataExporter. En este caso dt-users es el identificador del componente datatable -->
 							<p:commandButton
-								value="Export"
+								value="#{msgs.btn_export}"
 								icon="pi pi-upload"
 								styleClass="ui-button-help"
 								ajax="false">
@@ -66,7 +76,7 @@
 						paginatorPosition="bottom">
 						<f:facet name="header">
 							<div class="products-table-header">
-								<span style="font-weight: bold">Usuarios</span>
+								<span style="font-weight: bold">#{msgs.users_label}</span>
 								<span class="filter-container ui-input-icon-left">
 									<i class="pi pi-search"></i>
 									<p:inputText
@@ -78,54 +88,42 @@
 						</f:facet>
 
 						<p:column
-							headerText="Usuario"
+							headerText="#{msgs.label_username}"
 							sortBy="#{user.username}"
 							filterBy="#{user.username}">
 							<h:outputText value="#{user.username}" />
 						</p:column>
 						<p:column
-							headerText="Full name"
+							headerText="#{msgs.name_label}"
 							sortBy="#{user.firstName}"
 							filterBy="#{user.firstName}">
 							<h:outputText value="#{user.firstName}" />
 						</p:column>
 						<p:column
-							headerText="Last name"
+							headerText="#{msgs.last_name_label}"
 							sortBy="#{user.lastName}"
 							filterBy="#{user.lastName}">
 							<h:outputText value="#{user.lastName}" />
 						</p:column>
 						<p:column
-							headerText="Contraseña"
+							headerText="#{msgs.password}"
 							sortBy="#{user.password}"
 							filterBy="#{user.password}">
 							<h:outputText value="#{user.password}" />
 						</p:column>
 						<p:column
-							headerText="Correo"
+							headerText="#{msgs.email}"
 							sortBy="#{user.email}"
 							filterBy="#{user.email}">
 							<h:outputText value="#{user.email}" />
 						</p:column>
 						<p:column
-							headerText="Roles"
+							headerText="#{msgs.roles}"
 							sortBy="#{user.roles}"
 							filterBy="#{user.roles}">
 							<h:outputText value="#{user.rolesName}" />
 						</p:column>
 						<p:column exportable="false" rendered="#{userBean.admin}">
-							<p:commandButton
-								icon="pi pi-pencil"
-								action="#{manageUserBean.openForEdit}"
-								update="user-form:manage-user-content"
-								oncomplete="PF('manageUserDialog').show()"
-								styleClass="edit-button rounded-button ui-button-success"
-								process="@this">
-								<f:setPropertyActionListener
-									value="#{user}"
-									target="#{manageUserBean.selectedUser}" />
-								<p:resetInput target="user-form:manage-user-content" />
-							</p:commandButton>
 							<p:commandButton
 								class="ui-button-warning rounded-button"
 								icon="pi pi-trash"
@@ -135,8 +133,8 @@
 									value="#{user}"
 									target="#{manageUserBean.selectedUser}" />
 								<p:confirm
-									header="Confirmar"
-									message="Está seguro de eliminar al usuario?"
+									header="#{msgs.confirm_label}"
+									message="#{msgs.user_confirm}"
 									icon="pi pi-exclamation-triangle" />
 							</p:commandButton>
 						</p:column>
@@ -149,12 +147,12 @@
 				su uso es bien sencillo, cada confirmDialog va atado a un p:confirm que es el que se definie dentro del button -->
 					<p:confirmDialog global="true" showEffect="fade" width="300">
 						<p:commandButton
-							value="Si"
+							value="#{msgs.btn_yes}"
 							type="button"
 							styleClass="ui-confirmdialog-yes"
 							icon="pi pi-check" />
 						<p:commandButton
-							value="No"
+							value="#{msgs.btn_no}"
 							type="button"
 							styleClass="ui-confirmdialog-no ui-button-secondary"
 							icon="pi pi-times" />

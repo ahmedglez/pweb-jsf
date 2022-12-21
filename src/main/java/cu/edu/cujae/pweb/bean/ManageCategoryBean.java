@@ -24,13 +24,20 @@ public class ManageCategoryBean {
     @Autowired
     private DriverCategoryService driverCategoryService;
 
+    @Autowired
+    private UserBean userBean;
+
     public void newCategory(){
         this.selectedCategory = new DriversCategoriesDto();
         this.selectedCategory.setCode(-1);
     }
 
     public void loadData(){
-        categories = getAllWithOutSinCategory();
+        try{
+            categories = getAllWithOutSinCategory();
+        }catch (Exception e){
+            PrimeFaces.current().executeScript("PF('manageLoggedDialog').show()");
+        }
     }
 
     public void saveCategory() {

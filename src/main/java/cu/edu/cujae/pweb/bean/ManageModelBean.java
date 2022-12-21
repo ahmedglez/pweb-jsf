@@ -28,6 +28,8 @@ public class ManageModelBean {
     private ModelService modelService;
     @Autowired
     private BrandService brandService;
+    @Autowired
+    private UserBean userBean;
 
 
     public void newModel(){
@@ -36,8 +38,13 @@ public class ManageModelBean {
     }
 
     public void loadData(){
-        this.brands = brandService.getAll();
-        this.models = modelService.getAll();
+        try{
+            this.brands = brandService.getAll();
+            this.models = modelService.getAll();
+        }catch (Exception e){
+            PrimeFaces.current().executeScript("PF('manageLoggedDialog').show()");
+        }
+
     }
 
     public void saveModel() {

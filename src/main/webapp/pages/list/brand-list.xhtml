@@ -35,7 +35,7 @@
                             -->
                         <p:commandButton
                                 rendered="#{userBean.admin}"
-                                value="Nuevo"
+                                value="#{msgs.btn_new}"
                                 icon="pi pi-plus"
                                 actionListener="#{manageBrandBean.newBrand}"
                                 action="#{manageBrandBean.newBrand()}"
@@ -50,7 +50,7 @@
                         <!-- Este es un button que tiene como objetivo exportar el contenido de la tabla que apunta a propiedad target
                                  del componente dataExporter. En este caso dt-users es el identificador del componente datatable -->
                         <p:commandButton
-                                value="Export"
+                                value="#{msgs.btn_export}"
                                 icon="pi pi-upload"
                                 styleClass="ui-button-help"
                                 ajax="false">
@@ -89,7 +89,7 @@
 									<p:inputText
                                             id="globalFilter"
                                             onkeyup="PF('dtBrand').filter()"
-                                            placeholder="Buscar" />
+                                            placeholder="#{msgs.btn_search}" />
 								</span>
                         </div>
                     </f:facet>
@@ -117,8 +117,8 @@
                                     value="#{brand}"
                                     target="#{manageBrandBean.selectedBrand}" />
                             <p:confirm
-                                    header="Confirmar"
-                                    message="Está seguro de eliminar la marca?"
+                                    header="#{msgs.confirm_label}"
+                                    message="#{msgs.brand_confirm}"
                                     icon="pi pi-exclamation-triangle" />
                         </p:commandButton>
                     </p:column>
@@ -131,12 +131,12 @@
             su uso es bien sencillo, cada confirmDialog va atado a un p:confirm que es el que se definie dentro del button -->
             <p:confirmDialog global="true" showEffect="fade" width="300">
                 <p:commandButton
-                        value="Si"
+                        value="#{msgs.btn_yes}"
                         type="button"
                         styleClass="ui-confirmdialog-yes"
                         icon="pi pi-check" />
                 <p:commandButton
-                        value="No"
+                        value="#{msgs.btn_no}"
                         type="button"
                         styleClass="ui-confirmdialog-no ui-button-secondary"
                         icon="pi pi-times" />

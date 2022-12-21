@@ -12,7 +12,7 @@
               widgetVar="manageBrandDialog"
               responsive="true">
          <p:outputPanel id="manage-brand-content" class="ui-fluid">
-            <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
+            <p:ajaxStatus onerror="setTimeout(function() { $('.ui-messages').slideUp(); }, 4000)" />
             <div class="p-field">
                <p:outputLabel for="@next">#{msgs.brand_label}</p:outputLabel>
                <p:inputText
@@ -31,13 +31,13 @@
 
          <f:facet name="footer">
             <p:commandButton
-                    value="Salvar"
+                    value="#{msgs.btn_save}"
                     icon="pi pi-check"
                     actionListener="#{manageBrandBean.saveBrand}"
                     update="manage-brand-content"
                     process="manage-brand-content @this" />
             <p:commandButton
-                    value="Cancelar"
+                    value="#{msgs.btn_cancel}"
                     icon="pi pi-times"
                     onclick="PF('manageBrandDialog').hide()"
                     class="ui-button-secondary" />

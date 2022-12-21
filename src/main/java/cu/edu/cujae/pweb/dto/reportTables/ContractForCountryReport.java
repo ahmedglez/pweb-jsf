@@ -1,8 +1,5 @@
 package cu.edu.cujae.pweb.dto.reportTables;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-
 public class ContractForCountryReport {
 
     private String country;
@@ -69,9 +66,6 @@ public class ContractForCountryReport {
         this.totalIncome = totalIncome;
     }
 
-    public static ArrayList<ContractForCountryReport> getContractForCountryReport() throws SQLException, ClassNotFoundException {
-        return new ArrayList<>();
-    }
 
 
 }

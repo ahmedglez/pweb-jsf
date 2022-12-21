@@ -6,9 +6,9 @@ import java.util.ArrayList;
 public class IncomeAnnualReport {
 
     private String month;
-    private float incomeMonthly;
+    private double incomeMonthly;
 
-    public IncomeAnnualReport(String moth, float incomeMonthly) {
+    public IncomeAnnualReport(String moth, double incomeMonthly) {
         this.month = moth;
         this.incomeMonthly = incomeMonthly;
     }
@@ -21,25 +21,22 @@ public class IncomeAnnualReport {
         this.month = month;
     }
 
-    public float getIncomeMonthly() {
+    public double getIncomeMonthly() {
         return incomeMonthly;
     }
 
-    public void setIncomeMonthly(float incomeMonthly) {
+    public void setIncomeMonthly(double incomeMonthly) {
         this.incomeMonthly = incomeMonthly;
     }
 
     public static ArrayList<IncomeAnnualReport> generatedIncomeAnnualReport(){
         ArrayList<IncomeAnnualReport> report = new ArrayList<>();
         String[] moths = {"JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER","TOTAL"};
-        float amount = 0;
+        double amount = 0;
         for(String m : moths){
             report.add(new IncomeAnnualReport(m,amount));
         }
         return report;
     }
 
-    public static ArrayList<IncomeAnnualReport> getIncomeAnnualReport() throws SQLException, ClassNotFoundException {
-        return new ArrayList<>();
-    }
 }

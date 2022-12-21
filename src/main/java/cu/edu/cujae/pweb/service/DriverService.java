@@ -21,7 +21,7 @@ public class DriverService implements CrudInterface {
   RestService restService;
 
   @Override
-  public List<DriverDto> getAll() {
+  public List<DriverDto> getAll(){
     List<DriverDto> drivers = new ArrayList<DriverDto>();
     try {
       MultiValueMap<String, String> params = new LinkedMultiValueMap<>();

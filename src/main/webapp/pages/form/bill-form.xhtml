@@ -12,7 +12,7 @@
               widgetVar="manageBillDialog"
               responsive="true">
          <p:outputPanel id="manage-bill-content" class="ui-fluid">
-            <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
+            <p:ajaxStatus onerror="setTimeout(function() { $('.ui-messages').slideUp(); }, 4000)" />
             <div class="p-field">
                <p:outputLabel for="@next">#{msgs.normal_bill_label}</p:outputLabel>
                <p:inputNumber id="tarifa" value="#{manageBillBean.selectedBill.amount}"  required="true"  minValue="100" maxValue="2000"/>
@@ -30,13 +30,13 @@
 
          <f:facet name="footer">
             <p:commandButton
-                    value="Salvar"
+                    value="#{msgs.btn_save}"
                     icon="pi pi-check"
                     actionListener="#{manageBillBean.saveBill}"
                     update="manage-bill-content"
                     process="manage-bill-content @this" />
             <p:commandButton
-                    value="Cancelar"
+                    value="#{msgs.btn_cancel}"
                     icon="pi pi-times"
                     onclick="PF('manageBillDialog').hide()"
                     class="ui-button-secondary" />

@@ -10,9 +10,9 @@ public class CarStatusReport {
     private String carId;
     private String carBrand;
     private String status;
-    private LocalDate endOfContract;
+    private String endOfContract;
 
-    public CarStatusReport(String carId, String carBrand, String status, LocalDate endOfContract) {
+    public CarStatusReport(String carId, String carBrand, String status, String endOfContract) {
         this.carId = carId;
         this.carBrand = carBrand;
         this.status = status;
@@ -43,15 +43,12 @@ public class CarStatusReport {
         this.status = status;
     }
 
-    public LocalDate getEndOfContract() {
+    public String getEndOfContract() {
         return endOfContract;
     }
 
-    public void setEndOfContract(LocalDate endOfContract) {
+    public void setEndOfContract(String endOfContract) {
         this.endOfContract = endOfContract;
     }
 
-    public static ArrayList<CarStatusReport> getCarStatusReport() throws SQLException, ClassNotFoundException {
-        return new ArrayList<>();
-    }
 }

@@ -5,7 +5,7 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 	<ui:composition template="/pages/template/layout.xhtml">
-		<ui:define name="title"> Listado de Turistas </ui:define>
+		<ui:define name="title">#{msgs.list_tourist}</ui:define>
 		<ui:define name="layout">
 			<div class="card crud-demo">
 				<h:form id="form">
@@ -21,7 +21,7 @@
                                 -->
 							<p:commandButton
 								rendered="#{userBean.admin}"
-								value="Nuevo"
+								value="#{msgs.btn_new}"
 								icon="pi pi-plus"
 								actionListener="#{manageTouristBean.newTourist}"
 								action="#{manageTouristBean.newTourist()}"
@@ -36,7 +36,7 @@
 							<!-- Este es un button que tiene como objetivo exportar el contenido de la tabla que apunta a propiedad target
                                      del componente dataExporter. En este caso dt-users es el identificador del componente datatable -->
 							<p:commandButton
-								value="Export"
+								value="#{msgs.btn_export}"
 								icon="pi pi-upload"
 								styleClass="ui-button-help"
 								ajax="false">
@@ -69,52 +69,52 @@
 						paginatorPosition="bottom">
 						<f:facet name="header">
 							<div class="products-table-header">
-								<span style="font-weight: bold">Turistas</span>
+								<span style="font-weight: bold">#{msgs.tourists_label}</span>
 								<span class="filter-container ui-input-icon-left">
 									<i class="pi pi-search"></i>
 									<p:inputText
 										id="globalFilter"
 										onkeyup="PF('dtTourist').filter()"
-										placeholder="Buscar" />
+										placeholder="#{msgs.btn_search}" />
 								</span>
 							</div>
 						</f:facet>
 
 						<p:column
-							headerText="Passport"
+							headerText="#{msgs.passport_label}"
 							sortBy="#{tourist.idPassport}"
 							filterBy="#{tourist.idPassport}">
 							<h:outputText value="#{tourist.idPassport}" />
 						</p:column>
 						<p:column
-							headerText="Nombre"
+							headerText="#{msgs.name_label}"
 							sortBy="#{tourist.name}"
 							filterBy="#{tourist.name}">
 							<h:outputText value="#{tourist.name}" />
 						</p:column>
-						<p:column headerText="Apellidos" sortBy="#{tourist.lastName}">
+						<p:column headerText="#{msgs.last_name_label}" sortBy="#{tourist.lastName}">
 							<h:outputText value="#{tourist.lastName}" />
 						</p:column>
 						<p:column
-							headerText="Edad"
+							headerText="#{msgs.age_label}"
 							sortBy="#{tourist.age}"
 							filterBy="#{tourist.age}">
 							<h:outputText value="#{tourist.age}" />
 						</p:column>
 						<p:column
-							headerText="Sexo"
+							headerText="#{msgs.sex_label}"
 							sortBy="#{tourist.sex}"
 							filterBy="#{tourist.sex}">
 							<h:outputText value="#{tourist.sex}" />
 						</p:column>
 						<p:column
-							headerText="Telefono"
+							headerText="#{msgs.number_label}"
 							sortBy="#{tourist.telephoneNumber}"
 							filterBy="#{tourist.telephoneNumber}">
 							<h:outputText value="#{tourist.telephoneNumber}" />
 						</p:column>
 						<p:column
-							headerText="Pais"
+							headerText="#{msgs.country_label}"
 							sortBy="#{tourist.country}"
 							filterBy="#{tourist.country}">
 							<h:outputText value="#{tourist.country}" />
@@ -141,8 +141,8 @@
 									value="#{tourist}"
 									target="#{manageTouristBean.selectedTourist}" />
 								<p:confirm
-									header="Confirmar"
-									message="Está seguro de eliminar al usuario?"
+									header="#{msgs.confirm_label}"
+									message="#{msgs.tourist_confirm}"
 									icon="pi pi-exclamation-triangle" />
 							</p:commandButton>
 						</p:column>
@@ -155,12 +155,12 @@
                     su uso es bien sencillo, cada confirmDialog va atado a un p:confirm que es el que se definie dentro del button -->
 				<p:confirmDialog global="true" showEffect="fade" width="300">
 					<p:commandButton
-						value="Si"
+						value="#{msgs.btn_yes}"
 						type="button"
 						styleClass="ui-confirmdialog-yes"
 						icon="pi pi-check" />
 					<p:commandButton
-						value="No"
+						value="#{msgs.btn_no}"
 						type="button"
 						styleClass="ui-confirmdialog-no ui-button-secondary"
 						icon="pi pi-times" />

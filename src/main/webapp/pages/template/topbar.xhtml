@@ -18,40 +18,40 @@
         <h:form id="topBar" style="margin-left:5px">
 
                 <p:menubar>
-                    <p:submenu label="Theme" >
-                        <p:menuitem value="Saga" action="#{guestPreferences.setTheme('saga')}" ajax="false"  icon="pi pi-sun"></p:menuitem>
-                        <p:menuitem value="Arya" action="#{guestPreferences.setTheme('arya')}" ajax="false" icon="pi pi-moon"></p:menuitem>
+                    <p:submenu label="#{msgs.theme_label}" >
+                        <p:menuitem value="#{msgs.theme_light}" action="#{guestPreferences.setTheme('saga')}" ajax="false"  icon="pi pi-sun"></p:menuitem>
+                        <p:menuitem value="#{msgs.theme_dark}" action="#{guestPreferences.setTheme('arya')}" ajax="false" icon="pi pi-moon"></p:menuitem>
                     </p:submenu>
-	                <p:submenu label="language" icon="pi pi-globe">
-						<p:menuitem value="Español" action="#{languageBean.setLanguage('es')}" ajax="false" icon="pi pi-globe"></p:menuitem>
-						<p:menuitem value="Ingles" action="#{languageBean.setLanguage('en')}" ajax="false" icon="pi pi-globe"></p:menuitem>
+	                <p:submenu label="#{msgs.language}" icon="pi pi-globe">
+						<p:menuitem value="#{msgs.spanish}" action="#{languageBean.setLanguage('es')}" ajax="false" icon="pi pi-globe"></p:menuitem>
+						<p:menuitem value="#{msgs.english}" action="#{languageBean.setLanguage('en')}" ajax="false" icon="pi pi-globe"></p:menuitem>
 					</p:submenu>
-                    <p:submenu label="Manage account" icon="pi pi-fw pi-user">
+                    <p:submenu label="#{msgs.manage_account}" icon="pi pi-fw pi-user">
                         <p:menuitem
-                                value="Change username"
+                                value="#{msgs.change_username}"
                                 icon="pi pi-fw pi-user"
                                 update="username-form:manage-username-content"
                                 oncomplete="PF('manageUsernameDialog').show()">
                             <p:resetInput target="username-form:manage-username-content" />
                         </p:menuitem>
                         <p:menuitem
-                                value="Change email"
+                                value="#{msgs.change_email}"
                                 icon="pi pi-fw pi-envelope"
                                 update="email-form:manage-email-content"
                                 oncomplete="PF('manageEmailDialog').show()">
                             <p:resetInput target="email-form:manage-email-content" />
                         </p:menuitem>
                         <p:menuitem
-                                value="Change password"
+                                value="#{msgs.change_password}"
                                 icon="pi pi-fw pi-lock"
                                 update="password-form:manage-password-content"
                                 oncomplete="PF('managePasswordDialog').show()">
                             <p:resetInput target="password-form:manage-password-content" />
                         </p:menuitem>
-                        <p:menuitem value="Logout" icon="pi pi-fw pi-sign-out" action="#{userBean.logout()}">
+                        <p:menuitem value="#{msgs.do_logout}" icon="pi pi-fw pi-sign-out" action="#{userBean.logout()}">
                             <p:confirm
-                                header="Confirmar"
-                                message="Está seguro ue desea cerrar sesion?"
+                                header="#{msgs.confirm_label}"
+                                message="#{msgs.logout_confirm}"
                                 icon="pi pi-exclamation-triangle" />
                         </p:menuitem>
                     </p:submenu>
@@ -59,12 +59,12 @@
 
             <p:confirmDialog global="true" showEffect="fade" width="300">
                 <p:commandButton
-                        value="Si"
+                        value="#{msgs.btn_yes}"
                         type="button"
                         styleClass="ui-confirmdialog-yes"
                         icon="pi pi-check" />
                 <p:commandButton
-                        value="No"
+                        value="#{msgs.btn_no}"
                         type="button"
                         styleClass="ui-confirmdialog-no ui-button-secondary"
                         icon="pi pi-times" />

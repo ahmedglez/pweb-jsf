@@ -1,0 +1,84 @@
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/pages/template/layout.xhtml">
+    <ui:define name="title">#{msgs.list_tourist_fail}</ui:define>
+    <ui:define name="layout">
+        <div class="card crud-demo">
+            <h:form id="form">
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:outputLabel value="#{msgs.date_report} #{manageCountryBean.actualDate}"/>
+                    </p:toolbarGroup>
+                    <p:toolbarGroup align="right">
+                        <!-- Este es un button que tiene como objetivo exportar el contenido de la tabla que apunta a propiedad target
+                             del componente dataExporter. En este caso dt-users es el identificador del componente datatable -->
+                        <p:commandButton
+                                value="#{msgs.btn_export}"
+                                icon="pi pi-upload"
+                                styleClass="ui-button-help"
+                                ajax="false">
+                            <p:dataExporter
+                                    type="pdf"
+                                    target="dt-tourist-fail-report"
+                                    fileName="touristFail" />
+                        </p:commandButton>
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+                <p:dataTable
+                        id="dt-tourist-fail-report"
+                        widgetVar="dtTouristFailReport"
+                        var="tourist"
+                        value="#{manageTouristBean.touristFailContractReports}"
+                        reflow="true"
+                        paginator="true"
+                        rows="10"
+                        paginatorPosition="bottom">
+                    <f:facet name="header">
+                        <div class="products-table-header">
+                            <span style="font-weight: bold">#{msgs.tourist_fail}</span>
+                            <span class="filter-container ui-input-icon-left">
+									<i class="pi pi-search"></i>
+									<p:inputText
+                                            id="globalFilter"
+                                            onkeyup="PF('dtCarTouristFailReport').filter()"
+                                            placeholder="#{msgs.btn_search}" />
+								</span>
+                        </div>
+                    </f:facet>
+                    <p:column
+                            headerText="#{msgs.name_label}"
+                            sortBy="#{tourist.name}"
+                            filterBy="#{tourist.name}">
+                        <h:outputText
+                                value="#{tourist.name}" />
+                    </p:column>
+                    <p:column
+                            headerText="#{msgs.last_name_label}"
+                            sortBy="#{tourist.lastName}"
+                            filterBy="#{tourist.lastName}">
+                        <h:outputText
+                                value="#{tourist.lastName}" />
+                    </p:column>
+                    <p:column
+                            headerText="#{msgs.final_date}"
+                            sortBy="#{tourist.finalDate.toString()}"
+                            filterBy="#{tourist.finalDate.toString()}">
+                        <h:outputText value="#{tourist.finalDate.toString()}" />
+                    </p:column>
+                    <p:column
+                            headerText="#{msgs.delibery_date}"
+                            sortBy="#{tourist.deliveryDate.toString()}"
+                            filterBy="#{tourist.deliveryDate.toString()}">
+                        <h:outputText value="#{tourist.deliveryDate.toString()}" />
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>
