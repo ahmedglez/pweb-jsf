@@ -4,58 +4,58 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 <h:form id="user-form">
-	<p:dialog header="Usuario" showEffect="fade" modal="true"
+	<p:dialog header="#{msgs.new_user}" showEffect="fade" modal="true"
 		widgetVar="manageUserDialog" responsive="true">
 		<p:outputPanel id="manage-user-content" class="ui-fluid">
 			<p:outputPanel rendered="#{not empty manageUserBean.selectedUser}">
 				<p:panelGrid layout="grid" columns="2">
 					<h:panelGroup>
-						<p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
+						<p:ajaxStatus onstart="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
 						<div class="p-field">
-							<p:outputLabel for="@next">Usuario</p:outputLabel>
+							<p:outputLabel for="@next">#{msgs.label_username}</p:outputLabel>
 							<p:inputText
 									id="username"
 									required="true"
-									requiredMessage="Usuario requerido"
+									requiredMessage="#{msgs.username_message}"
 								    value="#{manageUserBean.selectedUser.username}" />
 						</div>
 						<div class="p-field">
-							<p:outputLabel for="@next">Frist name</p:outputLabel>
+							<p:outputLabel for="@next">#{msgs.name_label}</p:outputLabel>
 							<p:inputText
 									id="firstname"
 									required="true"
-									requiredMessage="Nombre requerido"
+									requiredMessage="#{msgs.name_message}"
 									value="#{manageUserBean.selectedUser.firstName}" />
 						</div>
 						<div class="p-field">
-							<p:outputLabel for="@next">Last name</p:outputLabel>
+							<p:outputLabel for="@next">#{msgs.last_name_label}</p:outputLabel>
 							<p:inputText
 									id="lastname"
 									required="true"
-									requiredMessage="Apellidos requeridos"
+									requiredMessage="#{msgs.last_name_message}"
 									value="#{manageUserBean.selectedUser.lastName}" />
 						</div>
 						<div class="p-field">
-							<p:outputLabel for="@next">Correo</p:outputLabel>
+							<p:outputLabel for="@next">#{msgs.email}</p:outputLabel>
 							<p:inputText
 									id="email"
 									required="true"
 								    value="#{manageUserBean.selectedUser.email}"
-								    validatorMessage="Email no valido"
-									requiredMessage="Email requerido"
+								    validatorMessage="#{msgs.email_invalid}"
+									requiredMessage="#{msgs.email_message}"
 							>
 								<f:validateRegex
 									pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 							</p:inputText>
 						</div>
 						<div class="p-field">
-							<p:outputLabel for="@next">Roles</p:outputLabel>
+							<p:outputLabel for="@next">#{msgs.roles}</p:outputLabel>
 							<p:selectCheckboxMenu
 									id="multiple"
 									required="true"
 									value="#{manageUserBean.selectedRoles}" label="Seleccione un rol"
 									style="min-width: 15rem" multiple="true" filter="true"
-									requiredMessage="Selecione un rol"
+									requiredMessage="#{msgs.select_role}"
 									filterMatchMode="startsWith" panelStyle="width: 30rem"
 									scrollHeight="250">
 								<f:selectItems value="#{manageUserBean.roles}" var="role"
@@ -63,21 +63,19 @@
 							</p:selectCheckboxMenu>
 						</div>
 						<div class="p-field">
-							<p:outputLabel for="@next" >Contraseña</p:outputLabel>
+							<p:outputLabel for="@next" >#{msgs.password}</p:outputLabel>
 							<p:password id="password1"
 										required="true"
-										requiredMessage="Contraseña requerida"
-										validatorMessage="Las contraseñas deben coincidir"
+										requiredMessage="#{msgs.password_message}"
+										validatorMessage="#{msgs.repeat_message}"
 										value="#{manageUserBean.selectedUser.password}"
 										match="password2">
 							</p:password>
 						</div>
 						<div class="p-field">
-							<p:outputLabel for="@next" >Repetir contraseña</p:outputLabel>
+							<p:outputLabel for="@next" >#{msgs.repeat_password}</p:outputLabel>
 							<p:password id="password2"
 										required="true"
-										requiredMessage="Contraseña requerida"
-										validatorMessage="Las contraseñas deben coincidir"
 										value="#{manageUserBean.selectedUser.password}">
 							</p:password>
 						</div>
@@ -89,7 +87,7 @@
 					</h:panelGroup>
 					<h:panelGroup>
 						<div>
-							<p:graphicImage name="photo_tourist.jpg" library="images" width="350" height="450" />
+							<p:graphicImage name="user.jpg" library="images" width="350" height="450" />
 						</div>
 					</h:panelGroup>
 				</p:panelGrid>
@@ -97,10 +95,10 @@
 			</p:outputPanel>
 		</p:outputPanel>
 		<f:facet name="footer">
-			<p:commandButton value="Salvar" icon="pi pi-check"
+			<p:commandButton value="#{msgs.btn_save}" icon="pi pi-check"
 				actionListener="#{manageUserBean.saveUser}"
 				update="manage-user-content" process="manage-user-content @this" />
-			<p:commandButton value="Cancelar" icon="pi pi-times"
+			<p:commandButton value="#{msgs.btn_cancel}" icon="pi pi-times"
 				onclick="PF('manageUserDialog').hide()" class="ui-button-secondary" process="@this"/>
 		</f:facet>
 	</p:dialog>

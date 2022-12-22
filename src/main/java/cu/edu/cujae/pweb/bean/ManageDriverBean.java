@@ -31,6 +31,8 @@ public class ManageDriverBean {
   private DriverService driverService;
   @Autowired
   private DriverCategoryService driverCategoryService;
+  @Autowired
+  private UserBean userBean;
 
   @PostConstruct
   public void init() {
@@ -40,6 +42,15 @@ public class ManageDriverBean {
   public void newDriver() {
     this.selectedDriver = new DriverDto();
     this.selectedCategory = 0;
+  }
+
+  public void loadData(){
+    try{
+      categories = getAllWithOutSinCategory();
+      drivers = getAllWithOutSinDriver();
+    }catch (Exception e){
+      PrimeFaces.current().executeScript("PF('manageLoggedDialog').show()");
+    }
   }
 
   //Permite eliminar un chofer
@@ -146,8 +157,6 @@ public class ManageDriverBean {
   }
 
   public List<DriverDto> getDrivers() {
-    categories = getAllWithOutSinCategory();
-    drivers = getAllWithOutSinDriver();
     return drivers;
   }
 

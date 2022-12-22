@@ -15,32 +15,39 @@
         </div> -->
 
 		<div class="layout-menu">
-			<div class="menu-category">Administración</div>
+			<div class="menu-category">#{msgs.administration}</div>
 			<div class="menu-items">
 				<h:link
 					rendered="#{userBean.admin}"
-					outcome="/pages/security/users/user-list.xhtml">
-					Gestionar Usuarios
+					outcome="/pages/security/users/user-list.xhtml"
+					onclick="#{manageUserBean.loadData()}">
+					#{msgs.manage_user}
 				</h:link>
-				<h:link outcome="/pages/list/driver-list.xhtml">
-					Gestionar Conductores
+				<h:link outcome="/pages/list/driver-list.xhtml" onclick="#{manageDriverBean.loadData()}">
+					#{msgs.manage_driver}
 				</h:link>
-				<h:link outcome="/pages/list/tourist-list.xhtml">
-					Gestionar Turistas
+				<h:link outcome="/pages/list/tourist-list.xhtml" onclick="#{manageTouristBean.loadData()}">
+					#{msgs.manage_tourist}
 				</h:link>
-				<h:link outcome="/pages/list/car-list.xhtml"> Gestionar Carros </h:link>
-				<h:link outcome="/pages/list/contract-list.xhtml">
-					Gestionar Contractos
+				<h:link outcome="/pages/list/car-list.xhtml" onclick="#{manageCarBean.loadData()}">#{msgs.manage_cars}</h:link>
+				<h:link outcome="/pages/list/contract-list.xhtml" onclick="#{manageContractBean.loadData()}">
+					#{msgs.manage_contracts}
 				</h:link>
 			</div>
-			<div class="menu-category">Reportes</div>
+			<div class="menu-category">#{msgs.reports}</div>
 			<div class="menu-items">
-				<p:outputPanel>
-
-				</p:outputPanel>
-				<p:outputPanel>
-
-				</p:outputPanel>
+				<h:link outcome="/pages/report/contract-for-brand-and-model-report.xhtml" onclick="#{manageContractBean.loadReports()}">
+					#{msgs.contract_report}
+				</h:link>
+				<h:link outcome="/pages/report/tourist-fail-contract-report.xhtml" onclick="#{manageTouristBean.loadReports()}">
+					#{msgs.tourist_report}
+				</h:link>
+				<h:link outcome="/pages/report/car-status-report.xhtml" onclick="#{manageCarBean.loadReports()}">
+					#{msgs.car_report}
+				</h:link>
+				<h:link outcome="/pages/report/annual-income-report.xhtml" onclick="#{manageContractBean.loadReports()}">
+					#{msgs.income_report}
+				</h:link>
 			</div>
 		</div>
 	</div>

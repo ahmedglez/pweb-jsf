@@ -1,0 +1,34 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+   <h:form id="relogged-form">
+      <p:dialog
+              header="La sesion expiro"
+              showEffect="fade"
+              modal="true"
+              widgetVar="manageReloggedDialog"
+              responsive="true">
+         <p:outputPanel id="manage-relogged-content" class="ui-fluid">
+            <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
+            <div class="p-field">
+               <h2>
+                  Por favor vuelva a loguearse en la aplicacion
+               </h2>
+            </div>
+         </p:outputPanel>
+         <f:facet name="footer">
+            <p:commandButton
+                    value="OK"
+                    icon="pi pi-times"
+                    actionListener="#{userBean.logout}"
+                    onclick="PF('manageLoggedDialog').hide()"
+                    class="ui-button-secondary">
+            </p:commandButton>
+
+         </f:facet>
+      </p:dialog>
+   </h:form>
+</ui:composition>

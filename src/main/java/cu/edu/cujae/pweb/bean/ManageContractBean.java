@@ -1,12 +1,20 @@
 package cu.edu.cujae.pweb.bean;
 
 import cu.edu.cujae.pweb.dto.*;
+import cu.edu.cujae.pweb.dto.reportTables.ContractForBrandAndModelReport;
+import cu.edu.cujae.pweb.dto.reportTables.ContractForCountryReport;
+import cu.edu.cujae.pweb.dto.reportTables.IncomeAnnualReport;
 import cu.edu.cujae.pweb.service.*;
 import cu.edu.cujae.pweb.utils.DateController;
 import cu.edu.cujae.pweb.utils.JsfUtils;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -24,6 +32,9 @@ public class ManageContractBean {
   private ContractDto contractDto;
   private ContractDto selectedContract;
   private List<ContractDto> contracts;
+  private List<ContractForBrandAndModelReport> contractForBrandAndModelReports;
+  private List<ContractForCountryReport> contractForCountryReports;
+  private List<IncomeAnnualReport> incomeAnnualReports;
   private Date startingDate;
   private Date finalDate;
   private int selectedTourist;
@@ -50,6 +61,9 @@ public class ManageContractBean {
   @Autowired
   private DriverService driverService;
 
+  @Autowired
+  private UserBean userBean;
+
   private List<CarDto> cars;
   private List<TouristDto> tourists;
   private List<DriverDto> drivers;
@@ -58,11 +72,6 @@ public class ManageContractBean {
 
   @PostConstruct
   public void init() {
-    /*  this.contracts = contractService.getAll();
-        this.payments = paymentService.getAll();
-        this.tourists = touristServices.getAll();
-        this.cars = carService.getAll();
-        this.drivers = driverService.getAll(); */
   }
 
   public void newContract() {
@@ -75,6 +84,31 @@ public class ManageContractBean {
     this.selectedBill = 0;
     this.selectedPayment = 0;
   }
+
+  public void loadData(){
+    try{
+      contracts = contractService.getAll();
+      cars = getAvailableCars();
+      tourists = touristServices.getAll();
+      drivers = driverService.getAll();
+      payments = paymentService.getAll();
+      bills = billService.getAll();
+    }catch (Exception e){
+      userBean.logout();
+    }
+
+  }
+
+  public void loadReports() throws ParseException {
+    try{
+      contractForBrandAndModelReports = contractForBrandAndModelReports();
+      contractForCountryReports = contractForCountryReports();
+      incomeAnnualReports = incomeAnnualReport();
+    }catch (Exception e){
+      PrimeFaces.current().executeScript("PF('manageLoggedDialog').show()");
+    }
+  }
+
 
   public void openForEdit(ContractDto contact) throws ParseException {
     this.selectedCar = contact.getCar().getCode();
@@ -124,11 +158,16 @@ public class ManageContractBean {
         )
       );
       selectedContract.setTourist(touristServices.getByCode(selectedTourist));
+      CarDto car = carService.getByCode(selectedCar);
+      car.getStatus().setStatus("Rentado");
+      car.getStatus().setCode(2);
+      carService.update(car);
       selectedContract.setCar(carService.getByCode(selectedCar));
       selectedContract.setDriver(driverService.getByCode(selectedDriver));
       selectedContract.setPayment(paymentService.getByCode(selectedPayment));
       contractService.create(this.selectedContract);
       contracts = contractService.getAll();
+      cars = getAvailableCars();
       JsfUtils.addMessageFromBundle(
         null,
         FacesMessage.SEVERITY_INFO,
@@ -145,11 +184,16 @@ public class ManageContractBean {
         )
       );
       selectedContract.setTourist(touristServices.getByCode(selectedTourist));
+        CarDto car = carService.getByCode(selectedCar);
+        car.getStatus().setStatus("Rentado");
+        car.getStatus().setCode(2);
+        carService.update(car);
       selectedContract.setCar(carService.getByCode(selectedCar));
       selectedContract.setDriver(driverService.getByCode(selectedDriver));
       selectedContract.setPayment(paymentService.getByCode(selectedPayment));
       contractService.update(this.selectedContract);
       contracts = contractService.getAll();
+      cars = getAvailableCars();
       JsfUtils.addMessageFromBundle(
         null,
         FacesMessage.SEVERITY_INFO,
@@ -159,6 +203,109 @@ public class ManageContractBean {
 
     PrimeFaces.current().executeScript("PF('manageContractDialog').hide()"); //Este code permite cerrar el dialog cuyo id es manageUserDialog. Este identificador es el widgetVar
     PrimeFaces.current().ajax().update("form:dt-contract"); // Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
+  }
+
+  private List<ContractForCountryReport> contractForCountryReports() throws ParseException {
+      List<ContractForCountryReport> report = new ArrayList<>();
+      List<ContractDto> contracts = contractService.getAll();
+      List<String> countries = new LinkedList<>();
+      for (ContractDto con : contracts) {
+        String country = con.getTourist().getCountry();
+        if (!countries.contains(country)) {
+          countries.add(country);
+          List<Integer> carsId = new LinkedList<>();
+          for (ContractDto c : contracts) {
+            int code = c.getCode();
+            String country1 = c.getTourist().getCountry();
+            String brand = c.getCar().getModel().getBrand().getBrand();
+            String model = c.getCar().getModel().getModel();
+            int amountExtension = 0;
+            int amountRentedDays = 0;
+            float incomeCash = 0;
+            float totalAmount = 0;
+            if (!carsId.contains(c.getCar().getCode()) && country1.equals(country)) {
+              carsId.add(c.getCode());
+              for (ContractDto d : contracts) {
+                if (d.getCode() == code && country1.equals(country)) {
+                  amountExtension += d.getExtension();
+                  amountRentedDays += ChronoUnit.DAYS.between(DateController.getLocalDateByString(d.getStartingDate()), DateController.getLocalDateByString(d.getFinalDate()));
+                  totalAmount += d.getTotalAmount();
+                  if (d.getPayment().getPayment().equals("cash")) {
+                    incomeCash += d.getTotalAmount();
+                  }
+                }
+              }
+              report.add(new ContractForCountryReport(country, brand, model, amountExtension, incomeCash, totalAmount));
+            }
+          }
+        }
+      }
+      return report;
+  }
+
+  public List<IncomeAnnualReport> incomeAnnualReport() throws ParseException {
+    List<IncomeAnnualReport> report = IncomeAnnualReport.generatedIncomeAnnualReport();
+    List<ContractDto> contracts = contractService.getAll();
+    float totalAmount = 0;
+    for (ContractDto c : contracts) {
+      if (DateController.getLocalDateByString(c.getStartingDate()).getYear() == LocalDate.now().getYear()) {
+        int month = DateController.getLocalDateByString(c.getStartingDate()).getMonthValue();
+        totalAmount += c.getTotalAmount();
+        double amount = c.getTotalAmount() + report.get(month-1).getIncomeMonthly();
+        report.get(month-1).setIncomeMonthly(amount);
+      }
+    }
+    report.get(12).setIncomeMonthly(totalAmount);
+    return report;
+  }
+
+  private List<ContractForBrandAndModelReport> contractForBrandAndModelReports() throws ParseException {
+    List<ContractForBrandAndModelReport> report = new ArrayList<>();
+    List<ContractDto> contracts = contractService.getAll();
+    List<Integer> carsId = new LinkedList<>();
+    for (ContractDto c : contracts) {
+      int code = c.getCode();
+      String brand = c.getCar().getModel().getBrand().getBrand();
+      String model = c.getCar().getModel().getModel();
+      int contractAmount = 0;
+      int amountRentedDays = 0;
+      float incomeCreditCard = 0;
+      float incomeCash = 0;
+      float incomeCheck = 0;
+      if (!carsId.contains(c.getCar().getCode())) {
+        carsId.add(c.getCode());
+        for (ContractDto d : contracts) {
+          if (d.getCode() == code) {
+            contractAmount++;
+            amountRentedDays += ChronoUnit.DAYS.between(DateController.getLocalDateByString(d.getStartingDate()), DateController.getLocalDateByString(d.getFinalDate()));
+            if (d.getPayment().getPayment().equals("credit card")) {
+              incomeCreditCard += d.getTotalAmount();
+            } else {
+              if (d.getPayment().getPayment().equals("cash")) {
+                incomeCash += d.getTotalAmount();
+              } else {
+                if (d.getPayment().getPayment().equals("check")) {
+                  incomeCheck += d.getTotalAmount();
+                }
+              }
+            }
+          }
+        }
+        report.add(new ContractForBrandAndModelReport(brand, model, contractAmount, amountRentedDays, incomeCreditCard, incomeCheck, incomeCash));
+      }
+    }
+    return report;
+  }
+
+  private List<CarDto> getAvailableCars(){
+    List<CarDto> available = new ArrayList<>();
+    List<CarDto> carDtos = carService.getAll();
+    for(CarDto c : carDtos){
+      if(c.getStatus().getStatus().equals("Disponible")){
+        available.add(c);
+      }
+    }
+    return available;
   }
 
   public ContractDto getContractDto() {
@@ -178,7 +325,6 @@ public class ManageContractBean {
   }
 
   public List<ContractDto> getContracts() {
-    contracts = contractService.getAll();
     return contracts;
   }
 
@@ -187,7 +333,6 @@ public class ManageContractBean {
   }
 
   public List<CarDto> getCars() {
-    cars = carService.getAll();
     return cars;
   }
 
@@ -196,7 +341,6 @@ public class ManageContractBean {
   }
 
   public List<TouristDto> getTourists() {
-    tourists = touristServices.getAll();
     return tourists;
   }
 
@@ -205,7 +349,6 @@ public class ManageContractBean {
   }
 
   public List<DriverDto> getDrivers() {
-    drivers = driverService.getAll();
     return drivers;
   }
 
@@ -214,12 +357,10 @@ public class ManageContractBean {
   }
 
   public List<PaymentsDto> getPayments() {
-    payments = paymentService.getAll();
     return payments;
   }
 
   public List<BillDto> getBills() {
-    bills = billService.getAll();
     return bills;
   }
 
@@ -335,5 +476,27 @@ public class ManageContractBean {
     this.selectedPayment = selectedPayment;
   }
 
+  public List<ContractForBrandAndModelReport> getContractForBrandAndModelReports() {
+    return contractForBrandAndModelReports;
+  }
 
+  public void setContractForBrandAndModelReports(List<ContractForBrandAndModelReport> contractForBrandAndModelReports) {
+    this.contractForBrandAndModelReports = contractForBrandAndModelReports;
+  }
+
+  public List<ContractForCountryReport> getContractForCountryReports() {
+    return contractForCountryReports;
+  }
+
+  public void setContractForCountryReports(List<ContractForCountryReport> contractForCountryReports) {
+    this.contractForCountryReports = contractForCountryReports;
+  }
+
+  public List<IncomeAnnualReport> getIncomeAnnualReports() {
+    return incomeAnnualReports;
+  }
+
+  public void setIncomeAnnualReports(List<IncomeAnnualReport> incomeAnnualReports) {
+    this.incomeAnnualReports = incomeAnnualReports;
+  }
 }

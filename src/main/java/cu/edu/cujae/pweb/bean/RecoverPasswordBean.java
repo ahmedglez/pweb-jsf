@@ -4,11 +4,14 @@ import cu.edu.cujae.pweb.dto.UserDto;
 import cu.edu.cujae.pweb.dto.UserForRecoverCode;
 import cu.edu.cujae.pweb.security.CurrentUserUtils;
 import cu.edu.cujae.pweb.service.AuthService;
-import javax.annotation.ManagedBean;
+
 import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+
+import cu.edu.cujae.pweb.utils.PasswordEncoderUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +29,8 @@ public class RecoverPasswordBean {
   private String confirmPassword;
 
   private UserDto user;
+
+  private PasswordEncoderUtils passwordEncoderUtils = new PasswordEncoderUtils();
 
   @Autowired
   private AuthService authService;
@@ -66,7 +71,7 @@ public class RecoverPasswordBean {
 
   public void changePassword() {
     try {
-      user.setPassword(password);
+      user.setPassword(passwordEncoderUtils.encode(password));
       authService.recoverPassword(user);
       getFacesContext()
         .getExternalContext()

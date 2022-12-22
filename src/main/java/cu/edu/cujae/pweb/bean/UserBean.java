@@ -4,8 +4,6 @@ import cu.edu.cujae.pweb.dto.AuthenticationRequest;
 import cu.edu.cujae.pweb.dto.AuthenticationResponse;
 import cu.edu.cujae.pweb.dto.UserDto;
 import cu.edu.cujae.pweb.service.AuthService;
-import cu.edu.cujae.pweb.service.UserService;
-import cu.edu.cujae.pweb.utils.JsfUtils;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,9 +14,12 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.servlet.http.HttpServletRequest;
+
+import cu.edu.cujae.pweb.service.UserService;
+import cu.edu.cujae.pweb.utils.JsfUtils;
+import cu.edu.cujae.pweb.utils.PasswordEncoderUtils;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 @ManagedBean
@@ -34,6 +35,8 @@ public class UserBean implements Serializable {
   private boolean admin;
   public static String refreshToken;
   private UserDto userLogged;
+
+  private PasswordEncoderUtils passwordEncoderUtils = new PasswordEncoderUtils();
 
   @Autowired
   private AuthService authService;
@@ -82,7 +85,7 @@ public class UserBean implements Serializable {
           .redirect(
             getRequest().getContextPath() + "/pages/welcome/welcome.jsf"
           );
-        userLogged = userService.getByUsername(username);
+        userLogged = userService.getPersonalInfo();
         return authenticationResponse;
       } else {
         getFacesContext()
@@ -106,79 +109,76 @@ public class UserBean implements Serializable {
     return FacesContext.getCurrentInstance();
   }
 
-  //  public String logout() {
-  //    return dispatchToUrl("/pages/security/login.xhtml");
-  //  }
+//  public String logout() {
+//    return dispatchToUrl("/pages/security/login.xhtml");
+//  }
 
-  public String logout() {
-    try {
-      token = "";
-      refreshToken = "";
-      FacesContext
-        .getCurrentInstance()
-        .getExternalContext()
-        .invalidateSession();
+  public String logout(){
+    try{
+        token = "";
+        refreshToken = "";
+      FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
       getFacesContext()
-        .getExternalContext()
-        .redirect(getRequest().getContextPath() + "/pages/security/login.jsf");
-    } catch (Exception e) {
+              .getExternalContext()
+              .redirect(
+                      getRequest().getContextPath() +
+                              "/pages/security/login.jsf"
+              );
+    }catch (Exception e){
       e.printStackTrace();
     }
     return "logout";
   }
 
-  public UserDto updateUsername() throws IOException {
-    System.out.println("Update username");
-    System.out.println("username: " + username);
-    username = userLogged.getUsername();
-    UserDto user = userService.getPersonalInfo();
-    user.setUsername(username);
-    userService.updatePersonalInfo(user, "username");
-    token = "";
-    refreshToken = "";
-    JsfUtils.addMessageFromBundle(
-      null,
-      FacesMessage.SEVERITY_INFO,
-      "message_user_edited"
-    );
-    PrimeFaces.current().executeScript("PF('manageUsernameDialog').hide()");
-    login();
-    return user;
-  }
+    public void updateUsername() throws IOException {
+      System.out.println("Update username");
+      System.out.println("username: " + username);
+      username = userLogged.getUsername();
+      UserDto user = userService.getPersonalInfo();
+      user.setUsername(username);
+      userService.updatePersonalInfo(user, "username");
+      token = "";
+      refreshToken = "";
+      JsfUtils.addMessageFromBundle(
+           null,
+           FacesMessage.SEVERITY_INFO,
+           "message_user_edited"
+      );
+      PrimeFaces.current().executeScript("PF('manageUsernameDialog').hide()");
+      login();
+    }
 
-  public void updateEmail() {
-    String email = userLogged.getEmail();
-    UserDto user = userService.getPersonalInfo();
-    user.setEmail(email);
-    userService.updatePersonalInfo(user, "email");
-    JsfUtils.addMessageFromBundle(
-      null,
-      FacesMessage.SEVERITY_INFO,
-      "message_user_edited"
-    );
-    PrimeFaces.current().executeScript("PF('manageEmailDialog').hide()");
-  }
-
-  public void updatePassword() throws IOException {
-    password = userLogged.getPassword();
-    UserDto user = userService.getPersonalInfo();
-    user.setPassword(password);
-    userService.updatePersonalInfo(user, "password");
-    token = "";
-    refreshToken = "";
-    JsfUtils.addMessageFromBundle(
-      null,
-      FacesMessage.SEVERITY_INFO,
-      "message_user_edited"
-    );
-    PrimeFaces.current().executeScript("PF('managePasswordDialog').hide()");
-    login();
-  }
+    public void updateEmail(){
+      String email = userLogged.getEmail();
+      UserDto user = userService.getPersonalInfo();
+      user.setEmail(email);
+      userService.updatePersonalInfo(user, "email");
+        JsfUtils.addMessageFromBundle(
+                null,
+                FacesMessage.SEVERITY_INFO,
+                "message_user_edited"
+        );
+        PrimeFaces.current().executeScript("PF('manageEmailDialog').hide()");
+    }
+    public void updatePassword() throws IOException {
+      password = userLogged.getPassword();
+      UserDto user = userService.getPersonalInfo();
+      user.setPassword(password);
+      userService.updatePersonalInfo(user, "password");
+        token = "";
+        refreshToken = "";
+        JsfUtils.addMessageFromBundle(
+                null,
+                FacesMessage.SEVERITY_INFO,
+                "message_user_edited"
+        );
+        PrimeFaces.current().executeScript("PF('managePasswordDialog').hide()");
+        login();
+    }
 
   public UserDto getUserLogged() {
     return userLogged;
   }
-
   public String getUsername() {
     return username;
   }
@@ -230,4 +230,6 @@ public class UserBean implements Serializable {
   public void setUserLogged(UserDto userLogged) {
     this.userLogged = userLogged;
   }
+
+
 }

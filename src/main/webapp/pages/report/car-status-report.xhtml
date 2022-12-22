@@ -1,0 +1,84 @@
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/pages/template/layout.xhtml">
+   <ui:define name="title">#{msgs.list_car_status}</ui:define>
+   <ui:define name="layout">
+      <div class="card crud-demo">
+         <h:form id="form">
+            <p:toolbar>
+               <p:toolbarGroup>
+                  <p:outputLabel value="#{msgs.date_report} #{manageCountryBean.actualDate}"/>
+               </p:toolbarGroup>
+               <p:toolbarGroup align="right">
+                  <!-- Este es un button que tiene como objetivo exportar el contenido de la tabla que apunta a propiedad target
+                       del componente dataExporter. En este caso dt-users es el identificador del componente datatable -->
+                  <p:commandButton
+                          value="#{msgs.btn_export}"
+                          icon="pi pi-upload"
+                          styleClass="ui-button-help"
+                          ajax="false">
+                     <p:dataExporter
+                             type="pdf"
+                             target="dt-car-status-report"
+                             fileName="carStatus" />
+                  </p:commandButton>
+               </p:toolbarGroup>
+            </p:toolbar>
+
+            <p:dataTable
+                    id="dt-car-status-report"
+                    widgetVar="dtCarStatusReport"
+                    var="car"
+                    value="#{manageCarBean.carStatusReports}"
+                    reflow="true"
+                    paginator="true"
+                    rows="10"
+                    paginatorPosition="bottom">
+               <f:facet name="header">
+                  <div class="products-table-header">
+                     <span style="font-weight: bold">#{msgs.car_status}</span>
+                     <span class="filter-container ui-input-icon-left">
+									<i class="pi pi-search"></i>
+									<p:inputText
+                                            id="globalFilter"
+                                            onkeyup="PF('dtCarStatusReport').filter()"
+                                            placeholder="#{msgs.btn_search}" />
+								</span>
+                  </div>
+               </f:facet>
+               <p:column
+                       headerText="#{msgs.plate_label}"
+                       sortBy="#{car.carId}"
+                       filterBy="#{car.carId}">
+                  <h:outputText
+                          value="#{car.carId}" />
+               </p:column>
+               <p:column
+                       headerText="#{msgs.brand_label}"
+                       sortBy="#{car.carBrand}"
+                       filterBy="#{car.carBrand}">
+                  <h:outputText
+                          value="#{car.carBrand}" />
+               </p:column>
+               <p:column
+                       headerText="#{msgs.status_label}"
+                       sortBy="#{car.status}"
+                       filterBy="#{car.status}">
+                  <h:outputText value="#{car.status}" />
+               </p:column>
+               <p:column
+                       headerText="#{msgs.end_contract}"
+                       sortBy="#{car.endOfContract}"
+                       filterBy="#{car.endOfContract}">
+                  <h:outputText value="#{car.endOfContract}" />
+               </p:column>
+            </p:dataTable>
+         </h:form>
+      </div>
+   </ui:define>
+</ui:composition>
+</html>

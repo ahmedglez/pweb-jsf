@@ -139,7 +139,7 @@ public class UserService implements CrudInterface {
     headers.add("field", field);
     headers.add("Authorization", "Bearer " + UserBean.token);
     String response = (String) restService
-      .PUT("/api/v1/profile/", params, user, String.class, UserBean.token, headers)
+      .PUT("/api/v1/profile/", params, user, String.class,UserBean.token, headers)
       .getBody();
     System.out.println(response);
   }

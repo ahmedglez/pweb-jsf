@@ -23,8 +23,20 @@ public class ManageBrandBean {
     @Autowired
     private BrandService brandService;
 
+    @Autowired
+    private UserBean userBean;
+
     public void newBrand(){
-        this.selectedBrand = new BrandDto();
+
+        try{
+            this.selectedBrand = new BrandDto();
+        }catch (Exception e){
+            PrimeFaces.current().executeScript("PF('manageLoggedDialog').show()");
+        }
+    }
+
+    public void loadData(){
+        this.brands = brandService.getAll();
     }
 
     public void saveBrand() {
@@ -79,7 +91,6 @@ public class ManageBrandBean {
     }
 
     public List<BrandDto> getBrands() {
-        this.brands = brandService.getAll();
         return brands;
     }
 

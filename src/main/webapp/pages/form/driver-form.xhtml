@@ -15,7 +15,7 @@
 			<p:outputPanel rendered="#{not empty manageDriverBean.selectedDriver}">
 				<p:panelGrid layout="grid" columns="2">
 					<h:panelGroup>
-						<p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
+						<p:ajaxStatus onerror="setTimeout(function() { $('.ui-messages').slideUp(); }, 4000)" />
 						<div class="p-field">
 							<p:outputLabel for="@next">#{msgs.ci_label}</p:outputLabel>
 							<p:inputText
@@ -80,7 +80,7 @@
 					</h:panelGroup>
 					<h:panelGroup>
 						<div>
-							<p:graphicImage name="photo_tourist.jpg" library="images" width="350" height="450" />
+							<p:graphicImage name="driver.jpeg" library="images" width="330" height="450" />
 						</div>
 					</h:panelGroup>
 				</p:panelGrid>
@@ -89,13 +89,13 @@
 
 		<f:facet name="footer">
 			<p:commandButton
-				value="Salvar"
+				value="#{msgs.btn_save}"
 				icon="pi pi-check"
 				actionListener="#{manageDriverBean.saveDriver}"
 				update="manage-driver-content"
 				process="manage-driver-content @this" />
 			<p:commandButton
-				value="Cancelar"
+				value="#{msgs.btn_cancel}"
 				icon="pi pi-times"
 				onclick="PF('manageDriverDialog').hide()"
 				class="ui-button-secondary"

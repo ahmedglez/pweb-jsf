@@ -53,7 +53,7 @@
 		</ui:insert>
 
 		<h:form
-			><p:growl id="messages" showDetail="true" globalOnly="true" severity="error,info">
+			><p:growl id="messages" showDetail="true" globalOnly="true" severity="error info" >
 				<p:autoUpdate />
 			</p:growl>
 		</h:form>
@@ -63,6 +63,8 @@
 		<ui:include src="/pages/security/users/change-password.xhtml"></ui:include>
 
 		<ui:include src="/pages/security/users/change-username.xhtml"></ui:include>
+
+		<ui:include src="/pages/errors/relogged.xhtml"></ui:include>
 
 		<h:outputStylesheet name="layout.css" library="css" />
 		<h:outputScript name="layout.js" library="script" />

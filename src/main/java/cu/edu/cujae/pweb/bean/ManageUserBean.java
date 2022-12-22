@@ -12,6 +12,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 
+import cu.edu.cujae.pweb.utils.PasswordEncoderUtils;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -28,6 +29,8 @@ public class ManageUserBean {
 
   private List<RoleDto> roles;
 
+  private PasswordEncoderUtils passwordEncoderUtils = new PasswordEncoderUtils();
+
   /* @Autowired es la manera para inyectar una dependencia/clase anotada con @service en spring
    * Tener en cuenta que lo que se inyecta siempre es la interfaz y no la clase
    */
@@ -37,11 +40,19 @@ public class ManageUserBean {
   @Autowired
   private RoleService roleService;
 
+  @Autowired
+  private UserBean userBean;
+
   //Esta anotacioon permite que se ejecute code luego de haberse ejecuta el constructor de la clase.
-  @PostConstruct
-  public void init() {
-   /*  users = users == null ? userService.getAll() : users;
-    roles = roleService.getAll(); */
+
+  public void loadData() {
+    try{
+      users = userService.getAll();
+      roles = roleService.getAll();
+    }catch (Exception e){
+      PrimeFaces.current().executeScript("PF('manageLoggedDialog').show()");
+    }
+
   }
 
   //Se ejecuta al dar clic en el button Nuevo
@@ -65,6 +76,7 @@ public class ManageUserBean {
         rolesToAdd.add(roleService.getByCode(selectedRoles[i]));
       }
       selectedUser.setRoles(rolesToAdd);
+      selectedUser.setPassword(passwordEncoderUtils.encode(selectedUser.getPassword()));
       userService.create(selectedUser);
       users = userService.getAll();
       JsfUtils.addMessageFromBundle(
@@ -78,6 +90,7 @@ public class ManageUserBean {
         rolesToAdd.add(roleService.getByCode(selectedRoles[i]));
       }
       selectedUser.setRoles(rolesToAdd);
+      selectedUser.setPassword(passwordEncoderUtils.encode(selectedUser.getPassword()));
       userService.update(selectedUser);
       users = userService.getAll();
       JsfUtils.addMessageFromBundle(
@@ -91,10 +104,6 @@ public class ManageUserBean {
     PrimeFaces.current().ajax().update("form:dt-users"); // Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
   }
 
-  public void onCancel(){
-    PrimeFaces.current().ajax().update("form:dt-users");
-    this.selectedUser = null;
-  }
 
   //Permite eliminar un usuario
   public void deleteUser() {
@@ -135,7 +144,6 @@ public class ManageUserBean {
   }
 
   public List<UserDto> getUsers() {
-    users = userService.getAll();
     return users;
   }
 
@@ -152,7 +160,6 @@ public class ManageUserBean {
   }
 
   public List<RoleDto> getRoles() {
-    roles = roleService.getAll();
     return roles;
   }
 

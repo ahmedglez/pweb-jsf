@@ -31,7 +31,7 @@ public class AuthService {
       String uri = template.expand().toString();
       System.out.println("uri: " + uri);
       String response = (String) restService
-        .POST(uri, authenticationRequest, String.class, UserBean.token)
+        .POST(uri, authenticationRequest, String.class)
         .getBody();
       authenticationResponse =
         apiRestMapper.mapOne(response, AuthenticationResponse.class);

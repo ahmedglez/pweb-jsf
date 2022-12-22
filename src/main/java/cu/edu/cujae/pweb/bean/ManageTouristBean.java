@@ -1,10 +1,22 @@
  package cu.edu.cujae.pweb.bean;
 
+import cu.edu.cujae.pweb.dto.ContractDto;
 import cu.edu.cujae.pweb.dto.CountryDto;
 import cu.edu.cujae.pweb.dto.TouristDto;
+import cu.edu.cujae.pweb.dto.reportTables.TouristFailContractReport;
+import cu.edu.cujae.pweb.service.ContractService;
 import cu.edu.cujae.pweb.service.CountryService;
 import cu.edu.cujae.pweb.service.TouristServices;
+import cu.edu.cujae.pweb.utils.DateController;
 import cu.edu.cujae.pweb.utils.JsfUtils;
+
+import java.sql.CallableStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -13,6 +25,7 @@ import javax.faces.view.ViewScoped;
 
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -24,6 +37,7 @@ public class ManageTouristBean {
   private TouristDto selectedTourist;
   private List<TouristDto> tourists;
   private List<CountryDto> countries;
+  private List<TouristFailContractReport> touristFailContractReports;
   private int selectedCountry;
 
   @Autowired
@@ -32,10 +46,23 @@ public class ManageTouristBean {
   @Autowired
   private TouristServices service;
 
-  @PostConstruct
-  public void onInit() {
-   /*  tourists = service.getAll();
-    countries = countryService.getCountries(); */
+  @Autowired
+  private ContractService contractService;
+
+  @Autowired
+  private UserBean userBean;
+
+  public void loadData() {
+    try{
+      tourists = service.getAll();
+      countries = countryService.getCountries();
+    }catch (Exception e){
+      PrimeFaces.current().executeScript("PF('manageLoggedDialog').show()");
+    }
+  }
+
+  public void loadReports() throws ParseException {
+    touristFailContractReports = touristFailContractReport();
   }
 
   public void newTourist() {
@@ -101,6 +128,20 @@ public class ManageTouristBean {
     PrimeFaces.current().ajax().update("form:dt-tourist"); // Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
   }
 
+  public ArrayList<TouristFailContractReport> touristFailContractReport() throws ParseException {
+    ArrayList<TouristFailContractReport> report = new ArrayList<>();
+    List<ContractDto> contracts = contractService.getAll();
+    for(ContractDto c : contracts){
+      if(c.getExtension()!=0){
+        LocalDate deliveryDate = DateController.getLocalDateByString(c.getFinalDate()).plusDays(c.getExtension());
+        report.add(new TouristFailContractReport(c.getTourist().getName(), c.getTourist().getLastName(),DateController.getLocalDateByString(c.getFinalDate()), deliveryDate)
+        );
+      }
+    }
+
+    return report;
+  }
+
   public TouristDto getTourist() {
     return tourist;
   }
@@ -118,7 +159,6 @@ public class ManageTouristBean {
   }
 
   public List<TouristDto> getTourists() {
-    tourists = service.getAll();
     return tourists;
   }
 
@@ -142,4 +182,11 @@ public class ManageTouristBean {
     this.selectedCountry = selectedCountry;
   }
 
+  public List<TouristFailContractReport> getTouristFailContractReports() {
+    return touristFailContractReports;
+  }
+
+  public void setTouristFailContractReports(List<TouristFailContractReport> touristFailContractReports) {
+    this.touristFailContractReports = touristFailContractReports;
+  }
 }

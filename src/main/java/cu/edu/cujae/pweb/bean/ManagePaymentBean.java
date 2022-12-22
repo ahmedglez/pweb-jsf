@@ -22,9 +22,19 @@ public class ManagePaymentBean {
 
     @Autowired
     private PaymentService paymentService;
+    @Autowired
+    private UserBean userBean;
 
     public void newPayment(){
         this.selectedPayment = new PaymentsDto();
+    }
+
+    public void loadData(){
+        try{
+            payments = paymentService.getAll();
+        }catch (Exception e){
+            PrimeFaces.current().executeScript("PF('manageLoggedDialog').show()");
+        }
     }
 
     public void savePayment() {
@@ -79,7 +89,6 @@ public class ManagePaymentBean {
     }
 
     public List<PaymentsDto> getPayments() {
-        payments = paymentService.getAll();
         return payments;
     }
 

@@ -1,0 +1,105 @@
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/pages/template/layout.xhtml">
+   <ui:define name="title">#{msgs.list_contract_country}</ui:define>
+   <ui:define name="layout">
+      <div class="card crud-demo">
+         <p:tabMenu activeIndex="#{param.i}" style="padding-bottom: 2rem">
+            <p:menuitem value="#{msgs.contract_model_brand}" outcome="/pages/report/contract-for-brand-and-model-report.xhtml" icon="pi pi-fw pi-tag" onclick="#{manageContractBean.loadReports()}">
+               <f:param name="i" value="0"/>
+            </p:menuitem>
+            <p:menuitem value="#{msgs.contract_country}" outcome="/pages/report/contract-for-country-report.xhtml" icon="pi pi-fw pi-tag" onclick="#{manageContractBean.loadReports()}">
+               <f:param name="i" value="1"/>
+            </p:menuitem>
+         </p:tabMenu>
+         <h:form id="form">
+            <p:toolbar>
+               <p:toolbarGroup>
+                  <p:outputLabel value="#{msgs.date_report} #{manageCountryBean.actualDate}"/>
+               </p:toolbarGroup>
+               <p:toolbarGroup align="right">
+                  <!-- Este es un button que tiene como objetivo exportar el contenido de la tabla que apunta a propiedad target
+                       del componente dataExporter. En este caso dt-users es el identificador del componente datatable -->
+                  <p:commandButton
+                          value="#{msgs.btn_export}"
+                          icon="pi pi-upload"
+                          styleClass="ui-button-help"
+                          ajax="false">
+                     <p:dataExporter
+                             type="pdf"
+                             target="dt-contract-country-report"
+                             fileName="contract" />
+                  </p:commandButton>
+               </p:toolbarGroup>
+            </p:toolbar>
+
+            <p:dataTable
+                    id="dt-contract-country-report"
+                    widgetVar="dtContractCountryReport"
+                    var="contract"
+                    value="#{manageContractBean.contractForCountryReports}"
+                    reflow="true"
+                    paginator="true"
+                    rows="10"
+                    paginatorPosition="bottom">
+               <f:facet name="header">
+                  <div class="products-table-header">
+                     <span style="font-weight: bold">#{msgs.contracts_label}</span>
+                     <span class="filter-container ui-input-icon-left">
+									<i class="pi pi-search"></i>
+									<p:inputText
+                                            id="globalFilter"
+                                            onkeyup="PF('dtContractCountryReport').filter()"
+                                            placeholder="#{msgs.btn_search}" />
+								</span>
+                  </div>
+               </f:facet>
+               <p:column
+                       headerText="#{msgs.country_label}"
+                       sortBy="#{contract.country}"
+                       filterBy="#{contract.country}">
+                  <h:outputText
+                          value="#{contract.country}" />
+               </p:column>
+               <p:column
+                       headerText="#{msgs.brand_label}"
+                       sortBy="#{contract.carBrand}"
+                       filterBy="#{contract.carBrand}">
+                  <h:outputText
+                          value="#{contract.carBrand}" />
+               </p:column>
+               <p:column
+                       headerText="#{msgs.model_label}"
+                       sortBy="#{contract.carModel}"
+                       filterBy="#{contract.carModel}">
+                  <h:outputText value="#{contract.carModel}" />
+               </p:column>
+               <p:column
+                       headerText="#{msgs.total_days_rented}"
+                       sortBy="#{contract.totalExtensionDays}"
+                       filterBy="#{contract.totalExtensionDays}">
+                  <h:outputText value="#{contract.totalExtensionDays}" />
+               </p:column>
+               <p:column
+                       headerText="#{msgs.income_for_cash}"
+                       sortBy="#{contract.incomeForCash}"
+                       filterBy="#{contract.incomeForCash}">
+                  <h:outputText value="#{contract.incomeForCash}" />
+               </p:column>
+               <p:column
+                       headerText="#{msgs.total_income}"
+                       sortBy="#{contract.totalIncome}"
+                       filterBy="#{contract.totalIncome}">
+                  <h:outputText
+                          value="#{contract.totalIncome}" />
+               </p:column>
+            </p:dataTable>
+         </h:form>
+      </div>
+   </ui:define>
+</ui:composition>
+</html>
