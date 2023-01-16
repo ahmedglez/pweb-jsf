@@ -1,6 +1,6 @@
 # Pweb-Jsf-Project
 
-School project made with Spring and JSF, based on an ERP software to manage car rental business (with a web interface).
+This public Github repository contains a school project for a car rental company web application developed using Java, Spring, JavaServer Faces, Maven, and Primefaces. The project aims to provide a user-friendly interface for customers to rent cars and for the company to manage their inventory. The application utilizes Maven for dependency management and building the project, Spring for implementing the backend, JavaServer Faces for the frontend, and Primefaces for creating a visually appealing interface. This project provides a solid foundation for understanding how these technologies work together to create a functional web application.
 
 ## Installation
 
